@@ -88,9 +88,9 @@ class Admin extends React.Component {
         <div className="main-panel" ref="mainPanel">
           <AdminNavbar {...this.props} handleMiniClick={this.handleMiniClick} />
           <Switch>{this.getRoutes(routes)}</Switch>
-          this.props.location.pathname.indexOf("full-screen-map") !== -1 ? null
-          : (
-          <Footer fluid />
+          {this.props.location.pathname.indexOf("full-screen-map") !==
+          -1 ? null : (
+            <Footer fluid />
           )}
         </div>
       </div>

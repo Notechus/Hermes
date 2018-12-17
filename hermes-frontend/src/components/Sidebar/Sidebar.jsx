@@ -145,10 +145,9 @@ class Sidebar extends React.Component {
             </div>
           </a>
           <a href="http://localhost:3000" className="simple-text logo-normal">
-            FreeRunner
+            Hermes
           </a>
         </div>
-
         <div className="sidebar-wrapper" ref="sidebar">
           <div className="user">
             <div className="photo">
