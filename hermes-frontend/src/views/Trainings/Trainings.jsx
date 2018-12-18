@@ -2,7 +2,6 @@ import React from "react";
 import { connect } from "react-redux";
 // reactstrap components
 import { Card, CardBody, CardHeader, CardTitle, Col, Row } from "reactstrap";
-
 import TrainingsTable from "components/TrainingsTable/TrainingsTable";
 import { getUser } from "reducers/authorizationDataReducer";
 import {

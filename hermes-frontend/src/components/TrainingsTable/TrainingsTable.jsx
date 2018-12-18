@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-// import Button from "reactstrap/src/Button";
 import Table from "reactstrap/src/Table";
 import TrainingsTableRowData from "components/TrainingsTable/TrainingsTableRowData";
 import TrainingsTableActionCell from "components/TrainingsTable/TrainingTableActionCell";

@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import UncontrolledTooltip from "reactstrap/src/UncontrolledTooltip";
 import Button from "reactstrap/src/Button";
@@ -12,7 +12,7 @@ const TrainingTableActionCell = ({
   icon,
   click
 }) => (
-  <Fragment>
+  <React.Fragment>
     <Button
       className="btn-icon"
       color={color}
@@ -22,12 +22,12 @@ const TrainingTableActionCell = ({
       onClick={click}
     >
       <i className={icon} />
-      {label ? label : null}
+      {label}
     </Button>{" "}
     <UncontrolledTooltip delay={0} target={"tooltip" + id}>
       {tooltip}
     </UncontrolledTooltip>
-  </Fragment>
+  </React.Fragment>
 );
 
 TrainingTableActionCell.propTypes = {
