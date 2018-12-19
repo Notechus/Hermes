@@ -10,3 +10,16 @@ export const formatDate = date => {
 export const formatDateTime = date => {
   return moment(date, DATETIME_FORMAT);
 };
+
+export const sorByDateString = (date1, date2) => {
+  const d1 = moment(date1, DATE_FORMAT);
+  const d2 = moment(date2, DATE_FORMAT);
+
+  if (d1.isAfter(d2)) {
+    return 1;
+  } else if (d2.isAfter(d1)) {
+    return -1;
+  } else {
+    return 0;
+  }
+};

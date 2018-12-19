@@ -4,7 +4,7 @@ import { Table } from "reactstrap";
 import TrainingsTableActionCell from "components/TrainingsTable/TrainingTableActionCell";
 import TrainingsTableRowData from "components/TrainingsTable/TrainingsTableRowData";
 
-const TrainingsTable = ({ header, data, onEdit, onDelete }) => {
+const TrainingsTable = ({ header, data, onChange, onEdit, onDelete }) => {
   return (
     <Table responsive>
       <thead className="text-primary">
@@ -19,16 +19,8 @@ const TrainingsTable = ({ header, data, onEdit, onDelete }) => {
       <tbody>
         {data.map((prop, key) => (
           <tr key={key}>
-            <TrainingsTableRowData row={prop} />
+            <TrainingsTableRowData row={prop} onChange={() => onChange(prop)} />
             <td className="text-right">
-              <TrainingsTableActionCell
-                color="info"
-                id={"-like-" + prop.id}
-                size="sm"
-                tooltip="Like"
-                icon="fa fa-user"
-                click={() => {}}
-              />
               <TrainingsTableActionCell
                 color="success"
                 id={"-edit-" + prop.id}
@@ -56,6 +48,7 @@ const TrainingsTable = ({ header, data, onEdit, onDelete }) => {
 TrainingsTable.propTypes = {
   header: PropTypes.array.isRequired,
   data: PropTypes.array.isRequired,
+  onChange: PropTypes.func,
   onEdit: PropTypes.func,
   onDelete: PropTypes.func
 };

@@ -9,9 +9,11 @@ import {
 } from "reducers/trainingsReducer";
 import {
   fetchCurrentWeekForUser,
-  fetchPastTrainingsForUser
+  fetchPastTrainingsForUser,
+  updateTraining
 } from "actions/trainingsActions";
 import TrainingsTable from "components/TrainingsTable/TrainingsTable";
+import { sorByDateString } from "utils/dates";
 
 const trainingsHeader = [
   "Activity Date",
@@ -29,6 +31,11 @@ class Trainings extends React.Component {
     this.props.fetchPastTrainings(username);
   }
 
+  updateTraining = training => {
+    training.completed = !training.completed;
+    this.props.updateTraining(training);
+  };
+
   render() {
     return (
       <>
@@ -37,12 +44,15 @@ class Trainings extends React.Component {
             <Col md="12">
               <Card>
                 <CardHeader>
-                  <CardTitle tag="h4">Simple Table</CardTitle>
+                  <CardTitle tag="h4">Current Week</CardTitle>
                 </CardHeader>
                 <CardBody>
                   <TrainingsTable
                     header={trainingsHeader}
-                    data={this.props.currentWeek}
+                    data={this.props.currentWeek.sort((a, b) =>
+                      sorByDateString(a.activityDate, b.activityDate)
+                    )}
+                    onChange={this.updateTraining}
                     onEdit={() => {
                       console.log("edit");
                     }}
@@ -69,7 +79,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   fetchCurrentWeek: username => dispatch(fetchCurrentWeekForUser(username)),
   fetchPastTrainings: (username, page) =>
-    dispatch(fetchPastTrainingsForUser(username, page))
+    dispatch(fetchPastTrainingsForUser(username, page)),
+  updateTraining: training => dispatch(updateTraining(training))
 });
 
 export default connect(
