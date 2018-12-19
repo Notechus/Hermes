@@ -2,7 +2,6 @@ import React from "react";
 import { connect } from "react-redux";
 // reactstrap components
 import { Card, CardBody, CardHeader, CardTitle, Col, Row } from "reactstrap";
-import TrainingsTable from "components/TrainingsTable/TrainingsTable";
 import { getUser } from "reducers/authorizationDataReducer";
 import {
   getCurrentWeekTrainings,
@@ -12,6 +11,7 @@ import {
   fetchCurrentWeekForUser,
   fetchPastTrainingsForUser
 } from "actions/trainingsActions";
+import TrainingsTable from "components/TrainingsTable/TrainingsTable";
 
 const trainingsHeader = [
   "Activity Date",
@@ -43,8 +43,12 @@ class Trainings extends React.Component {
                   <TrainingsTable
                     header={trainingsHeader}
                     data={this.props.currentWeek}
-                    onEdit={() => console.log("edit")}
-                    onDelete={() => console.log("delete")}
+                    onEdit={() => {
+                      console.log("edit");
+                    }}
+                    onDelete={() => {
+                      console.log("delete");
+                    }}
                   />
                 </CardBody>
               </Card>

@@ -1,12 +1,10 @@
-import React  from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import Label from "reactstrap/src/Label";
-import Input from "reactstrap/src/Input";
-import FormGroup from "reactstrap/src/FormGroup";
+import { Label, Input, FormGroup } from "reactstrap";
 
 const TrainingsTableRowData = ({ row }) => {
   return (
-    <React.Fragment>
+    <>
       <td>{row.activityDate}</td>
       <td>
         <FormGroup check>
@@ -19,7 +17,7 @@ const TrainingsTableRowData = ({ row }) => {
       <td>{row.description}</td>
       <td>{row.coachNotes}</td>
       <td>{row.coach}</td>
-    </React.Fragment>
+    </>
   );
 };
 
