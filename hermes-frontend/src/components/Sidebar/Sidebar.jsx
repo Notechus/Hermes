@@ -46,69 +46,72 @@ class Sidebar extends React.Component {
   }
   // this function creates the links and collapses that appear in the sidebar (left menu)
   createLinks = routes => {
-    return routes.map((prop, key) => {
-      if (prop.redirect) {
-        return null;
-      }
-      if (prop.collapse) {
-        let st = {};
-        st[prop["state"]] = !this.state[prop.state];
-        return (
-          <li
-            className={this.getCollapseInitialState(prop.views) ? "active" : ""}
-            key={key}
-          >
-            <a
-              href="#pablo"
-              data-toggle="collapse"
-              aria-expanded={this.state[prop.state]}
-              onClick={e => {
-                e.preventDefault();
-                this.setState(st);
-              }}
+    return routes
+      .map((prop, key) => {
+        if (prop.redirect || prop.hidden) {
+          return null;
+        }
+        if (prop.collapse) {
+          let st = {};
+          st[prop["state"]] = !this.state[prop.state];
+          return (
+            <li
+              className={
+                this.getCollapseInitialState(prop.views) ? "active" : ""
+              }
+              key={key}
             >
+              <a
+                href="#pablo"
+                data-toggle="collapse"
+                aria-expanded={this.state[prop.state]}
+                onClick={e => {
+                  e.preventDefault();
+                  this.setState(st);
+                }}
+              >
+                {prop.icon !== undefined ? (
+                  <>
+                    <i className={prop.icon} />
+                    <p>
+                      {prop.name}
+                      <b className="caret" />
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <span className="sidebar-mini-icon">{prop.mini}</span>
+                    <span className="sidebar-normal">
+                      {prop.name}
+                      <b className="caret" />
+                    </span>
+                  </>
+                )}
+              </a>
+              <Collapse isOpen={this.state[prop.state]}>
+                <ul className="nav">{this.createLinks(prop.views)}</ul>
+              </Collapse>
+            </li>
+          );
+        }
+        return (
+          <li className={this.activeRoute(prop.layout + prop.path)} key={key}>
+            <NavLink to={prop.layout + prop.path} activeClassName="">
               {prop.icon !== undefined ? (
                 <>
                   <i className={prop.icon} />
-                  <p>
-                    {prop.name}
-                    <b className="caret" />
-                  </p>
+                  <p>{prop.name}</p>
                 </>
               ) : (
                 <>
                   <span className="sidebar-mini-icon">{prop.mini}</span>
-                  <span className="sidebar-normal">
-                    {prop.name}
-                    <b className="caret" />
-                  </span>
+                  <span className="sidebar-normal">{prop.name}</span>
                 </>
               )}
-            </a>
-            <Collapse isOpen={this.state[prop.state]}>
-              <ul className="nav">{this.createLinks(prop.views)}</ul>
-            </Collapse>
+            </NavLink>
           </li>
         );
-      }
-      return (
-        <li className={this.activeRoute(prop.layout + prop.path)} key={key}>
-          <NavLink to={prop.layout + prop.path} activeClassName="">
-            {prop.icon !== undefined ? (
-              <>
-                <i className={prop.icon} />
-                <p>{prop.name}</p>
-              </>
-            ) : (
-              <>
-                <span className="sidebar-mini-icon">{prop.mini}</span>
-                <span className="sidebar-normal">{prop.name}</span>
-              </>
-            )}
-          </NavLink>
-        </li>
-      );
-    });
+      });
   };
   // verifies if routeName is the one active (in browser input)
   activeRoute = routeName => {

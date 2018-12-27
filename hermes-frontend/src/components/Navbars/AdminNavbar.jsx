@@ -125,6 +125,15 @@ class AdminNavbar extends React.Component {
               isOpen={this.state.collapseOpen}
             >
               <Nav navbar>
+                <NavItem>
+                  <NavLink
+                    href="#new"
+                    className="btn-rotate"
+                    onClick={e => e.preventDefault()}
+                  >
+                    New
+                  </NavLink>
+                </NavItem>
                 <UncontrolledDropdown className="btn-rotate" nav>
                   <DropdownToggle
                     aria-haspopup={true}

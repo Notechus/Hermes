@@ -2,18 +2,18 @@ import React from "react";
 import { connect } from "react-redux";
 // reactstrap components
 import { Card, CardBody, CardHeader, CardTitle, Col, Row } from "reactstrap";
-import { getUser } from "reducers/authorizationDataReducer";
+import { getUser } from "../../../reducers/authorizationDataReducer";
 import {
   getCurrentWeekTrainings,
   getPastTrainings
-} from "reducers/trainingsReducer";
+} from "../../../reducers/trainingsReducer";
 import {
   fetchCurrentWeekForUser,
   fetchPastTrainingsForUser,
   updateTraining
-} from "actions/trainingsActions";
-import TrainingsTable from "components/TrainingsTable/TrainingsTable";
-import { sorByDateString } from "utils/dates";
+} from "../../../actions/trainingsActions";
+import TrainingsTable from "../../../components/TrainingsTable/TrainingsTable";
+import { sorByDateString } from "../../../utils/dates";
 
 const trainingsHeader = [
   "Activity Date",
@@ -24,7 +24,7 @@ const trainingsHeader = [
   "Actions"
 ];
 
-class Trainings extends React.Component {
+class TrainingsPage extends React.Component {
   componentDidMount() {
     const username = this.props.user ? this.props.user.profile.username : "";
     this.props.fetchCurrentWeek(username);
@@ -64,6 +64,30 @@ class Trainings extends React.Component {
               </Card>
             </Col>
           </Row>
+          <Row>
+            <Col md="12">
+              <Card>
+                <CardHeader>
+                  <CardTitle tag="h4">Past Trainings</CardTitle>
+                </CardHeader>
+                <CardBody>
+                  <TrainingsTable
+                    header={trainingsHeader}
+                    data={this.props.pastTrainings.sort((a, b) =>
+                      sorByDateString(a.activityDate, b.activityDate)
+                    )}
+                    onChange={this.updateTraining}
+                    onEdit={() => {
+                      console.log("edit");
+                    }}
+                    onDelete={() => {
+                      console.log("delete");
+                    }}
+                  />
+                </CardBody>
+              </Card>
+            </Col>
+          </Row>
         </div>
       </>
     );
@@ -86,4 +110,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Trainings);
+)(TrainingsPage);
