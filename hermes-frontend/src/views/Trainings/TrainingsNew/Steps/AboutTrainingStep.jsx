@@ -19,6 +19,8 @@ class AboutTrainingStep extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      loaded: false,
+      image: "",
       fullName: "",
       trainingDate: "",
       memberAvatar: "",
@@ -50,20 +52,21 @@ class AboutTrainingStep extends React.Component {
   };
 
   isValidated = () => {
-    if (
-      this.state.fullNameState === "has-success" &&
-      this.state.trainingDateState === "has-success"
-    ) {
-      return true;
-    } else {
-      if (this.state.fullNameState !== "has-success") {
-        this.setState({ fullNameState: "has-danger" });
-      }
-      if (this.state.trainingDateState !== "has-success") {
-        this.setState({ trainingDateState: "has-danger" });
-      }
-      return false;
-    }
+    // if (
+    //   this.state.fullNameState === "has-success" &&
+    //   this.state.trainingDateState === "has-success"
+    // ) {
+    //   return true;
+    // } else {
+    //   if (this.state.fullNameState !== "has-success") {
+    //     this.setState({ fullNameState: "has-danger" });
+    //   }
+    //   if (this.state.trainingDateState !== "has-success") {
+    //     this.setState({ trainingDateState: "has-danger" });
+    //   }
+    //   return false;
+    // }
+    return true;
   };
 
   // function that returns true if value is email, false otherwise
@@ -73,7 +76,10 @@ class AboutTrainingStep extends React.Component {
         <h5 className="info-text">Let's start with the basic information</h5>
         <Row className="justify-content-center">
           <Col sm="4">
-            <PictureAvatarNoUpload avatar />
+            <PictureAvatarNoUpload
+              image={this.state.image}
+              loaded={this.state.loaded}
+            />
           </Col>
           <Col sm="6" className="mt-3">
             <InputGroup

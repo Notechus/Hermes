@@ -6,24 +6,29 @@ import ReactWizard from "react-bootstrap-wizard";
 import { Col } from "reactstrap";
 
 import AboutTrainingStep from "./Steps/AboutTrainingStep.jsx";
-import Step2 from "./Steps/Step2.jsx";
-import Step3 from "./Steps/Step3.jsx";
+import TrainingActivitiesStep from "./Steps/TrainingActivitiesStep.jsx";
+import AdditionalInfoStep from "./Steps/AdditionalInfoStep.jsx";
 
 const steps = [
   {
     stepName: "About",
-    stepIcon: "nc-icon nc-single-02",
+    stepIcon: "nc-icon nc-alert-circle-i",
     component: AboutTrainingStep
   },
   {
-    stepName: "Account",
-    stepIcon: "nc-icon nc-touch-id",
-    component: Step2
+    stepName: "Activities",
+    stepIcon: "nc-icon nc-user-run",
+    component: TrainingActivitiesStep
   },
   {
-    stepName: "Address",
-    stepIcon: "nc-icon nc-pin-3",
-    component: Step3
+    stepName: "Additional Information",
+    stepIcon: "nc-icon nc-single-copy-04",
+    component: AdditionalInfoStep
+  },
+  {
+    stepName: "Summary",
+    stepIcon: "nc-icon nc-bookmark-2",
+    component: AdditionalInfoStep
   }
 ];
 
@@ -43,7 +48,7 @@ class TrainingsNew extends React.Component {
     return (
       <>
         <div className="content">
-          <Col className="mr-auto ml-auto" md="10">
+          <Col className="ml-auto mr-auto" md="10">
             <ReactWizard
               steps={steps}
               navSteps

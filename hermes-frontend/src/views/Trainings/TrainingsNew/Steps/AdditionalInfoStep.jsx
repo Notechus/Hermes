@@ -5,7 +5,7 @@ import Select from "react-select";
 // reactstrap components
 import { FormGroup, Input, Row, Col } from "reactstrap";
 
-class Wizard extends React.Component {
+class AdditionalInfoStep extends React.Component {
   render() {
     return (
       <>
@@ -66,4 +66,4 @@ class Wizard extends React.Component {
   }
 }
 
-export default Wizard;
+export default AdditionalInfoStep;
