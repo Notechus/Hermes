@@ -3,6 +3,7 @@ export default {
   enabled: true,
   authorities: [],
   profile: {
+    avatar: "localhost:3000/avatars/xyz",
     name: "Sebastian",
     surname: "Paulus",
     email: "sebastian.paulus7@gmail.com",

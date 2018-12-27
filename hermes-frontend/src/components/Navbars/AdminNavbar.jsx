@@ -129,7 +129,10 @@ class AdminNavbar extends React.Component {
                   <NavLink
                     href="#new"
                     className="btn-rotate"
-                    onClick={e => e.preventDefault()}
+                    onClick={e =>
+                      e.preventDefault() ||
+                      this.props.history.push("/admin/trainings_new")
+                    }
                   >
                     New
                   </NavLink>
