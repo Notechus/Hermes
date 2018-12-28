@@ -1,15 +1,10 @@
 import React from "react";
 // reactstrap components
-import {
-  Button,
-  Col,
-  Form,
-  FormGroup,
-  Input,
-  Label,
-  Row,
-  Table
-} from "reactstrap";
+import { Col, Row } from "reactstrap";
+
+import { compareOrders } from "utils/functions";
+import ActivitiesTable from "components/TrainingsNew/ActivitiesTable";
+import NewActivityForm from "components/TrainingsNew/NewActivityForm";
 
 class TrainingActivitiesStep extends React.Component {
   constructor(props) {
@@ -29,6 +24,49 @@ class TrainingActivitiesStep extends React.Component {
     return true;
   };
 
+  addActivity = () => {
+    const { order, mileage, description, comment } = this.state;
+
+    if (this.state.activities.find(e => e.order === order)) {
+      this.setState({
+        activities: [
+          ...this.state.activities.filter(e => !(e.order === order)),
+          { order, mileage, description, comment }
+        ].sort((a, b) => compareOrders(a.order, b.order)),
+        order: 0,
+        mileage: 0.0,
+        description: "",
+        comment: ""
+      });
+    } else {
+      this.setState({
+        activities: [
+          ...this.state.activities,
+          { order, mileage, description, comment }
+        ].sort((a, b) => compareOrders(a.order, b.order)),
+        order: 0,
+        mileage: 0.0,
+        description: "",
+        comment: ""
+      });
+    }
+  };
+
+  removeActivity = order => {
+    this.setState({
+      activities: this.state.activities.filter(e => !(e.order === order))
+    });
+  };
+
+  editActivity = activity => {
+    this.setState({
+      order: activity.order,
+      mileage: activity.mileage,
+      description: activity.description,
+      comment: activity.comment
+    });
+  };
+
   change = event => {
     this.setState({ [event.target.name]: event.target.value });
   };
@@ -41,63 +79,23 @@ class TrainingActivitiesStep extends React.Component {
           <Col lg="10">
             <Row className="justify-content-center">
               <Col sm="12">
-                <Table responsive>
-                  <thead>
-                    <tr>
-                      <th className="text-right">Order</th>
-                      <th className="text-right">Mileage</th>
-                      <th className="text-right">Description</th>
-                      <th className="text-right">Comment</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {this.state.activities.map(activity => (
-                      <tr>
-                        <td className="text-right">{activity.order}</td>
-                        <td className="text-right">{activity.mileage}</td>
-                        <td className="text-right">{activity.description}</td>
-                        <td className="text-right">{activity.comment}</td>
-                      </tr>
-                    ))}
-                    <tr>
-                      <td className="text-right" />
-                      <td className="text-right" />
-                      <td className="text-right" />
-                      <td className="text-right" />
-                    </tr>
-                  </tbody>
-                </Table>
+                <ActivitiesTable
+                  data={this.state.activities}
+                  onEdit={this.editActivity}
+                  onDelete={this.removeActivity}
+                />
               </Col>
             </Row>
             <Row>
               <Col sm="4">
-                <Form action="#" method="#">
-                  <label>Order</label>
-                  <FormGroup>
-                    <Input
-                      name="order"
-                      placeholder="Order"
-                      type="text"
-                      value={this.state.order}
-                      onChange={this.change}
-                    />
-                  </FormGroup>
-                  <FormGroup>
-                    <Input placeholder="Mileage" type="text" />
-                  </FormGroup>
-                  <FormGroup>
-                    <Input placeholder="Description" type="textarea" />
-                  </FormGroup>
-                  <FormGroup>
-                    <Button
-                      className="btn-default"
-                      color="default"
-                      type="button"
-                    >
-                      Submit
-                    </Button>
-                  </FormGroup>
-                </Form>
+                <NewActivityForm
+                  order={this.state.order}
+                  mileage={this.state.mileage}
+                  description={this.state.description}
+                  comment={this.state.comment}
+                  onChange={this.change}
+                  onSubmit={this.addActivity}
+                />
               </Col>
               <Col sm="6">Here templates</Col>
             </Row>

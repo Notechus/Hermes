@@ -13,7 +13,7 @@ import {
   updateTraining
 } from "../../../actions/trainingsActions";
 import TrainingsTable from "../../../components/TrainingsTable/TrainingsTable";
-import { sorByDateString } from "../../../utils/dates";
+import { sorByDateString } from "../../../utils/functions";
 
 const trainingsHeader = [
   "Activity Date",

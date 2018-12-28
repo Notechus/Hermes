@@ -11,6 +11,8 @@ export const formatDateTime = date => {
   return moment(date, DATETIME_FORMAT);
 };
 
+export const compareOrders = (order1, order2) => order1 - order2;
+
 export const sorByDateString = (date1, date2) => {
   const d1 = moment(date1, DATE_FORMAT);
   const d2 = moment(date2, DATE_FORMAT);
