@@ -27,7 +27,9 @@ class TrainingActivitiesStep extends React.Component {
   };
 
   addActivity = () => {
-    const { order, mileage, description, comment } = this.state;
+    const { description, comment } = this.state;
+    const order = Number.parseInt(this.state.order);
+    const mileage = Number.parseFloat(this.state.mileage);
 
     if (this.state.activities.find(e => e.order === order)) {
       this.setState({
@@ -73,11 +75,8 @@ class TrainingActivitiesStep extends React.Component {
     this.setState({ [name + "Focus"]: value });
   };
 
-  change = (event, type, firstValue, secondValue) => {
+  change = (event, type) => {
     switch (type) {
-      case "order":
-        this.setState({ orderState: "has-success" });
-        break;
       case "mileage":
         const val = event.target.value.includes(".")
           ? Number.parseFloat(event.target.value)

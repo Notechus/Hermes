@@ -48,7 +48,7 @@ const NewActivityForm = ({
             placeholder="Mileage"
             type="text"
             value={mileage}
-            onChange={e => onChange(e, "mileage", 0)}
+            onChange={e => onChange(e, "mileage")}
             onFocus={() => onFocus("mileage", true)}
             onBlur={() => onFocus("mileage", false)}
           />
@@ -69,7 +69,7 @@ const NewActivityForm = ({
             placeholder="Description"
             type="textarea"
             value={description}
-            onChange={e => onChange(e, "description", 1, 150)}
+            onChange={e => onChange(e, "description")}
             onFocus={() => onFocus("description", true)}
             onBlur={() => onFocus("description", false)}
           />
