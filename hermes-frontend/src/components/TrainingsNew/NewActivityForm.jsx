@@ -1,5 +1,5 @@
 import React from "react";
-
+import classnames from "classnames";
 import {
   Button,
   Form,
@@ -12,9 +12,16 @@ import {
 const NewActivityForm = ({
   order,
   mileage,
+  mileageState,
+  mileageFocus,
   description,
+  descriptionState,
+  descriptionFocus,
   comment,
+  commentState,
+  commentFocus,
   onChange,
+  onFocus,
   onSubmit
 }) => {
   return (
@@ -28,27 +35,49 @@ const NewActivityForm = ({
             type="number"
             min={0}
             value={order}
-            onChange={onChange}
+            onChange={e => onChange(e, "order")}
           />
         </FormGroup>
-        <InputGroup>
+        <InputGroup
+          className={classnames(mileageState, {
+            "input-group-focus": mileageFocus
+          })}
+        >
           <Input
             name="mileage"
             placeholder="Mileage"
             type="text"
             value={mileage}
-            onChange={onChange}
+            onChange={e => onChange(e, "mileage", 0)}
+            onFocus={() => onFocus("mileage", true)}
+            onBlur={() => onFocus("mileage", false)}
           />
           <InputGroupAddon addonType="append">km</InputGroupAddon>
+          {mileageState === "has-danger" && (
+            <label className="error">
+              This field is required and must be a positive number.
+            </label>
+          )}
         </InputGroup>
-        <FormGroup>
+        <FormGroup
+          className={classnames(descriptionState, {
+            "input-group-focus": descriptionFocus
+          })}
+        >
           <Input
             name="description"
             placeholder="Description"
             type="textarea"
             value={description}
-            onChange={onChange}
+            onChange={e => onChange(e, "description", 1, 150)}
+            onFocus={() => onFocus("description", true)}
+            onBlur={() => onFocus("description", false)}
           />
+          {descriptionState === "has-danger" && (
+            <label className="error">
+              This field is required and must be between 1 and 150 characters.
+            </label>
+          )}
         </FormGroup>
         <FormGroup>
           <Input
@@ -56,7 +85,7 @@ const NewActivityForm = ({
             placeholder="Comment"
             type="textarea"
             value={comment}
-            onChange={onChange}
+            onChange={e => onChange(e, "comment")}
           />
         </FormGroup>
         <FormGroup>

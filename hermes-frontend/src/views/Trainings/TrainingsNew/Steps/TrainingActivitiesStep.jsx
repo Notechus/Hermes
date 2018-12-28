@@ -3,6 +3,7 @@ import React from "react";
 import { Col, Row } from "reactstrap";
 
 import { compareOrders } from "utils/functions";
+import { verifyIsPositiveNumber, verifyRangeInclusive } from "utils/validation";
 import ActivitiesTable from "components/TrainingsNew/ActivitiesTable";
 import NewActivityForm from "components/TrainingsNew/NewActivityForm";
 
@@ -15,8 +16,9 @@ class TrainingActivitiesStep extends React.Component {
       mileage: 0.0,
       description: "",
       comment: "",
-      orderState: "",
-      descriptionState: ""
+      mileageState: "",
+      descriptionState: "",
+      commentState: ""
     };
   }
 
@@ -67,7 +69,35 @@ class TrainingActivitiesStep extends React.Component {
     });
   };
 
-  change = event => {
+  changeFocus = (name, value) => {
+    this.setState({ [name + "Focus"]: value });
+  };
+
+  change = (event, type, firstValue, secondValue) => {
+    switch (type) {
+      case "order":
+        this.setState({ orderState: "has-success" });
+        break;
+      case "mileage":
+        const val = event.target.value.includes(".")
+          ? Number.parseFloat(event.target.value)
+          : Number.parseInt(event.target.value);
+        if (event.target.value !== "" && verifyIsPositiveNumber(val)) {
+          this.setState({ mileageState: "has-success" });
+        } else {
+          this.setState({ mileageState: "has-danger" });
+        }
+        break;
+      case "description":
+        if (verifyRangeInclusive(event.target.value.length, 1, 150)) {
+          this.setState({ descriptionState: "has-success" });
+        } else {
+          this.setState({ descriptionState: "has-danger" });
+        }
+        break;
+      default:
+        break;
+    }
     this.setState({ [event.target.name]: event.target.value });
   };
 
@@ -91,9 +121,16 @@ class TrainingActivitiesStep extends React.Component {
                 <NewActivityForm
                   order={this.state.order}
                   mileage={this.state.mileage}
+                  mileageState={this.state.mileageState}
+                  mileageFocus={this.state.mileageFocus}
                   description={this.state.description}
+                  descriptionState={this.state.descriptionState}
+                  descriptionFocus={this.state.descriptionFocus}
                   comment={this.state.comment}
+                  commentState={this.state.commentState}
+                  commentFocus={this.state.commentFocus}
                   onChange={this.change}
+                  onFocus={this.changeFocus}
                   onSubmit={this.addActivity}
                 />
               </Col>
