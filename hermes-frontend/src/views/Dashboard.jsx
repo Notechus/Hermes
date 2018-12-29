@@ -12,12 +12,7 @@ import {
   CardHeader,
   CardTitle,
   Col,
-  FormGroup,
-  Input,
-  Label,
-  Row,
-  Table,
-  UncontrolledTooltip
+  Row
 } from "reactstrap";
 
 import {

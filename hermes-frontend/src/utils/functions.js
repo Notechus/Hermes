@@ -3,13 +3,11 @@ import moment from "moment";
 export const DATE_FORMAT = "YYYY-MM-DD";
 export const DATETIME_FORMAT = DATE_FORMAT + " HH:mm:ss";
 
-export const formatDate = date => {
-  return moment(date, DATE_FORMAT);
-};
+export const formatDate = date => moment(date, DATE_FORMAT);
 
-export const formatDateTime = date => {
-  return moment(date, DATETIME_FORMAT);
-};
+export const formatDateAsString = date => moment(date).format(DATE_FORMAT);
+
+export const formatDateTime = date => moment(date, DATETIME_FORMAT);
 
 export const compareOrders = (order1, order2) => order1 - order2;
 
