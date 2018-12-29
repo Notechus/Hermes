@@ -68,7 +68,7 @@ class TrainingsPage extends React.Component {
             <Col md="12">
               <Card>
                 <CardHeader>
-                  <CardTitle tag="h4">Past Trainings</CardTitle>
+                  <CardTitle tag="h4">All Trainings</CardTitle>
                 </CardHeader>
                 <CardBody>
                   <TrainingsTable

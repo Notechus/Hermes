@@ -8,6 +8,7 @@ import { Col } from "reactstrap";
 import AboutTrainingStep from "./Steps/AboutTrainingStep.jsx";
 import TrainingActivitiesStep from "./Steps/TrainingActivitiesStep.jsx";
 import AdditionalInfoStep from "./Steps/AdditionalInfoStep.jsx";
+import TrainingSummaryStep from "./Steps/TrainingSummaryStep.jsx";
 
 const steps = [
   {
@@ -28,7 +29,7 @@ const steps = [
   {
     stepName: "Summary",
     stepIcon: "nc-icon nc-bookmark-2",
-    component: AdditionalInfoStep
+    component: TrainingSummaryStep
   }
 ];
 

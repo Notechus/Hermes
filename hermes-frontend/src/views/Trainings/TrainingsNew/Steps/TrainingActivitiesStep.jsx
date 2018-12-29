@@ -116,7 +116,7 @@ class TrainingActivitiesStep extends React.Component {
               </Col>
             </Row>
             <Row>
-              <Col sm="4">
+              <Col sm="10">
                 <NewActivityForm
                   order={this.state.order}
                   mileage={this.state.mileage}
@@ -133,7 +133,7 @@ class TrainingActivitiesStep extends React.Component {
                   onSubmit={this.addActivity}
                 />
               </Col>
-              <Col sm="6">Here templates</Col>
+              <Col sm="6" />
             </Row>
           </Col>
         </Row>

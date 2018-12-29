@@ -12,7 +12,7 @@ Chart.pluginService.register({
       var txt = centerConfig.text;
       var color = centerConfig.color || "#000";
       var sidePadding = centerConfig.sidePadding || 20;
-      var sidePaddingCalculated = sidePadding / 100 * (chart.innerRadius * 2);
+      var sidePaddingCalculated = (sidePadding / 100) * (chart.innerRadius * 2);
       //Start with a base font of 30px
       ctx.font = "30px " + fontStyle;
 
@@ -454,14 +454,14 @@ const chartExample5 = {
         pointHoverRadius: 0,
         backgroundColor: ["#4acccd", "#f4f3ef"],
         borderWidth: 0,
-        data: [60, 40]
+        data: [80, 20]
       }
     ]
   },
   options: {
     elements: {
       center: {
-        text: "60%",
+        text: "80%",
         color: "#66615c", // Default is #000000
         fontStyle: "Arial", // Default is Arial
         sidePadding: 60 // Defualt is 20 (as a percentage)
@@ -472,7 +472,7 @@ const chartExample5 = {
       display: false
     },
     tooltips: {
-      enabled: false
+      enabled: true
     },
     scales: {
       yAxes: [
