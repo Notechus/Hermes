@@ -4,6 +4,7 @@ import { getUser } from "reducers/authorizationDataReducer";
 
 import ReactWizard from "react-bootstrap-wizard";
 import { Col } from "reactstrap";
+import ReactBSAlert from "react-bootstrap-sweetalert";
 
 import AboutTrainingStep from "./Steps/AboutTrainingStep.jsx";
 import TrainingActivitiesStep from "./Steps/TrainingActivitiesStep.jsx";
@@ -34,12 +35,38 @@ const steps = [
 ];
 
 class TrainingsNew extends React.Component {
-  state = {};
+  state = {
+    alert: null
+  };
+
+  successAlert = () => {
+    this.setState({
+      alert: (
+        <ReactBSAlert
+          success
+          style={{ display: "block", marginTop: "-100px" }}
+          title="Good job!"
+          onConfirm={() => this.hideAlert()}
+          onCancel={() => this.hideAlert()}
+          confirmBtnBsStyle="info"
+        >
+          You have successfully added a training!
+        </ReactBSAlert>
+      )
+    });
+  };
+
+  hideAlert = () => {
+    this.setState({
+      alert: null
+    });
+  };
 
   componentDidMount() {}
 
   createNewTraining = formState => {
     console.log(formState);
+    this.successAlert();
 
     // const { fullName } = formState;
     //dispatch action here
@@ -49,6 +76,7 @@ class TrainingsNew extends React.Component {
     return (
       <>
         <div className="content">
+          {this.state.alert}
           <Col className="ml-auto mr-auto" md="10">
             <ReactWizard
               steps={steps}

@@ -49,7 +49,8 @@ class TrainingSummaryStep extends React.Component {
                 content={
                   <BasicInfoTrainingSummary
                     fullName={wizardData.fullName}
-                    avatar={""}
+                    avatar={wizardData.memberAvatar}
+                    loaded={wizardData.loaded}
                     trainingDate={wizardData.trainingDate}
                   />
                 }

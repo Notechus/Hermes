@@ -4,8 +4,6 @@ import Charts from "views/Charts.jsx";
 import Dashboard from "views/Dashboard.jsx";
 import ExtendedForms from "views/forms/ExtendedForms.jsx";
 import ExtendedTables from "views/tables/ExtendedTables.jsx";
-import FullScreenMap from "views/maps/FullScreenMap.jsx";
-import GoogleMaps from "views/maps/GoogleMaps.jsx";
 import GridSystem from "views/components/GridSystem.jsx";
 import Icons from "views/components/Icons.jsx";
 import LockScreen from "views/pages/LockScreen.jsx";
@@ -21,8 +19,6 @@ import Timeline from "views/pages/Timeline.jsx";
 import Typography from "views/components/Typography.jsx";
 import UserProfile from "views/pages/UserProfile.jsx";
 import ValidationForms from "views/forms/ValidationForms.jsx";
-import VectorMap from "views/maps/VectorMap.jsx";
-import Widgets from "views/Widgets.jsx";
 import Wizard from "views/forms/Wizard.jsx";
 import Trainings from "views/Trainings/TrainingsPage/TrainingsPage";
 import TrainingsNew from "views/Trainings/TrainingsNew/TrainingsNew";
@@ -214,42 +210,6 @@ const routes = [
         layout: "/admin"
       }
     ]
-  },
-  {
-    collapse: true,
-    name: "Maps",
-    icon: "nc-icon nc-pin-3",
-    state: "mapsCollapse",
-    views: [
-      {
-        path: "/google-maps",
-        name: "Google Maps",
-        mini: "GM",
-        component: GoogleMaps,
-        layout: "/admin"
-      },
-      {
-        path: "/full-screen-map",
-        name: "Full Screen Map",
-        mini: "FSM",
-        component: FullScreenMap,
-        layout: "/admin"
-      },
-      {
-        path: "/vector-map",
-        name: "Vector Map",
-        mini: "VM",
-        component: VectorMap,
-        layout: "/admin"
-      }
-    ]
-  },
-  {
-    path: "/widgets",
-    name: "Widgets",
-    icon: "nc-icon nc-box",
-    component: Widgets,
-    layout: "/admin"
   },
   {
     path: "/charts",
