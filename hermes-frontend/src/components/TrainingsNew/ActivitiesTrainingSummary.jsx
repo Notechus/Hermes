@@ -9,10 +9,10 @@ const ActivitiesTrainingSummary = ({ activities }) => {
         <Col sm="12">
           <h6>Activities: {activities.length}</h6>
           {activities.map((prop, key) => (
-            <p key={key} className="text-muted">
+            <h6 key={key} className="text-muted ml-3">
               {prop.order}. {prop.mileage} km - {prop.description} (
               {prop.comment})
-            </p>
+            </h6>
           ))}
         </Col>
       </Row>

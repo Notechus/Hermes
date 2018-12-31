@@ -4,6 +4,7 @@ import { Col, Row } from "reactstrap";
 import TrainingSummaryCollapse from "components/TrainingsNew/TrainingSummaryCollapse";
 import BasicInfoTrainingSummary from "components/TrainingsNew/BasicInfoTrainingSummary";
 import ActivitiesTrainingSummary from "components/TrainingsNew/ActivitiesTrainingSummary";
+import AdditionalInfoTrainingSummary from "components/TrainingsNew/AdditionalInfoTrainingSummary";
 
 class TrainingSummaryStep extends React.Component {
   state = {
@@ -29,6 +30,7 @@ class TrainingSummaryStep extends React.Component {
   };
 
   render() {
+    const { wizardData } = this.props;
     return (
       <>
         <Row className="justify-content-center">
@@ -46,9 +48,9 @@ class TrainingSummaryStep extends React.Component {
                 parent="#summary-accordion"
                 content={
                   <BasicInfoTrainingSummary
-                    fullName={this.props.wizardData.fullName}
+                    fullName={wizardData.fullName}
                     avatar={""}
-                    trainingDate={this.props.wizardData.trainingDate}
+                    trainingDate={wizardData.trainingDate}
                   />
                 }
                 title="Basic Info"
@@ -60,15 +62,26 @@ class TrainingSummaryStep extends React.Component {
                 content={
                   <ActivitiesTrainingSummary
                     activities={
-                      this.props.wizardData.activities
-                        ? this.props.wizardData.activities
-                        : []
+                      wizardData.activities ? wizardData.activities : []
                     }
                   />
                 }
                 title="Activities Info"
                 isOpen={this.isOpen("activitiesInfo")}
                 toggle={() => this.collapsesToggle("activitiesInfo")}
+              />
+              <TrainingSummaryCollapse
+                parent="#summary-accordion"
+                content={
+                  <AdditionalInfoTrainingSummary
+                    comment={wizardData.trainingComment}
+                    importance={wizardData.importance}
+                    intensity={wizardData.intensity}
+                  />
+                }
+                title="Additional Info"
+                isOpen={this.isOpen("additionalInfo")}
+                toggle={() => this.collapsesToggle("additionalInfo")}
               />
             </div>
           </Col>

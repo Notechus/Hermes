@@ -14,7 +14,7 @@ const BasicInfoTrainingSummary = ({ fullName, avatar, trainingDate }) => {
         </Col>
         <Col sm="6">
           <h6>Member name: {fullName}</h6>
-          <p>Training Date: {formatDateAsString(trainingDate)}</p>
+          <h6>Training Date: {formatDateAsString(trainingDate)}</h6>
         </Col>
       </Row>
     </>
