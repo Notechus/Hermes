@@ -86,7 +86,11 @@ class Admin extends React.Component {
           activeColor={this.state.activeColor}
         />
         <div className="main-panel" ref="mainPanel">
-          <AdminNavbar {...this.props} handleMiniClick={this.handleMiniClick} />
+          <AdminNavbar
+            {...this.props}
+            handleMiniClick={this.handleMiniClick}
+            onStateChange={this.props.onStateChange}
+          />
           <Switch>{this.getRoutes(routes)}</Switch>
           {this.props.location.pathname.indexOf("full-screen-map") !==
           -1 ? null : (

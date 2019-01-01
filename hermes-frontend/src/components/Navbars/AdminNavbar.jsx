@@ -14,6 +14,7 @@ import {
   NavLink,
   UncontrolledDropdown
 } from "reactstrap";
+import { Auth } from "aws-amplify";
 
 class AdminNavbar extends React.Component {
   constructor(props) {
@@ -181,6 +182,22 @@ class AdminNavbar extends React.Component {
                     <i className="nc-icon nc-settings-gear-65" />
                     <p>
                       <span className="d-lg-none d-md-block">Account</span>
+                    </p>
+                  </NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink
+                    className="btn-rotate"
+                    href="#pablo"
+                    onClick={() =>
+                      Auth.signOut()
+                        .then(() => this.props.onStateChange("signedOut", {}))
+                        .catch(err => console.log(err))
+                    }
+                  >
+                    <i className="nc-icon nc-button-power" />
+                    <p>
+                      <span className="d-lg-none d-md-block">Sign out</span>
                     </p>
                   </NavLink>
                 </NavItem>

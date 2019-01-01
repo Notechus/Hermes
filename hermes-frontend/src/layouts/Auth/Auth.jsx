@@ -22,11 +22,12 @@ class Pages extends React.Component {
     }
   }
   getRoutes = routes => {
-    return routes.map((prop, key) => {
-      if (prop.collapse) {
-        return this.getRoutes(prop.views);
-      }
-      if (prop.layout === "/auth") {
+    return routes
+      .filter(route => route.layout === "/auth")
+      .map((prop, key) => {
+        if (prop.collapse) {
+          return this.getRoutes(prop.views);
+        }
         return (
           <Route
             path={prop.layout + prop.path}
@@ -34,15 +35,12 @@ class Pages extends React.Component {
             key={key}
           />
         );
-      } else {
-        return null;
-      }
-    });
+      });
   };
   render() {
     return (
       <>
-        <AuthNavbar />
+        <AuthNavbar current={this.props.history.location.pathname} />
         <div className="wrapper wrapper-full-page" ref="fullPages">
           <div className="full-page section-image">
             <Switch>{this.getRoutes(routes)}</Switch>

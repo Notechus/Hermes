@@ -23,9 +23,7 @@ class AuthNavbar extends React.Component {
   componentDidMount() {
     window.addEventListener("resize", this.updateColor);
   }
-  // this function opens and closes the collapse on small devices
-  // it also adds navbar-transparent class to the navbar when closed
-  // ad bg-white when opened
+
   toggleCollapse = () => {
     let newState = {
       collapseOpen: !this.state.collapseOpen
@@ -38,6 +36,7 @@ class AuthNavbar extends React.Component {
     this.setState(newState);
   };
   render() {
+    const { current } = this.props;
     return (
       <Navbar
         className={classnames("navbar-absolute fixed-top", this.state.color)}
@@ -46,7 +45,7 @@ class AuthNavbar extends React.Component {
         <Container>
           <div className="navbar-wrapper">
             <NavbarBrand href="#pablo" onClick={e => e.preventDefault()}>
-              Paper Dashboard PRO React
+              Hermes
             </NavbarBrand>
           </div>
           <button
@@ -74,30 +73,22 @@ class AuthNavbar extends React.Component {
                   Dashboard
                 </NavLink>
               </NavItem>
-              <NavItem>
-                <NavLink to="/auth/register" className="nav-link">
-                  <i className="nc-icon nc-book-bookmark" />
-                  Register
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink to="/auth/login" className="nav-link">
-                  <i className="nc-icon nc-tap-01" />
-                  Login
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink to="/admin/user-profile" className="nav-link">
-                  <i className="nc-icon nc-satisfied" />
-                  User
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink to="/auth/lock-screen" className="nav-link">
-                  <i className="nc-icon nc-key-25" />
-                  Lock
-                </NavLink>
-              </NavItem>
+              {current !== "/auth/register" && (
+                <NavItem>
+                  <NavLink to="/auth/register" className="nav-link">
+                    <i className="nc-icon nc-book-bookmark" />
+                    Register
+                  </NavLink>
+                </NavItem>
+              )}
+              {current !== "/auth/login" && (
+                <NavItem>
+                  <NavLink to="/auth/login" className="nav-link">
+                    <i className="nc-icon nc-tap-01" />
+                    Login
+                  </NavLink>
+                </NavItem>
+              )}
             </Nav>
           </Collapse>
         </Container>

@@ -1,25 +1,24 @@
 import React from "react";
-
 // reactstrap components
 import {
   Button,
   Card,
-  CardHeader,
   CardBody,
   CardFooter,
-  Label,
-  FormGroup,
+  CardHeader,
+  Col,
+  Container,
   Form,
   Input,
+  InputGroup,
   InputGroupAddon,
   InputGroupText,
-  InputGroup,
-  Container,
-  Col,
   Row
 } from "reactstrap";
 
-class Login extends React.Component {
+import { AuthPiece } from "aws-amplify-react";
+
+class Login extends AuthPiece {
   componentDidMount() {
     document.body.classList.toggle("login-page");
   }
@@ -46,7 +45,7 @@ class Login extends React.Component {
                           <i className="nc-icon nc-single-02" />
                         </InputGroupText>
                       </InputGroupAddon>
-                      <Input placeholder="First Name..." type="text" />
+                      <Input placeholder="Username" type="text" />
                     </InputGroup>
                     <InputGroup>
                       <InputGroupAddon addonType="prepend">
@@ -60,30 +59,16 @@ class Login extends React.Component {
                         autoComplete="off"
                       />
                     </InputGroup>
-                    <br />
-                    <FormGroup>
-                      <FormGroup check>
-                        <Label check>
-                          <Input
-                            defaultChecked
-                            defaultValue=""
-                            type="checkbox"
-                          />
-                          <span className="form-check-sign" />
-                          Subscribe to newsletter
-                        </Label>
-                      </FormGroup>
-                    </FormGroup>
                   </CardBody>
                   <CardFooter>
                     <Button
                       block
                       className="btn-round mb-3"
-                      color="warning"
+                      color="success"
                       href="#pablo"
                       onClick={e => e.preventDefault()}
                     >
-                      Get Started
+                      Sign in
                     </Button>
                   </CardFooter>
                 </Card>
@@ -94,7 +79,7 @@ class Login extends React.Component {
         <div
           className="full-page-background"
           style={{
-            backgroundImage: `url(${require("assets/img/bg/fabio-mangione.jpg")})`
+            backgroundImage: `url(${require("../../assets/img/bg/fabio-mangione.jpg")})`
           }}
         />
       </div>

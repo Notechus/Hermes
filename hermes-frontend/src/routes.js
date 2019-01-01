@@ -6,12 +6,9 @@ import ExtendedForms from "views/forms/ExtendedForms.jsx";
 import ExtendedTables from "views/tables/ExtendedTables.jsx";
 import GridSystem from "views/components/GridSystem.jsx";
 import Icons from "views/components/Icons.jsx";
-import LockScreen from "views/pages/LockScreen.jsx";
-import Login from "views/pages/Login.jsx";
 import Notifications from "views/components/Notifications.jsx";
 import Panels from "views/components/Panels.jsx";
 import ReactTables from "views/tables/ReactTables.jsx";
-import Register from "views/pages/Register.jsx";
 import RegularForms from "views/forms/RegularForms.jsx";
 import RegularTables from "views/tables/RegularTables.jsx";
 import SweetAlert from "views/components/SweetAlert.jsx";
@@ -47,6 +44,13 @@ const routes = [
     hidden: true
   },
   {
+    hidden: true,
+    path: "/user-profile",
+    name: "UserProfile",
+    component: UserProfile,
+    layout: "/admin"
+  },
+  {
     collapse: true,
     name: "Pages",
     icon: "nc-icon nc-book-bookmark",
@@ -58,36 +62,9 @@ const routes = [
         mini: "T",
         component: Timeline,
         layout: "/admin"
-      },
-      {
-        path: "/login",
-        name: "Login",
-        mini: "L",
-        component: Login,
-        layout: "/auth"
-      },
-      {
-        path: "/register",
-        name: "Register",
-        mini: "R",
-        component: Register,
-        layout: "/auth"
-      },
-      {
-        path: "/lock-screen",
-        name: "LockScreen",
-        mini: "LS",
-        component: LockScreen,
-        layout: "/auth"
-      },
-      {
-        path: "/user-profile",
-        name: "UserProfile",
-        mini: "UP",
-        component: UserProfile,
-        layout: "/admin"
       }
-    ]
+    ],
+    layout: "/auth"
   },
   {
     collapse: true,
