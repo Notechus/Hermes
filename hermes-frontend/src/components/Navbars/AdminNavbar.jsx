@@ -129,7 +129,6 @@ class AdminNavbar extends React.Component {
                 <NavItem>
                   <NavLink
                     href="#new"
-                    className="btn-rotate"
                     onClick={e =>
                       e.preventDefault() ||
                       this.props.history.push("/admin/trainings_new")
@@ -138,7 +137,7 @@ class AdminNavbar extends React.Component {
                     New
                   </NavLink>
                 </NavItem>
-                <UncontrolledDropdown className="btn-rotate" nav>
+                <UncontrolledDropdown nav>
                   <DropdownToggle
                     aria-haspopup={true}
                     caret
@@ -174,11 +173,7 @@ class AdminNavbar extends React.Component {
                   </DropdownMenu>
                 </UncontrolledDropdown>
                 <NavItem>
-                  <NavLink
-                    className="btn-rotate"
-                    href="#pablo"
-                    onClick={e => e.preventDefault()}
-                  >
+                  <NavLink href="#pablo" onClick={e => e.preventDefault()}>
                     <i className="nc-icon nc-settings-gear-65" />
                     <p>
                       <span className="d-lg-none d-md-block">Account</span>
@@ -187,7 +182,6 @@ class AdminNavbar extends React.Component {
                 </NavItem>
                 <NavItem>
                   <NavLink
-                    className="btn-rotate"
                     href="#pablo"
                     onClick={() =>
                       Auth.signOut()
