@@ -9,4 +9,6 @@ import aws_config from "./config/aws-config";
 
 Amplify.configure(aws_config);
 
+console.log("process env", process.env);
+
 ReactDOM.render(<App />, document.getElementById("root"));

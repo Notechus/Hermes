@@ -51,20 +51,11 @@ const routes = [
     layout: "/admin"
   },
   {
-    collapse: true,
-    name: "Pages",
+    path: "/timeline",
+    name: "Timeline",
     icon: "nc-icon nc-book-bookmark",
-    state: "pagesCollapse",
-    views: [
-      {
-        path: "/timeline",
-        name: "Timeline",
-        mini: "T",
-        component: Timeline,
-        layout: "/admin"
-      }
-    ],
-    layout: "/auth"
+    component: Timeline,
+    layout: "/admin"
   },
   {
     collapse: true,
