@@ -12,6 +12,10 @@ export const UPDATE_AVATAR_SUCCESS = authorizationDataAction(
   "UPDATE_AVATAR_SUCCESS"
 );
 
+export const UPDATE_USER_SUCCESS = authorizationDataAction(
+  "UPDATE_USER_SUCCESS"
+);
+
 export const getUser = state => state.authorizationData.user;
 
 export const EMPTY_USER = {
@@ -40,6 +44,9 @@ const authorizationDataReducer = (state = initialState, action) => {
     case UPDATE_AVATAR_SUCCESS:
       const user = Object.assign({}, state.user, { avatar: action.avatar });
       return { ...state, user };
+    case UPDATE_USER_SUCCESS:
+      const newUser = Object.assign({}, state.user, action.attributes);
+      return { ...state, user: newUser };
     default:
       return state;
   }

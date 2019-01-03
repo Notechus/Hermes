@@ -1,6 +1,7 @@
 import {
   LOAD_AUTHORIZATION_SUCCESS,
-  UPDATE_AVATAR_SUCCESS
+  UPDATE_AVATAR_SUCCESS,
+  UPDATE_USER_SUCCESS
 } from "reducers/authorizationDataReducer";
 import { Auth, Storage } from "aws-amplify";
 
@@ -12,6 +13,11 @@ const loadAuthorizationSuccess = user => ({
 const updateAvatarSuccess = avatar => ({
   type: UPDATE_AVATAR_SUCCESS,
   avatar
+});
+
+const updateUserSuccess = attributes => ({
+  type: UPDATE_USER_SUCCESS,
+  attributes
 });
 
 export const fetchAuthorizedUser = dispatch => {
@@ -30,6 +36,19 @@ export const fetchAuthorizedUser = dispatch => {
 
     return dispatch(loadAuthorizationSuccess(user));
   });
+};
+
+export const updateUser = attributes => dispatch => {
+  Auth.currentAuthenticatedUser()
+    .then(user => {
+      return Auth.updateUserAttributes(user, attributes);
+    })
+    .then(result => {
+      if (result === "SUCCESS") {
+        dispatch(updateUserSuccess(attributes));
+      }
+    })
+    .catch(err => console.log(err));
 };
 
 export const updateUserAvatar = (name, file) => dispatch => {
