@@ -3,8 +3,9 @@ import { NavLink } from "react-router-dom";
 import { Collapse, Nav } from "reactstrap";
 import PerfectScrollbar from "perfect-scrollbar";
 
-import avatar from "assets/img/faces/ayo-ogunseinde-2.jpg";
 import logo from "assets/img/react-logo.png";
+import defaultImage from "assets/img/default-avatar.png";
+import { S3Image } from "aws-amplify-react";
 
 let ps;
 
@@ -148,13 +149,19 @@ class Sidebar extends React.Component {
         <div className="sidebar-wrapper" ref="sidebar">
           <div className="user">
             <div className="photo">
-              <img src={user.avatar ? user.avatar : avatar} alt="Avatar" />
+              {user.avatar && user.avatar !== "" ? (
+                <S3Image
+                  imgKey={user.avatar}
+                  level="protected"
+                  className="picture-src"
+                />
+              ) : (
+                <img src={defaultImage} alt="Avatar" />
+              )}
             </div>
             <div className="info">
               <NavLink to="/admin/user-profile" activeClassName="">
-                <span>
-                  {user ? user.name + " " + user.surname : "Unknown User"}
-                </span>
+                <span>{user ? user.username : "Unknown User"}</span>
               </NavLink>
             </div>
           </div>

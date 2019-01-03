@@ -17,11 +17,13 @@ const updateAvatarSuccess = avatar => ({
 export const fetchAuthorizedUser = dispatch => {
   return Auth.currentAuthenticatedUser().then(authUser => {
     let user = {
-      avatar: authUser.attributes.picture,
-      cognitoId: authUser.attributes.sub,
+      avatar: authUser.attributes.picture || "",
+      cognitoId: authUser.attributes.sub || "",
       username: authUser.username,
-      name: authUser.attributes.name,
-      surname: "Paulus"
+      name: authUser.attributes.name || "",
+      email: authUser.attributes.email,
+      surname: authUser.attributes.surname || "",
+      type: authUser.attributes.type || ""
     };
     console.log("user is", authUser);
     console.log("my user is", user);
@@ -31,6 +33,7 @@ export const fetchAuthorizedUser = dispatch => {
 };
 
 export const updateUserAvatar = (name, file) => dispatch => {
+  dispatch(updateAvatarSuccess(""));
   const finalName = name.toLowerCase();
   Storage.put(finalName, file, {
     contentType: "image/png",

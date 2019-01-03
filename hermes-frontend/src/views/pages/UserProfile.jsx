@@ -44,7 +44,7 @@ class UserProfile extends React.Component {
                       image={user.avatar}
                       onChange={this.handleImageChange}
                     />
-                    <h5 className="title">Chet Faker</h5>
+                    <h5 className="title">{user.name + " " + user.surname}</h5>
                     <p className="description">@{user.username}</p>
                   </div>
                   <p className="description text-center">
@@ -89,11 +89,11 @@ class UserProfile extends React.Component {
                     <Row>
                       <Col className="pr-1" md="5">
                         <FormGroup>
-                          <label>Company (disabled)</label>
+                          <label>Type</label>
                           <Input
-                            defaultValue="Creative Code Inc."
+                            defaultValue={user.type}
                             disabled
-                            placeholder="Company"
+                            placeholder="Type"
                             type="text"
                           />
                         </FormGroup>
@@ -102,7 +102,8 @@ class UserProfile extends React.Component {
                         <FormGroup>
                           <label>Username</label>
                           <Input
-                            defaultValue="michael23"
+                            disabled
+                            defaultValue={user.username}
                             placeholder="Username"
                             type="text"
                           />
@@ -110,10 +111,13 @@ class UserProfile extends React.Component {
                       </Col>
                       <Col className="pl-1" md="4">
                         <FormGroup>
-                          <label htmlFor="exampleInputEmail1">
-                            Email address
-                          </label>
-                          <Input placeholder="Email" type="email" />
+                          <label htmlFor="email">Email address</label>
+                          <Input
+                            name="email"
+                            placeholder="Email"
+                            type="email"
+                            value={user.email}
+                          />
                         </FormGroup>
                       </Col>
                     </Row>
@@ -122,7 +126,7 @@ class UserProfile extends React.Component {
                         <FormGroup>
                           <label>First Name</label>
                           <Input
-                            defaultValue="Chet"
+                            value={user.name}
                             placeholder="Company"
                             type="text"
                           />
@@ -132,7 +136,7 @@ class UserProfile extends React.Component {
                         <FormGroup>
                           <label>Last Name</label>
                           <Input
-                            defaultValue="Faker"
+                            value={user.surname}
                             placeholder="Last Name"
                             type="text"
                           />
