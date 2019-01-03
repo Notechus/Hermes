@@ -1,50 +1,55 @@
 import React from "react";
-
+import { connect } from "react-redux";
 // reactstrap components
 import {
-  Button,
   Card,
-  CardHeader,
   CardBody,
   CardFooter,
-  CardTitle,
-  FormGroup,
+  CardHeader,
+  Col,
   Form,
+  FormGroup,
   Input,
-  Row,
-  Col
+  Row
 } from "reactstrap";
 
+import { getUser } from "reducers/authorizationDataReducer";
+import { updateUserAvatar } from "actions/authorizationActions";
+import ImageAvatarUpload from "components/CustomUpload/ImageAvatarUpload.jsx";
+
 class UserProfile extends React.Component {
+  state = {};
+  componentDidMount() {}
+
+  handleImageChange = e => {
+    e.preventDefault();
+    const file = e.target.files[0];
+    const { username } = this.props.user;
+    this.props.changeAvatar(`${username}-avatar.png`, file);
+  };
+
   render() {
+    const user = this.props.user;
     return (
       <>
         <div className="content">
           <Row>
             <Col md="4">
               <Card className="card-user">
-                <div className="image">
-                  <img
-                    alt="..."
-                    src={require("assets/img/bg/damir-bosnjak.jpg")}
-                  />
-                </div>
+                <div className="image" />
                 <CardBody>
                   <div className="author">
-                    <a href="#pablo" onClick={e => e.preventDefault()}>
-                      <img
-                        alt="..."
-                        className="avatar border-gray"
-                        src={require("assets/img/mike.jpg")}
-                      />
-                      <h5 className="title">Chet Faker</h5>
-                    </a>
-                    <p className="description">@chetfaker</p>
+                    <ImageAvatarUpload
+                      loaded={user.avatar && user.avatar !== "" ? true : false}
+                      image={user.avatar}
+                      onChange={this.handleImageChange}
+                    />
+                    <h5 className="title">Chet Faker</h5>
+                    <p className="description">@{user.username}</p>
                   </div>
                   <p className="description text-center">
                     "I like the way you work it <br />
-                    No diggity <br />
-                    I wanna bag it up"
+                    No diggity <br />I wanna bag it up"
                   </p>
                 </CardBody>
                 <CardFooter>
@@ -72,102 +77,6 @@ class UserProfile extends React.Component {
                     </Row>
                   </div>
                 </CardFooter>
-              </Card>
-              <Card>
-                <CardHeader>
-                  <CardTitle tag="h4">Team Members</CardTitle>
-                </CardHeader>
-                <CardBody>
-                  <ul className="list-unstyled team-members">
-                    <li>
-                      <Row>
-                        <Col md="2" xs="2">
-                          <div className="avatar">
-                            <img
-                              alt="..."
-                              className="img-circle img-no-padding img-responsive"
-                              src={require("assets/img/faces/ayo-ogunseinde-2.jpg")}
-                            />
-                          </div>
-                        </Col>
-                        <Col md="7" xs="7">
-                          DJ Khaled <br />
-                          <span className="text-muted">
-                            <small>Offline</small>
-                          </span>
-                        </Col>
-                        <Col className="text-right" md="3" xs="3">
-                          <Button
-                            className="btn-round btn-icon"
-                            color="success"
-                            outline
-                            size="sm"
-                          >
-                            <i className="fa fa-envelope" />
-                          </Button>
-                        </Col>
-                      </Row>
-                    </li>
-                    <li>
-                      <Row>
-                        <Col md="2" xs="2">
-                          <div className="avatar">
-                            <img
-                              alt="..."
-                              className="img-circle img-no-padding img-responsive"
-                              src={require("assets/img/faces/joe-gardner-2.jpg")}
-                            />
-                          </div>
-                        </Col>
-                        <Col md="7" xs="7">
-                          Creative Tim <br />
-                          <span className="text-success">
-                            <small>Available</small>
-                          </span>
-                        </Col>
-                        <Col className="text-right" md="3" xs="3">
-                          <Button
-                            className="btn-round btn-icon"
-                            color="success"
-                            outline
-                            size="sm"
-                          >
-                            <i className="fa fa-envelope" />
-                          </Button>
-                        </Col>
-                      </Row>
-                    </li>
-                    <li>
-                      <Row>
-                        <Col md="2" xs="2">
-                          <div className="avatar">
-                            <img
-                              alt="..."
-                              className="img-circle img-no-padding img-responsive"
-                              src={require("assets/img/faces/clem-onojeghuo-2.jpg")}
-                            />
-                          </div>
-                        </Col>
-                        <Col className="col-ms-7" xs="7">
-                          Flume <br />
-                          <span className="text-danger">
-                            <small>Busy</small>
-                          </span>
-                        </Col>
-                        <Col className="text-right" md="3" xs="3">
-                          <Button
-                            className="btn-round btn-icon"
-                            color="success"
-                            outline
-                            size="sm"
-                          >
-                            <i className="fa fa-envelope" />
-                          </Button>
-                        </Col>
-                      </Row>
-                    </li>
-                  </ul>
-                </CardBody>
               </Card>
             </Col>
             <Col md="8">
@@ -296,4 +205,15 @@ class UserProfile extends React.Component {
   }
 }
 
-export default UserProfile;
+const mapStateToProps = state => ({
+  user: getUser(state)
+});
+
+const mapDispatchToProps = dispatch => ({
+  changeAvatar: (name, file) => dispatch(updateUserAvatar(name, file))
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(UserProfile);

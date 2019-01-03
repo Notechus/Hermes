@@ -10,6 +10,7 @@ import Sidebar from "components/Sidebar/Sidebar.jsx";
 import { fetchAuthorizedUser } from "actions/authorizationActions";
 
 import routes from "routes.js";
+import { getUser } from "reducers/authorizationDataReducer";
 
 let ps;
 
@@ -84,6 +85,7 @@ class Admin extends React.Component {
           routes={routes}
           bgColor={this.state.backgroundColor}
           activeColor={this.state.activeColor}
+          user={this.props.user}
         />
         <div className="main-panel" ref="mainPanel">
           <AdminNavbar
@@ -92,21 +94,22 @@ class Admin extends React.Component {
             onStateChange={this.props.onStateChange}
           />
           <Switch>{this.getRoutes(routes)}</Switch>
-          {this.props.location.pathname.indexOf("full-screen-map") !==
-          -1 ? null : (
-            <Footer fluid />
-          )}
+          <Footer fluid />
         </div>
       </div>
     );
   }
 }
 
+const mapStateToProps = state => ({
+  user: getUser(state)
+});
+
 const mapDispatchToProps = dispatch => ({
   fetchUser: () => dispatch(fetchAuthorizedUser)
 });
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(Admin);

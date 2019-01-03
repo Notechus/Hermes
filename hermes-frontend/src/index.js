@@ -5,8 +5,8 @@ import "assets/scss/paper-dashboard.scss";
 import "assets/demo/demo.css";
 import App from "./App";
 import Amplify from "aws-amplify";
-import aws_config from "./config/aws-config";
+import aws_exports from "./aws-exports";
 
-Amplify.configure(aws_config);
+Amplify.configure(aws_exports);
 
 ReactDOM.render(<App />, document.getElementById("root"));

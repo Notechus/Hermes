@@ -1,9 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { connect } from "react-redux";
-import { Nav, Collapse } from "reactstrap";
+import { Collapse, Nav } from "reactstrap";
 import PerfectScrollbar from "perfect-scrollbar";
-import { getUser } from "reducers/authorizationDataReducer";
 
 import avatar from "assets/img/faces/ayo-ogunseinde-2.jpg";
 import logo from "assets/img/react-logo.png";
@@ -15,8 +13,7 @@ class Sidebar extends React.Component {
     super(props);
     this.state = this.getCollapseStates(props.routes);
   }
-  // this creates the intial state of this component based on the collapse routes
-  // that it gets through this.props.routes
+
   getCollapseStates = routes => {
     let initialState = {};
     routes.map((prop, key) => {
@@ -46,72 +43,69 @@ class Sidebar extends React.Component {
   }
   // this function creates the links and collapses that appear in the sidebar (left menu)
   createLinks = routes => {
-    return routes
-      .map((prop, key) => {
-        if (prop.redirect || prop.hidden) {
-          return null;
-        }
-        if (prop.collapse) {
-          let st = {};
-          st[prop["state"]] = !this.state[prop.state];
-          return (
-            <li
-              className={
-                this.getCollapseInitialState(prop.views) ? "active" : ""
-              }
-              key={key}
-            >
-              <a
-                href="#pablo"
-                data-toggle="collapse"
-                aria-expanded={this.state[prop.state]}
-                onClick={e => {
-                  e.preventDefault();
-                  this.setState(st);
-                }}
-              >
-                {prop.icon !== undefined ? (
-                  <>
-                    <i className={prop.icon} />
-                    <p>
-                      {prop.name}
-                      <b className="caret" />
-                    </p>
-                  </>
-                ) : (
-                  <>
-                    <span className="sidebar-mini-icon">{prop.mini}</span>
-                    <span className="sidebar-normal">
-                      {prop.name}
-                      <b className="caret" />
-                    </span>
-                  </>
-                )}
-              </a>
-              <Collapse isOpen={this.state[prop.state]}>
-                <ul className="nav">{this.createLinks(prop.views)}</ul>
-              </Collapse>
-            </li>
-          );
-        }
+    return routes.map((prop, key) => {
+      if (prop.redirect || prop.hidden) {
+        return null;
+      }
+      if (prop.collapse) {
+        let st = {};
+        st[prop["state"]] = !this.state[prop.state];
         return (
-          <li className={this.activeRoute(prop.layout + prop.path)} key={key}>
-            <NavLink to={prop.layout + prop.path} activeClassName="">
+          <li
+            className={this.getCollapseInitialState(prop.views) ? "active" : ""}
+            key={key}
+          >
+            <a
+              href="#pablo"
+              data-toggle="collapse"
+              aria-expanded={this.state[prop.state]}
+              onClick={e => {
+                e.preventDefault();
+                this.setState(st);
+              }}
+            >
               {prop.icon !== undefined ? (
                 <>
                   <i className={prop.icon} />
-                  <p>{prop.name}</p>
+                  <p>
+                    {prop.name}
+                    <b className="caret" />
+                  </p>
                 </>
               ) : (
                 <>
                   <span className="sidebar-mini-icon">{prop.mini}</span>
-                  <span className="sidebar-normal">{prop.name}</span>
+                  <span className="sidebar-normal">
+                    {prop.name}
+                    <b className="caret" />
+                  </span>
                 </>
               )}
-            </NavLink>
+            </a>
+            <Collapse isOpen={this.state[prop.state]}>
+              <ul className="nav">{this.createLinks(prop.views)}</ul>
+            </Collapse>
           </li>
         );
-      });
+      }
+      return (
+        <li className={this.activeRoute(prop.layout + prop.path)} key={key}>
+          <NavLink to={prop.layout + prop.path} activeClassName="">
+            {prop.icon !== undefined ? (
+              <>
+                <i className={prop.icon} />
+                <p>{prop.name}</p>
+              </>
+            ) : (
+              <>
+                <span className="sidebar-mini-icon">{prop.mini}</span>
+                <span className="sidebar-normal">{prop.name}</span>
+              </>
+            )}
+          </NavLink>
+        </li>
+      );
+    });
   };
   // verifies if routeName is the one active (in browser input)
   activeRoute = routeName => {
@@ -154,14 +148,12 @@ class Sidebar extends React.Component {
         <div className="sidebar-wrapper" ref="sidebar">
           <div className="user">
             <div className="photo">
-              <img src={avatar} alt="Avatar" />
+              <img src={user.avatar ? user.avatar : avatar} alt="Avatar" />
             </div>
             <div className="info">
               <NavLink to="/admin/user-profile" activeClassName="">
                 <span>
-                  {user
-                    ? user.profile.name + " " + user.profile.surname
-                    : "Unknown User"}
+                  {user ? user.name + " " + user.surname : "Unknown User"}
                 </span>
               </NavLink>
             </div>
@@ -173,8 +165,4 @@ class Sidebar extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  user: getUser(state)
-});
-
-export default connect(mapStateToProps)(Sidebar);
+export default Sidebar;

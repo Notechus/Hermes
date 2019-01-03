@@ -1,5 +1,4 @@
 import { createActionNamespace } from "../utils/actions";
-
 const authorizationDataAction = createActionNamespace("authorizationData");
 
 export const LOAD_AUTHORIZATION_SUCCESS = authorizationDataAction(
@@ -9,12 +8,27 @@ export const REMOVE_AUTHORIZATION_SUCCESS = authorizationDataAction(
   "REMOVE_AUTHORIZATION_SUCCESS"
 );
 
+export const UPDATE_AVATAR_SUCCESS = authorizationDataAction(
+  "UPDATE_AVATAR_SUCCESS"
+);
+
 export const getUser = state => state.authorizationData.user;
-export const getToken = state => state.authorizationData.token;
+
+export const EMPTY_USER = {
+  username: "",
+  name: "",
+  surname: "",
+  avatar: "",
+  profile: "",
+  email: "",
+  gender: "",
+  type: "",
+  about: "",
+  memo: ""
+};
 
 const initialState = {
-  user: null,
-  token: ""
+  user: EMPTY_USER
 };
 
 const authorizationDataReducer = (state = initialState, action) => {
@@ -22,7 +36,10 @@ const authorizationDataReducer = (state = initialState, action) => {
     case LOAD_AUTHORIZATION_SUCCESS:
       return { ...state, user: action.user };
     case REMOVE_AUTHORIZATION_SUCCESS:
-      return { ...state, user: null };
+      return { ...state, user: EMPTY_USER };
+    case UPDATE_AVATAR_SUCCESS:
+      const user = Object.assign({}, state.user, { avatar: action.avatar });
+      return { ...state, user };
     default:
       return state;
   }
