@@ -15,6 +15,7 @@ import {
 
 import Login from "views/auth/Login";
 import Register from "views/auth/Register";
+import ConfirmRegister from "views/auth/ConfirmRegister";
 import configureStore from "store/configureStore";
 
 const hist = createBrowserHistory();
@@ -51,7 +52,7 @@ export default withAuthenticator(App, false, [
   <VerifyContact />,
   <Register />,
   <Loading />,
-  <ConfirmSignUp />,
+  <ConfirmRegister />,
   <ForgotPassword />,
   <RequireNewPassword />
 ]);

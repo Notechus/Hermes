@@ -55,7 +55,11 @@ class Login extends SignIn {
     return (
       <div className="wrapper wrapper-full-page" ref="fullPages">
         <div className="full-page section-image">
-          <AuthNavbar signUp={showSignUp} changeState={this.changeState} />
+          <AuthNavbar
+            signUp={showSignUp}
+            signIn={false}
+            changeState={this.changeState}
+          />
           <div className="login-page">
             <Container>
               <Row>
@@ -64,7 +68,7 @@ class Login extends SignIn {
                     <Card className="card-login">
                       <CardHeader>
                         <CardHeader>
-                          <h3 className="header text-center">Login</h3>
+                          <h3 className="header text-center">Sign In</h3>
                         </CardHeader>
                       </CardHeader>
                       <CardBody>

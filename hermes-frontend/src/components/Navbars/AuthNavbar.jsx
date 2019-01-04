@@ -78,7 +78,19 @@ class AuthNavbar extends React.Component {
                     onClick={() => this.props.changeState("signUp")}
                   >
                     <i className="nc-icon nc-book-bookmark" />
-                    Register
+                    Sign Up
+                  </a>
+                </NavItem>
+              )}
+              {this.props.signIn && (
+                <NavItem>
+                  <a
+                    href="#pablo"
+                    className="nav-link"
+                    onClick={() => this.props.changeState("signIn")}
+                  >
+                    <i className="nc-icon nc-book-bookmark" />
+                    Sign In
                   </a>
                 </NavItem>
               )}

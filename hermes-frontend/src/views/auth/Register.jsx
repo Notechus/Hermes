@@ -93,14 +93,18 @@ class Register extends SignUp {
     return (
       <div className="wrapper wrapper-full-page" ref="fullPages">
         <div className="full-page section-image">
-          <AuthNavbar signUp={false} changeState={this.changeState} />
+          <AuthNavbar
+            signUp={false}
+            signIn={true}
+            changeState={this.changeState}
+          />
           <div className="register-page">
             <Container>
               <Row>
                 <Col className="mr-auto ml-auto" lg="5" md="7">
                   <Card className="card-signup text-center">
                     <CardHeader>
-                      <CardTitle tag="h4">Register</CardTitle>
+                      <CardTitle tag="h4">Sign Up</CardTitle>
                     </CardHeader>
                     <CardBody>
                       <Form action="" className="form" method="">
