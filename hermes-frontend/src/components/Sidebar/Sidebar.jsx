@@ -159,7 +159,7 @@ class Sidebar extends React.Component {
                 <img src={defaultImage} alt="Avatar" />
               )}
             </div>
-            <div className="info">
+            <div className="info justify-content-center pl-4">
               <NavLink to="/admin/user-profile" activeClassName="">
                 <span>{user ? user.username : "Unknown User"}</span>
               </NavLink>

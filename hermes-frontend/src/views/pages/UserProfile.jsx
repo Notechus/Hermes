@@ -1,7 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
+import { isEqual } from "lodash";
 // reactstrap components
 import {
+  Button,
   Card,
   CardBody,
   CardFooter,
@@ -13,19 +15,43 @@ import {
   Row
 } from "reactstrap";
 
-import { getUser } from "reducers/authorizationDataReducer";
-import { updateUserAvatar } from "actions/authorizationActions";
+import { getUser, EMPTY_USER } from "reducers/authorizationDataReducer";
+import { updateUserAvatar, updateUser } from "actions/authorizationActions";
 import ImageAvatarUpload from "components/CustomUpload/ImageAvatarUpload.jsx";
 
 class UserProfile extends React.Component {
-  state = {};
+  state = { ...EMPTY_USER };
+
   componentDidMount() {}
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (!isEqual(this.props.user, prevProps.user)) {
+      this.setState({ ...this.props.user });
+    }
+  }
 
   handleImageChange = e => {
     e.preventDefault();
     const file = e.target.files[0];
     const { username } = this.props.user;
     this.props.changeAvatar(`${username}-avatar.png`, file);
+  };
+
+  onChange = e => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
+
+  handleUpdate = () => {
+    const { name, surname, email, gender, about, memo } = this.state;
+
+    const userToUpdate = {
+      name: name,
+      "custom:surname": surname,
+      gender: gender,
+      "custom:about": about,
+      "custom:memo": memo
+    };
+    this.props.updateUser(userToUpdate);
   };
 
   render() {
@@ -40,17 +66,14 @@ class UserProfile extends React.Component {
                 <CardBody>
                   <div className="author">
                     <ImageAvatarUpload
-                      loaded={user.avatar && user.avatar !== "" ? true : false}
+                      loaded={!!(user.avatar && user.avatar !== "")}
                       image={user.avatar}
                       onChange={this.handleImageChange}
                     />
                     <h5 className="title">{user.name + " " + user.surname}</h5>
                     <p className="description">@{user.username}</p>
                   </div>
-                  <p className="description text-center">
-                    "I like the way you work it <br />
-                    No diggity <br />I wanna bag it up"
-                  </p>
+                  <p className="description text-center">{user.memo}</p>
                 </CardBody>
                 <CardFooter>
                   <hr />
@@ -116,7 +139,8 @@ class UserProfile extends React.Component {
                             name="email"
                             placeholder="Email"
                             type="email"
-                            value={user.email}
+                            value={this.state.email}
+                            onChange={this.onChange}
                           />
                         </FormGroup>
                       </Col>
@@ -126,9 +150,11 @@ class UserProfile extends React.Component {
                         <FormGroup>
                           <label>First Name</label>
                           <Input
-                            value={user.name}
-                            placeholder="Company"
+                            name="name"
+                            value={this.state.name}
+                            placeholder="First Name"
                             type="text"
+                            onChange={this.onChange}
                           />
                         </FormGroup>
                       </Col>
@@ -136,9 +162,11 @@ class UserProfile extends React.Component {
                         <FormGroup>
                           <label>Last Name</label>
                           <Input
-                            value={user.surname}
+                            name="surname"
+                            value={this.state.surname}
                             placeholder="Last Name"
                             type="text"
+                            onChange={this.onChange}
                           />
                         </FormGroup>
                       </Col>
@@ -146,40 +174,14 @@ class UserProfile extends React.Component {
                     <Row>
                       <Col md="12">
                         <FormGroup>
-                          <label>Address</label>
+                          <label>Memo</label>
                           <Input
-                            defaultValue="Melbourne, Australia"
-                            placeholder="Home Address"
+                            name="memo"
+                            value={this.state.memo}
+                            placeholder="Memo"
                             type="text"
+                            onChange={this.onChange}
                           />
-                        </FormGroup>
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col className="pr-1" md="4">
-                        <FormGroup>
-                          <label>City</label>
-                          <Input
-                            defaultValue="Melbourne"
-                            placeholder="City"
-                            type="text"
-                          />
-                        </FormGroup>
-                      </Col>
-                      <Col className="px-1" md="4">
-                        <FormGroup>
-                          <label>Country</label>
-                          <Input
-                            defaultValue="Australia"
-                            placeholder="Country"
-                            type="text"
-                          />
-                        </FormGroup>
-                      </Col>
-                      <Col className="pl-1" md="4">
-                        <FormGroup>
-                          <label>Postal Code</label>
-                          <Input placeholder="ZIP Code" type="number" />
                         </FormGroup>
                       </Col>
                     </Row>
@@ -188,13 +190,21 @@ class UserProfile extends React.Component {
                         <FormGroup>
                           <label>About Me</label>
                           <Input
+                            name="about"
                             className="textarea"
                             type="textarea"
                             cols="80"
                             rows="4"
-                            defaultValue="Oh so, your weak rhyme You doubt I'll bother,
-                          reading into it"
+                            value={this.state.about}
+                            onChange={this.onChange}
                           />
+                        </FormGroup>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col md="12">
+                        <FormGroup>
+                          <Button onClick={this.handleUpdate}>Update</Button>
                         </FormGroup>
                       </Col>
                     </Row>
@@ -214,7 +224,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  changeAvatar: (name, file) => dispatch(updateUserAvatar(name, file))
+  changeAvatar: (name, file) => dispatch(updateUserAvatar(name, file)),
+  updateUser: attributes => dispatch(updateUser(attributes))
 });
 
 export default connect(

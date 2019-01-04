@@ -3,8 +3,18 @@ import { Provider } from "react-redux";
 import { Redirect, Route, Router, Switch } from "react-router-dom";
 import AdminLayout from "layouts/Admin/Admin.jsx";
 import { createBrowserHistory } from "history";
-import { withAuthenticator } from "aws-amplify-react";
+import {
+  ConfirmSignIn,
+  ConfirmSignUp,
+  ForgotPassword,
+  RequireNewPassword,
+  SignUp,
+  Loading,
+  VerifyContact,
+  withAuthenticator
+} from "aws-amplify-react";
 
+import Login from "views/auth/Login";
 import configureStore from "store/configureStore";
 
 const hist = createBrowserHistory();
@@ -35,4 +45,13 @@ class App extends React.Component {
   }
 }
 
-export default withAuthenticator(App, false);
+export default withAuthenticator(App, false, [
+  <Login />,
+  <ConfirmSignIn />,
+  <VerifyContact />,
+  <SignUp />,
+  <Loading />,
+  <ConfirmSignUp />,
+  <ForgotPassword />,
+  <RequireNewPassword />
+]);

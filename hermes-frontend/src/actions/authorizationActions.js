@@ -1,7 +1,6 @@
 import {
   LOAD_AUTHORIZATION_SUCCESS,
-  UPDATE_AVATAR_SUCCESS,
-  UPDATE_USER_SUCCESS
+  UPDATE_AVATAR_SUCCESS
 } from "reducers/authorizationDataReducer";
 import { Auth, Storage } from "aws-amplify";
 
@@ -15,21 +14,19 @@ const updateAvatarSuccess = avatar => ({
   avatar
 });
 
-const updateUserSuccess = attributes => ({
-  type: UPDATE_USER_SUCCESS,
-  attributes
-});
-
 export const fetchAuthorizedUser = dispatch => {
-  return Auth.currentAuthenticatedUser().then(authUser => {
+  return Auth.currentUserInfo().then(authUser => {
     let user = {
       avatar: authUser.attributes.picture || "",
       cognitoId: authUser.attributes.sub || "",
       username: authUser.username,
       name: authUser.attributes.name || "",
       email: authUser.attributes.email,
-      surname: authUser.attributes.surname || "",
-      type: authUser.attributes.type || ""
+      gender: authUser.attributes.gender || "",
+      surname: authUser.attributes["custom:surname"] || "",
+      type: authUser.attributes["custom:type"] || "",
+      about: authUser.attributes["custom:about"] || "",
+      memo: authUser.attributes["custom:memo"] || ""
     };
     console.log("user is", authUser);
     console.log("my user is", user);
@@ -45,7 +42,7 @@ export const updateUser = attributes => dispatch => {
     })
     .then(result => {
       if (result === "SUCCESS") {
-        dispatch(updateUserSuccess(attributes));
+        dispatch(fetchAuthorizedUser);
       }
     })
     .catch(err => console.log(err));
