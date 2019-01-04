@@ -18,7 +18,8 @@ import {
 
 import AuthNavbar from "components/Navbars/AuthNavbar";
 import Footer from "components/Footer/Footer";
-import { ForgotPassword, SignIn, SignUp } from "aws-amplify-react";
+import { ForgotPassword, SignIn } from "aws-amplify-react";
+import Register from "views/auth/Register";
 
 class Login extends SignIn {
   componentDidMount() {
@@ -47,7 +48,7 @@ class Login extends SignIn {
     }
     const showSignUp =
       override.includes("SignUp") ||
-      !hide.some(component => component === SignUp);
+      !hide.some(component => component === Register);
     const showForgotPassword =
       override.includes("ForgotPassword") ||
       !hide.some(component => component === ForgotPassword);
@@ -115,15 +116,17 @@ class Login extends SignIn {
                         <Row className="justify-content-center">
                           <Col md={12} lg={12} sm={12}>
                             {showForgotPassword && (
-                              <a
-                                href="#pablo"
-                                onClick={() =>
-                                  this.changeState("forgotPassword")
-                                }
-                              >
-                                Forget your password?
-                                <span>Reset password</span>
-                              </a>
+                              <p>
+                                Forgot your password?{" "}
+                                <a
+                                  href="#pablo"
+                                  onClick={() =>
+                                    this.changeState("forgotPassword")
+                                  }
+                                >
+                                  Reset password
+                                </a>
+                              </p>
                             )}
                           </Col>
                         </Row>

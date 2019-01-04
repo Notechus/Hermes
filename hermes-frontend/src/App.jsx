@@ -8,13 +8,13 @@ import {
   ConfirmSignUp,
   ForgotPassword,
   RequireNewPassword,
-  SignUp,
   Loading,
   VerifyContact,
   withAuthenticator
 } from "aws-amplify-react";
 
 import Login from "views/auth/Login";
+import Register from "views/auth/Register";
 import configureStore from "store/configureStore";
 
 const hist = createBrowserHistory();
@@ -49,7 +49,7 @@ export default withAuthenticator(App, false, [
   <Login />,
   <ConfirmSignIn />,
   <VerifyContact />,
-  <SignUp />,
+  <Register />,
   <Loading />,
   <ConfirmSignUp />,
   <ForgotPassword />,

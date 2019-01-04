@@ -31,7 +31,7 @@ const routes = [
   {
     path: "/trainings",
     name: "Trainings",
-    icon: "nc-icon nc-layout-11",
+    icon: "nc-icon nc-user-run",
     component: Trainings,
     layout: "/admin"
   },
