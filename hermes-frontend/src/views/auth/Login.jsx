@@ -22,15 +22,25 @@ import { ForgotPassword, SignIn, SignUp } from "aws-amplify-react";
 
 class Login extends SignIn {
   componentDidMount() {
-    super.componentDidMount();
+    window.addEventListener("keydown", this.onKeyDown);
     document.body.classList.toggle("login-page");
   }
+
   componentWillUnmount() {
-    super.componentDidMount();
+    window.removeEventListener("keydown", this.onKeyDown);
     document.body.classList.toggle("login-page");
   }
+
+  onKeyDown = e => {
+    if (e.keyCode !== 13) return;
+
+    const { hide = [] } = this.props;
+    if (this.props.authState === "signIn" && !hide.includes(Login)) {
+      this.signIn();
+    }
+  };
+
   render() {
-    console.log(this);
     const { hide = [], override = [] } = this.props;
     if (this.props.authState !== "signIn") {
       return null;
