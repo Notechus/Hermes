@@ -5,7 +5,6 @@ import AdminLayout from "layouts/Admin/Admin.jsx";
 import { createBrowserHistory } from "history";
 import {
   ConfirmSignIn,
-  ConfirmSignUp,
   ForgotPassword,
   RequireNewPassword,
   Loading,

@@ -26,7 +26,7 @@ const trainingsHeader = [
 
 class TrainingsPage extends React.Component {
   componentDidMount() {
-    const username = this.props.user ? this.props.user.profile.username : "";
+    const username = this.props.user ? this.props.user.username : "";
     this.props.fetchCurrentWeek(username);
     this.props.fetchPastTrainings(username);
   }
