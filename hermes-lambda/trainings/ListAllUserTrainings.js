@@ -4,16 +4,32 @@ const ddb = new AWS.DynamoDB.DocumentClient();
 AWS.config.update({ region: "eu-west-1" });
 
 exports.handler = async (event, context) => {
+  console.log(`Received event ("${context.awsRequestId}"):`, event);
+
   if (!event.requestContext.authorizer) {
-    return errorResponse("Authorization not configured", context.awsRequestId);
+    return errorResponse(
+      500,
+      "Authorization not configured",
+      context.awsRequestId
+    );
+  }
+  const username = event.pathParameters.username;
+  const authorizedUsername =
+    event.requestContext.authorizer.claims["cognito:username"];
+  if (username !== authorizedUsername) {
+    return errorResponse(
+      403,
+      "You don't have permissions to that resource",
+      context.awsRequestId
+    );
   }
 
-  console.log(`Received event ("${context.awsRequestId}"):`, event);
-  const username = event.requestContext.authorizer.claims["cognito:username"];
+  console.log(`Fetching ${authorizedUsername} trainings`);
 
-  console.log(`Fetching ${username} trainings`);
-
-  let trainingsResponse = await fetchTrainings(username, context.awsRequestId);
+  let trainingsResponse = await fetchTrainings(
+    authorizedUsername,
+    context.awsRequestId
+  );
   console.log("trainings records", trainingsResponse);
 
   return trainingsResponse;
@@ -39,13 +55,13 @@ const fetchTrainings = (username, awsRequestId) => {
     })
     .catch(err => {
       console.error(err);
-      return errorResponse(err.message, awsRequestId);
+      return errorResponse(500, err.message, awsRequestId);
     });
 };
 
-const errorResponse = (errorMessage, awsRequestId) => {
+const errorResponse = (code, errorMessage, awsRequestId) => {
   return {
-    statusCode: 500,
+    statusCode: code,
     body: JSON.stringify({
       Error: errorMessage,
       Reference: awsRequestId

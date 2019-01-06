@@ -4,6 +4,9 @@ import {
   UPDATE_TRAINING_SUCCESS
 } from "reducers/trainingsReducer";
 import { currentWeek, pastTrainings } from "helpers/data/trainings";
+import { API } from "aws-amplify";
+import { getApiToken } from "actions/authorizationActions";
+import { API_NAME, TRAININGS_FOR_USER, BASIC_HEADERS } from "utils/variables";
 
 const loadPastTrainings = trainings => ({
   type: LOAD_PAST_TRAININGS_SUCCESS,
@@ -20,8 +23,17 @@ const updateTrainingSuccess = training => ({
   training
 });
 
-export const fetchCurrentWeekForUser = username => dispatch => {
+export const fetchCurrentWeekForUser = username => async dispatch => {
+  const token = await getApiToken();
   console.log(`fetching tasks for user ${username}`);
+  try {
+    const trainings = await API.get(API_NAME, TRAININGS_FOR_USER(username), {
+      headers: BASIC_HEADERS(token)
+    });
+    console.log("got trainings", trainings);
+  } catch (err) {
+    console.log("Could not fetch trainings", err);
+  }
   return dispatch(loadCurrentWeek(currentWeek));
 };
 

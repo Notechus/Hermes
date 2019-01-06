@@ -14,6 +14,10 @@ const updateAvatarSuccess = avatar => ({
   avatar
 });
 
+export const getApiToken = async () => {
+  return (await Auth.currentSession()).idToken.jwtToken;
+};
+
 export const fetchAuthorizedUser = dispatch => {
   return Auth.currentUserInfo().then(authUser => {
     let user = {

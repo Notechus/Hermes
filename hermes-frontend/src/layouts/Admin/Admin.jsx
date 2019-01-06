@@ -8,6 +8,10 @@ import AdminNavbar from "components/Navbars/AdminNavbar.jsx";
 import Footer from "components/Footer/Footer.jsx";
 import Sidebar from "components/Sidebar/Sidebar.jsx";
 import { fetchAuthorizedUser } from "actions/authorizationActions";
+import {
+  fetchCurrentWeekForUser,
+  fetchPastTrainingsForUser
+} from "actions/trainingsActions";
 
 import routes from "routes.js";
 import { getUser } from "reducers/authorizationDataReducer";
@@ -25,6 +29,7 @@ class Admin extends React.Component {
   }
   componentDidMount() {
     this.props.fetchUser();
+    this.props.fetchCurrentWeekTrainings();
     if (navigator.platform.indexOf("Win") > -1) {
       document.documentElement.className += " perfect-scrollbar-on";
       document.documentElement.classList.remove("perfect-scrollbar-off");
@@ -106,7 +111,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchUser: () => dispatch(fetchAuthorizedUser)
+  fetchUser: () => dispatch(fetchAuthorizedUser),
+  fetchCurrentWeekTrainings: () => dispatch(fetchCurrentWeekForUser("Notechus"))
 });
 
 export default connect(
