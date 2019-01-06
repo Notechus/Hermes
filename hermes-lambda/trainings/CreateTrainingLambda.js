@@ -20,14 +20,14 @@ exports.handler = async (event, context) => {
   const training = {
     TrainingId: trainingId,
     Coach: username,
-    runner: requestBody.runner,
-    activityDate: requestBody.activityDate,
-    creationDate: new Date().toISOString(),
-    coachNotes: requestBody.coachNotes,
-    activities: requestBody.activities,
-    importance: requestBody.importance,
-    intensity: requestBody.intensity,
-    completed: false
+    Runner: requestBody.runner,
+    ActivityDate: requestBody.activityDate,
+    CreationDate: new Date().toISOString(),
+    CoachNotes: requestBody.coachNotes,
+    Activities: requestBody.activities,
+    Importance: requestBody.importance,
+    Intensity: requestBody.intensity,
+    Completed: false
   };
 
   console.log("Saving training: ", training);

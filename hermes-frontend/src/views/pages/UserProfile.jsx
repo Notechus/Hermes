@@ -15,8 +15,8 @@ import {
   Row
 } from "reactstrap";
 
-import { getUser, EMPTY_USER } from "reducers/authorizationDataReducer";
-import { updateUserAvatar, updateUser } from "actions/authorizationActions";
+import { EMPTY_USER, getUser } from "reducers/authorizationDataReducer";
+import { updateUser, updateUserAvatar } from "actions/authorizationActions";
 import ImageAvatarUpload from "components/CustomUpload/ImageAvatarUpload.jsx";
 
 class UserProfile extends React.Component {

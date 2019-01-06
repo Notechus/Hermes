@@ -1,24 +1,19 @@
 import React from "react";
-
 // reactstrap components
 import {
   Button,
   Card,
-  CardHeader,
   CardBody,
   CardFooter,
+  CardHeader,
   CardTitle,
-  Label,
+  Col,
+  Container,
+  Form,
   FormGroup,
   FormText,
-  Form,
   Input,
-  InputGroupAddon,
-  InputGroupText,
-  InputGroup,
-  Container,
-  Row,
-  Col
+  Row
 } from "reactstrap";
 import { ConfirmSignUp } from "aws-amplify-react";
 import AuthNavbar from "components/Navbars/AuthNavbar";
