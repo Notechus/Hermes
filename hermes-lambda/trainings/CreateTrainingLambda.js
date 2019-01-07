@@ -20,13 +20,13 @@ exports.handler = async (event, context) => {
   const training = {
     TrainingId: trainingId,
     Coach: username,
-    Runner: requestBody.runner,
-    ActivityDate: requestBody.activityDate,
+    Runner: requestBody.Runner,
+    ActivityDate: requestBody.ActivityDate,
     CreationDate: new Date().toISOString(),
-    CoachNotes: requestBody.coachNotes,
-    Activities: requestBody.activities,
-    Importance: requestBody.importance,
-    Intensity: requestBody.intensity,
+    CoachNotes: requestBody.CoachNotes,
+    Activities: requestBody.Activities,
+    Importance: requestBody.Importance,
+    Intensity: requestBody.Intensity,
     Completed: false
   };
 
