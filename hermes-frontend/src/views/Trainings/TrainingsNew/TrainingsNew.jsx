@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { getUser } from "reducers/authorizationDataReducer";
+import { createNewTraining } from "actions/trainingsActions";
 
 import ReactWizard from "react-bootstrap-wizard";
 import { Col } from "reactstrap";
@@ -66,10 +67,27 @@ class TrainingsNew extends React.Component {
 
   createNewTraining = formState => {
     console.log(formState);
-    this.successAlert();
+    // this.successAlert();
 
-    // const { fullName } = formState;
+    const {
+      trainingDate,
+      username,
+      intensity,
+      importance,
+      trainingComment,
+      activities
+    } = formState;
     //dispatch action here
+    this.props
+      .createTraining({
+        Runner: username,
+        ActivityDate: trainingDate,
+        Activities: activities,
+        CoachNotes: trainingComment,
+        Importance: importance,
+        Intensity: intensity
+      })
+      .then(() => this.successAlert());
   };
 
   render() {
@@ -101,7 +119,9 @@ const mapStateToProps = state => ({
   user: getUser(state)
 });
 
-const mapDispatchToProps = dispatch => ({});
+const mapDispatchToProps = dispatch => ({
+  createTraining: training => dispatch(createNewTraining(training))
+});
 
 export default connect(
   mapStateToProps,

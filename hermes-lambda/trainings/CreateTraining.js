@@ -18,16 +18,17 @@ exports.handler = async (event, context) => {
   console.log("Received request body: ", requestBody);
 
   const training = {
-    TrainingId: trainingId,
-    Coach: username,
-    Runner: requestBody.Runner,
-    ActivityDate: requestBody.ActivityDate,
-    CreationDate: new Date().toISOString(),
-    CoachNotes: requestBody.CoachNotes,
-    Activities: requestBody.Activities,
-    Importance: requestBody.Importance,
-    Intensity: requestBody.Intensity,
-    Completed: false
+    trainingId: trainingId,
+    coach: username,
+    description: requestBody.description,
+    runner: requestBody.runner,
+    trainingDate: requestBody.trainingDate,
+    creationDate: new Date().toISOString(),
+    coachNotes: requestBody.coachNotes !== "" ? requestBody.coachNotes : "-",
+    activities: requestBody.activities,
+    importance: requestBody.importance,
+    intensity: requestBody.intensity,
+    completed: false
   };
 
   console.log("Saving training: ", training);

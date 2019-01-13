@@ -5,15 +5,11 @@ import { Label, Input, FormGroup } from "reactstrap";
 const TrainingsTableRowData = ({ row, onChange }) => {
   return (
     <>
-      <td className="text-center">{row.activityDate}</td>
+      <td className="text-center">{row.trainingDate}</td>
       <td className="text-center">
         <FormGroup check>
           <Label check>
-            <Input
-              checked={row.completed}
-              type="checkbox"
-              onChange={onChange}
-            />
+            <Input checked={row.completed} type="checkbox" onChange={onChange} />
             <span className="form-check-sign" />
           </Label>
         </FormGroup>

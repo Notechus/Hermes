@@ -8,10 +8,6 @@ import AdminNavbar from "components/Navbars/AdminNavbar.jsx";
 import Footer from "components/Footer/Footer.jsx";
 import Sidebar from "components/Sidebar/Sidebar.jsx";
 import { fetchAuthorizedUser } from "actions/authorizationActions";
-import {
-  fetchCurrentWeekForUser,
-  fetchPastTrainingsForUser
-} from "actions/trainingsActions";
 
 import routes from "routes.js";
 import { getUser } from "reducers/authorizationDataReducer";
@@ -29,7 +25,6 @@ class Admin extends React.Component {
   }
   componentDidMount() {
     this.props.fetchUser();
-    this.props.fetchCurrentWeekTrainings();
     if (navigator.platform.indexOf("Win") > -1) {
       document.documentElement.className += " perfect-scrollbar-on";
       document.documentElement.classList.remove("perfect-scrollbar-off");
@@ -43,8 +38,8 @@ class Admin extends React.Component {
       document.documentElement.classList.remove("perfect-scrollbar-on");
     }
   }
-  componentDidUpdate(e) {
-    if (e.history.action === "PUSH") {
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevProps.history.action === "PUSH") {
       document.documentElement.scrollTop = 0;
       document.scrollingElement.scrollTop = 0;
       this.refs.mainPanel.scrollTop = 0;
@@ -56,13 +51,7 @@ class Admin extends React.Component {
         return this.getRoutes(prop.views);
       }
       if (prop.layout === "/admin") {
-        return (
-          <Route
-            path={prop.layout + prop.path}
-            component={prop.component}
-            key={key}
-          />
-        );
+        return <Route path={prop.layout + prop.path} component={prop.component} key={key} />;
       } else {
         return null;
       }
@@ -111,8 +100,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchUser: () => dispatch(fetchAuthorizedUser),
-  fetchCurrentWeekTrainings: () => dispatch(fetchCurrentWeekForUser("Notechus"))
+  fetchUser: () => dispatch(fetchAuthorizedUser)
 });
 
 export default connect(

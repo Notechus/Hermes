@@ -2,18 +2,12 @@ import React from "react";
 import { connect } from "react-redux";
 // reactstrap components
 import { Card, CardBody, CardHeader, CardTitle, Col, Row } from "reactstrap";
-import { getUser } from "../../../reducers/authorizationDataReducer";
-import {
-  getCurrentWeekTrainings,
-  getPastTrainings
-} from "../../../reducers/trainingsReducer";
-import {
-  fetchCurrentWeekForUser,
-  fetchPastTrainingsForUser,
-  updateTraining
-} from "../../../actions/trainingsActions";
-import TrainingsTable from "../../../components/TrainingsTable/TrainingsTable";
-import { sorByDateString } from "../../../utils/functions";
+import { getUser } from "reducers/authorizationDataReducer";
+import { getTrainings } from "reducers/trainingsReducer";
+import { fetchTrainingsForUser, updateTraining } from "actions/trainingsActions";
+import TrainingsTable from "components/TrainingsTable/TrainingsTable";
+import moment from "moment";
+import { sortByTrainingDateAsc, sortByTrainingDateDesc, isDateInRange } from "utils/functions";
 
 const trainingsHeader = [
   "Activity Date",
@@ -25,10 +19,16 @@ const trainingsHeader = [
 ];
 
 class TrainingsPage extends React.Component {
-  componentDidMount() {
-    const username = this.props.user ? this.props.user.username : "";
-    this.props.fetchCurrentWeek(username);
-    this.props.fetchPastTrainings(username);
+  componentDidMount() {}
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (
+      this.props.user &&
+      this.props.user.username &&
+      this.props.user.username !== prevProps.user.username
+    ) {
+      this.props.fetchTrainings(this.props.user.username);
+    }
   }
 
   updateTraining = training => {
@@ -36,7 +36,24 @@ class TrainingsPage extends React.Component {
     this.props.updateTraining(training);
   };
 
+  getCurrentWeekTrainings = trainings => {
+    const startWeek = moment().startOf("isoWeek");
+    const endWeek = moment().endOf("isoWeek");
+    return trainings
+      .filter(training => isDateInRange(training.trainingDate, startWeek, endWeek))
+      .sort(sortByTrainingDateDesc);
+  };
+
+  getOtherTrainings = trainings => {
+    const startWeek = moment().startOf("isoWeek");
+    const endWeek = moment().endOf("isoWeek");
+    return trainings
+      .filter(training => !isDateInRange(training.trainingDate, startWeek, endWeek))
+      .sort(sortByTrainingDateAsc);
+  };
+
   render() {
+    const { trainings } = this.props;
     return (
       <>
         <div className="content">
@@ -49,9 +66,7 @@ class TrainingsPage extends React.Component {
                 <CardBody>
                   <TrainingsTable
                     header={trainingsHeader}
-                    data={this.props.currentWeek.sort((a, b) =>
-                      sorByDateString(a.activityDate, b.activityDate)
-                    )}
+                    data={this.getCurrentWeekTrainings(trainings)}
                     onChange={this.updateTraining}
                     onEdit={() => {
                       console.log("edit");
@@ -73,9 +88,7 @@ class TrainingsPage extends React.Component {
                 <CardBody>
                   <TrainingsTable
                     header={trainingsHeader}
-                    data={this.props.pastTrainings.sort((a, b) =>
-                      sorByDateString(a.activityDate, b.activityDate)
-                    )}
+                    data={this.getOtherTrainings(trainings)}
                     onChange={this.updateTraining}
                     onEdit={() => {
                       console.log("edit");
@@ -96,14 +109,11 @@ class TrainingsPage extends React.Component {
 
 const mapStateToProps = state => ({
   user: getUser(state),
-  currentWeek: getCurrentWeekTrainings(state),
-  pastTrainings: getPastTrainings(state)
+  trainings: getTrainings(state)
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchCurrentWeek: username => dispatch(fetchCurrentWeekForUser(username)),
-  fetchPastTrainings: (username, page) =>
-    dispatch(fetchPastTrainingsForUser(username, page)),
+  fetchTrainings: username => dispatch(fetchTrainingsForUser(username)),
   updateTraining: training => dispatch(updateTraining(training))
 });
 

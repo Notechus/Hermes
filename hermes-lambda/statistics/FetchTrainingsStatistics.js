@@ -11,29 +11,28 @@ exports.handler = async (event, context) => {
   if (!requestContext.authorizer) {
     return errorResponse(500, "Authorization not configured", awsRequestId);
   }
-  const username = pathParameters.username;
-  const authUsername = requestContext.authorizer.claims["cognito:username"];
-  if (username !== authUsername) {
-    return errorResponse(
-      403,
-      "You don't have permissions to that resource",
-      awsRequestId
-    );
-  }
+  const username = requestContext.authorizer.claims["cognito:username"];
+  const statisticsName = pathParameters.name;
 
-  console.log(`Fetching ${authUsername} trainings`);
+  console.log(`Fetching ${statisticsName} statistics for ${username}`);
 
-  let trainingsResponse = await fetchTrainings(authUsername, awsRequestId);
+  let trainingsResponse = await fetchNextTraining(username, awsRequestId);
   console.log("trainings records", trainingsResponse);
+
+  let statistics = {
+    title: "",
+    data: {},
+    time: new Date().toISOString()
+  };
 
   return trainingsResponse;
 };
 
-const fetchTrainings = (username, awsRequestId) => {
+const fetchNextTraining = (username, awsRequestId) => {
   return ddb
-    .scan({
+    .query({
       TableName: "Trainings",
-      FilterExpression: "runner = :r",
+      FilterExpression: "Runner = :r",
       ExpressionAttributeValues: { ":r": username }
     })
     .promise()
