@@ -11,6 +11,7 @@ import { sortByTrainingDateAsc, sortByTrainingDateDesc, isDateInRange } from "ut
 
 const trainingsHeader = [
   "Activity Date",
+  "Weekday",
   "Completed",
   "Description",
   "Coach Notes",
@@ -19,7 +20,11 @@ const trainingsHeader = [
 ];
 
 class TrainingsPage extends React.Component {
-  componentDidMount() {}
+  componentDidMount() {
+    if (this.props.user && this.props.user.username) {
+      this.props.fetchTrainings(this.props.user.username);
+    }
+  }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (

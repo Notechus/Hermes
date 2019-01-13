@@ -5,7 +5,7 @@ export const currentWeek = [
     runner: "notechus",
     activityDate: "2018-12-10",
     creationDate: "2018-12-10 01:00:00",
-    description: "Easy run: 35 min @ 7:02-7:32 min/km",
+    trainingDescription: "Easy run: 35 min @ 7:02-7:32 min/km",
     coachNotes:
       "Running is the best method I know for people to learn that they can be so much more than they ever dreamed they could be. ",
     runnerComment: "",
@@ -26,7 +26,7 @@ export const currentWeek = [
     runner: "notechus",
     activityDate: "2018-12-11",
     creationDate: "2018-12-10 01:00:00",
-    description: "Rest day",
+    trainingDescription: "Rest day",
     coachNotes: "",
     runnerComment: "",
     coachComment: "",
@@ -39,7 +39,7 @@ export const currentWeek = [
     runner: "notechus",
     activityDate: "2018-12-12",
     creationDate: "2018-12-10 01:00:00",
-    description: "Easy run: 35 min @ 7:02-7:32 min/km",
+    trainingDescription: "Easy run: 35 min @ 7:02-7:32 min/km",
     coachNotes:
       "Running is the best method I know for people to learn that they can be so much more than they ever dreamed they could be.",
     runnerComment: "",
@@ -53,7 +53,7 @@ export const currentWeek = [
     runner: "notechus",
     activityDate: "2018-12-13",
     creationDate: "2018-12-10 01:00:00",
-    description: "Rest day",
+    trainingDescription: "Rest day",
     coachNotes: "",
     runnerComment: "",
     coachComment: "",
@@ -73,7 +73,7 @@ export const currentWeek = [
     runner: "notechus",
     activityDate: "2018-12-14",
     creationDate: "2018-12-10 01:00:00",
-    description: "Easy run: 35 min @ 7:02-7:32 min/km",
+    trainingDescription: "Easy run: 35 min @ 7:02-7:32 min/km",
     coachNotes:
       "Running is the best method I know for people to learn that they can be so much more than they ever dreamed they could be.",
     runnerComment: "",
@@ -94,7 +94,7 @@ export const currentWeek = [
     runner: "notechus",
     activityDate: "2018-12-15",
     creationDate: "2018-12-10 01:00:00",
-    description: "Long run: 70 min @ 7:06-7:50 min/km",
+    trainingDescription: "Long run: 70 min @ 7:06-7:50 min/km",
     coachNotes:
       "Running is the best method I know for people to learn that they can be so much more than they ever dreamed they could be.",
     runnerComment: "",
@@ -108,7 +108,7 @@ export const currentWeek = [
     runner: "notechus",
     activityDate: "2018-12-16",
     creationDate: "2018-12-10 01:00:00",
-    description: "Rest day",
+    trainingDescription: "Rest day",
     coachNotes: "",
     runnerComment: "",
     coachComment: "",
@@ -124,7 +124,7 @@ export const pastTrainings = [
     runner: "notechus",
     activityDate: "2017-11-14",
     creationDate: "2017-11-14 08:00:00",
-    description: "OWB1: 5km + 20' rozciąganie",
+    trainingDescription: "OWB1: 5km + 20' rozciąganie",
     coachNotes:
       "Na początek zawsze rozgrzewka. PAMIĘTAJ!!! OWB1 to bieg w pierwszym zakresie, czyli taki, w trakcie któego swobodnie możesz powiedzieć całe zdanie, czyli z kimś gadać. Na koniec 20min rozciągania, bo to ważne",
     runnerComment: "",
@@ -144,7 +144,7 @@ export const pastTrainings = [
     runner: "notechus",
     activityDate: "2017-11-16",
     creationDate: "2017-11-14 08:00:00",
-    description: "OWB1: 5km + 20' rozciągania",
+    trainingDescription: "OWB1: 5km + 20' rozciągania",
     coachNotes: "To samo :)",
     runnerComment: "5,48km, 35:43min, 6:31, 171hr",
     coachComment: "",
@@ -163,7 +163,7 @@ export const pastTrainings = [
     runner: "notechus",
     activityDate: "2017-11-18",
     creationDate: "2017-11-14 08:00:00",
-    description: "OWB1: 5km + 4x 100m rytmy + 1km tr",
+    trainingDescription: "OWB1: 5km + 4x 100m rytmy + 1km tr",
     coachNotes:
       "Tym razem znowu 5km OWB1, ale po tym robisz 4 szybkie rytmy, na 70% (skup się na technice, nie szybkości), wracasz marszem i truchtem. Na koniec 1km truchtu na schłodzenie. Pamiętaj na koniec o rozciąganiu. Między OWB1 a rytmami możesz się jeszcze porozciągać z 5min.",
     runnerComment:
@@ -186,7 +186,7 @@ export const pastTrainings = [
     runner: "notechus",
     activityDate: "2017-11-20",
     creationDate: "2017-11-14 08:00:00",
-    description: "OWB: 6km + 4x 100m rytmy + 1km truchtu",
+    trainingDescription: "OWB: 6km + 4x 100m rytmy + 1km truchtu",
     coachNotes:
       "Wydłużamy o 1km. W pracy powiesz jak Ci poszło, i ewentualnie pomyślimy co w tygodniu wrzucić. :)",
     runnerComment:
@@ -209,7 +209,7 @@ export const pastTrainings = [
     runner: "notechus",
     activityDate: "2017-11-22",
     creationDate: "2017-11-14 08:00:00",
-    description: "OWB1 5km + 20' rozciągania",
+    trainingDescription: "OWB1 5km + 20' rozciągania",
     coachNotes: "Na odpoczynek po poniedziałku.",
     runnerComment:
       "Nie zrobione, był hackathon w pracy, siedzieliśmy do późna.",

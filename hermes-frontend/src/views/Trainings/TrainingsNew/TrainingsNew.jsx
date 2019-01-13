@@ -67,7 +67,6 @@ class TrainingsNew extends React.Component {
 
   createNewTraining = formState => {
     console.log(formState);
-    // this.successAlert();
 
     const {
       trainingDate,
@@ -75,17 +74,19 @@ class TrainingsNew extends React.Component {
       intensity,
       importance,
       trainingComment,
-      activities
+      activities,
+      description
     } = formState;
     //dispatch action here
     this.props
       .createTraining({
-        Runner: username,
-        ActivityDate: trainingDate,
-        Activities: activities,
-        CoachNotes: trainingComment,
-        Importance: importance,
-        Intensity: intensity
+        runner: username,
+        trainingDate: trainingDate,
+        trainingDescription: description,
+        activities: activities,
+        coachNotes: trainingComment,
+        importance: importance,
+        intensity: intensity
       })
       .then(() => this.successAlert());
   };

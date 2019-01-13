@@ -42,7 +42,7 @@ class UserProfile extends React.Component {
   };
 
   handleUpdate = () => {
-    const { name, surname, email, gender, about, memo } = this.state;
+    const { name, surname, gender, about, memo } = this.state;
 
     const userToUpdate = {
       name: name,
@@ -113,12 +113,7 @@ class UserProfile extends React.Component {
                       <Col className="pr-1" md="5">
                         <FormGroup>
                           <label>Type</label>
-                          <Input
-                            defaultValue={user.type}
-                            disabled
-                            placeholder="Type"
-                            type="text"
-                          />
+                          <Input defaultValue={user.type} disabled placeholder="Type" type="text" />
                         </FormGroup>
                       </Col>
                       <Col className="px-1" md="3">

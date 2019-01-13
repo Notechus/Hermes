@@ -2,6 +2,7 @@ import moment from "moment";
 
 export const DATE_FORMAT = "YYYY-MM-DD";
 export const DATETIME_FORMAT = DATE_FORMAT + " HH:mm:ss";
+export const DAY_FORMAT = "dddd";
 
 export const formatDate = date => moment(date, DATE_FORMAT);
 

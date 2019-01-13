@@ -13,7 +13,7 @@ import {
 import ReactDatetime from "react-datetime";
 // core components
 import PictureAvatarNoUpload from "components/CustomUpload/PictureAvatarNoUpload.jsx";
-import { verifyFutureDate, verifyLength } from "utils/validation";
+import { verifyFutureDate, verifyLength, verifyRangeInclusive } from "utils/validation";
 
 class AboutTrainingStep extends React.Component {
   constructor(props) {
@@ -21,16 +21,17 @@ class AboutTrainingStep extends React.Component {
     this.state = {
       loaded: false,
       image: "",
-      fullName: "",
-      username: "Notechus",
+      username: "",
+      trainingDescription: "",
       trainingDate: "",
       memberAvatar: "",
-      fullNameState: "",
+      usernameState: "",
+      trainingDescriptionState: "",
       trainingDateState: ""
     };
   }
 
-  change = (event, stateName, type, stateNameEqualTo) => {
+  change = (event, stateName, type, value1, value2) => {
     switch (type) {
       case "date":
         if (verifyFutureDate(event.target.value)) {
@@ -40,7 +41,14 @@ class AboutTrainingStep extends React.Component {
         }
         break;
       case "length":
-        if (verifyLength(event.target.value, stateNameEqualTo)) {
+        if (verifyLength(event.target.value, value1)) {
+          this.setState({ [stateName + "State"]: "has-success" });
+        } else {
+          this.setState({ [stateName + "State"]: "has-danger" });
+        }
+        break;
+      case "range":
+        if (verifyRangeInclusive(event.target.value.length, value1, value2)) {
           this.setState({ [stateName + "State"]: "has-success" });
         } else {
           this.setState({ [stateName + "State"]: "has-danger" });
@@ -53,21 +61,20 @@ class AboutTrainingStep extends React.Component {
   };
 
   isValidated = () => {
-    // if (
-    //   this.state.fullNameState === "has-success" &&
-    //   this.state.trainingDateState === "has-success"
-    // ) {
-    //   return true;
-    // } else {
-    //   if (this.state.fullNameState !== "has-success") {
-    //     this.setState({ fullNameState: "has-danger" });
-    //   }
-    //   if (this.state.trainingDateState !== "has-success") {
-    //     this.setState({ trainingDateState: "has-danger" });
-    //   }
-    //   return false;
-    // }
-    return true;
+    if (
+      this.state.usernameState === "has-success" &&
+      this.state.trainingDateState === "has-success"
+    ) {
+      return true;
+    } else {
+      if (this.state.usernameState !== "has-success") {
+        this.setState({ usernameState: "has-danger" });
+      }
+      if (this.state.trainingDateState !== "has-success") {
+        this.setState({ trainingDateState: "has-danger" });
+      }
+      return false;
+    }
   };
 
   // function that returns true if value is email, false otherwise
@@ -81,8 +88,8 @@ class AboutTrainingStep extends React.Component {
           </Col>
           <Col sm="4" className="mt-1">
             <InputGroup
-              className={classnames(this.state.fullNameState, {
-                "input-group-focus": this.state.fullNameFocus
+              className={classnames(this.state.usernameState, {
+                "input-group-focus": this.state.usernameFocus
               })}
             >
               <InputGroupAddon addonType="prepend">
@@ -91,14 +98,14 @@ class AboutTrainingStep extends React.Component {
                 </InputGroupText>
               </InputGroupAddon>
               <Input
-                name="fullName"
-                placeholder="Full Name (required)"
+                name="username"
+                placeholder="Username (required)"
                 type="text"
-                onChange={e => this.change(e, "fullName", "length", 3)}
-                onFocus={() => this.setState({ fullNameFocus: true })}
-                onBlur={() => this.setState({ fullNameFocus: false })}
+                onChange={e => this.change(e, "username", "length", 3)}
+                onFocus={() => this.setState({ usernameFocus: true })}
+                onBlur={() => this.setState({ usernameFocus: false })}
               />
-              {this.state.fullNameState === "has-danger" && (
+              {this.state.usernameState === "has-danger" && (
                 <label className="error">This field is required.</label>
               )}
             </InputGroup>
@@ -130,6 +137,26 @@ class AboutTrainingStep extends React.Component {
               />
               {this.state.trainingDateState === "has-danger" && (
                 <label className="error">This field is required.</label>
+              )}
+            </FormGroup>
+            <FormGroup
+              className={classnames(this.state.trainingDescriptionState, {
+                "input-group-focus": this.state.trainingDescriptionFocus
+              })}
+            >
+              <Input
+                name="trainingDescription"
+                type="textarea"
+                placeholder="Description"
+                value={this.state.trainingDescription}
+                onChange={e => this.change(e, "trainingDescription", "range", 2, 150)}
+                onFocus={() => this.setState({ trainingDescriptionFocus: true })}
+                onBlur={() => this.setState({ trainingDescriptionFocus: false })}
+              />
+              {this.state.trainingDescriptionState === "has-danger" && (
+                <label className="error">
+                  This field is required and must be between 1 and 150 characters.
+                </label>
               )}
             </FormGroup>
           </Col>

@@ -48,7 +48,7 @@ class TrainingSummaryStep extends React.Component {
                 parent="#summary-accordion"
                 content={
                   <BasicInfoTrainingSummary
-                    fullName={wizardData.fullName}
+                    username={wizardData.username}
                     avatar={wizardData.memberAvatar}
                     loaded={wizardData.loaded}
                     trainingDate={wizardData.trainingDate}
@@ -62,9 +62,7 @@ class TrainingSummaryStep extends React.Component {
                 parent="#summary-accordion"
                 content={
                   <ActivitiesTrainingSummary
-                    activities={
-                      wizardData.activities ? wizardData.activities : []
-                    }
+                    activities={wizardData.activities ? wizardData.activities : []}
                   />
                 }
                 title="Activities Info"

@@ -21,7 +21,7 @@ const ActivitiesTable = ({ data, onEdit, onDelete }) => {
             <tr key={key}>
               <td className="text-right">{activity.order}</td>
               <td className="text-right">{activity.mileage} km</td>
-              <td className="text-right">{activity.description}</td>
+              <td className="text-right">{activity.trainingDescription}</td>
               <td className="text-right">{activity.comment}</td>
               <td className="text-right">
                 <TrainingsTableActionCell

@@ -10,7 +10,7 @@ const ActivitiesTrainingSummary = ({ activities }) => {
           <h6>Activities: {activities.length}</h6>
           {activities.map((prop, key) => (
             <h6 key={key} className="text-muted ml-3">
-              {prop.order}. {prop.mileage} km - {prop.description} (
+              {prop.order}. {prop.mileage} km - {prop.trainingDescription} (
               {prop.comment})
             </h6>
           ))}
