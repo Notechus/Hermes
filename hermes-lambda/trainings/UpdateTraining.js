@@ -1,5 +1,4 @@
 const AWS = require("aws-sdk");
-const uuid = require("uuid");
 const ddb = new AWS.DynamoDB.DocumentClient();
 
 AWS.config.update({ region: "eu-west-1" });
@@ -30,7 +29,7 @@ exports.handler = async (event, context) => {
     },
     UpdateExpression: `set ${firstProperty} = :${firstProperty}`,
     ConditionExpression: "runner = :runner",
-    ExpressionAttributeValues: { ":runner": requestBody.runner },
+    ExpressionAttributeValues: { ":runner": username },
     ReturnValues: "UPDATED_NEW"
   };
   params.ExpressionAttributeValues[`:${firstProperty}`] =
@@ -46,8 +45,7 @@ exports.handler = async (event, context) => {
     let updatedTraining = await updateTraining(params);
     console.log("Successfully updated training", updatedTraining);
     return {
-      statusCode: 200,
-      body: JSON.stringify(updatedTraining),
+      statusCode: 204,
       headers: {
         "Access-Control-Allow-Origin": "*"
       }

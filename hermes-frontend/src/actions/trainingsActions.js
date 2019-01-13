@@ -3,7 +3,6 @@ import {
   UPDATE_TRAINING_SUCCESS,
   CREATE_TRAINING_SUCCESS
 } from "reducers/trainingsReducer";
-import { currentWeek } from "helpers/data/trainings";
 import { API } from "aws-amplify";
 import { getApiToken } from "actions/authorizationActions";
 import { API_NAME, TRAININGS_FOR_USER, TRAININGS_RESOURCE, BASIC_HEADERS } from "utils/variables";
@@ -53,7 +52,16 @@ export const fetchTrainingsForUser = username => async dispatch => {
   }
 };
 
-export const updateTraining = training => dispatch => {
+export const updateTraining = training => async dispatch => {
+  const token = await getApiToken();
+  const init = { headers: BASIC_HEADERS(token), body: training };
+
   console.log(`updating training ${training}`);
-  return dispatch(updateTrainingSuccess(training));
+  try {
+    const response = await API.put(API_NAME, TRAININGS_RESOURCE, init);
+    console.log("got response after update", response);
+    return dispatch(updateTrainingSuccess(training));
+  } catch (err) {
+    console.log("Could not update training", err);
+  }
 };
