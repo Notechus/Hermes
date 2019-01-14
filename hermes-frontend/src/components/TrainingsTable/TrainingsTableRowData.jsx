@@ -17,7 +17,7 @@ const TrainingsTableRowData = ({ row, onChange }) => {
           </Label>
         </FormGroup>
       </td>
-      <td>{row.trainingDescription}</td>
+      <td>{row.description}</td>
       <td>{row.coachNotes}</td>
       <td>{row.coach}</td>
     </>

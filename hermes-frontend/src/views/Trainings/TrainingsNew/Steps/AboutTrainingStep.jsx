@@ -73,11 +73,13 @@ class AboutTrainingStep extends React.Component {
       if (this.state.trainingDateState !== "has-success") {
         this.setState({ trainingDateState: "has-danger" });
       }
+      if (this.state.trainingDescriptionState !== "has-success") {
+        this.setState({ trainingDescriptionState: "has-danger" });
+      }
       return false;
     }
   };
 
-  // function that returns true if value is email, false otherwise
   render() {
     return (
       <>

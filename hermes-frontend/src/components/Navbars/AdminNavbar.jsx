@@ -69,10 +69,7 @@ class AdminNavbar extends React.Component {
   render() {
     return (
       <>
-        <Navbar
-          className={classnames("navbar-absolute fixed-top", this.state.color)}
-          expand="lg"
-        >
+        <Navbar className={classnames("navbar-absolute fixed-top", this.state.color)} expand="lg">
           <Container fluid>
             <div className="navbar-wrapper">
               <div className="navbar-minimize">
@@ -91,11 +88,7 @@ class AdminNavbar extends React.Component {
                   toggled: this.state.sidebarOpen
                 })}
               >
-                <button
-                  className="navbar-toggler"
-                  type="button"
-                  onClick={this.toggleSidebar}
-                >
+                <button className="navbar-toggler" type="button" onClick={this.toggleSidebar}>
                   <span className="navbar-toggler-bar bar1" />
                   <span className="navbar-toggler-bar bar2" />
                   <span className="navbar-toggler-bar bar3" />
@@ -120,18 +113,13 @@ class AdminNavbar extends React.Component {
               <span className="navbar-toggler-bar navbar-kebab" />
               <span className="navbar-toggler-bar navbar-kebab" />
             </button>
-            <Collapse
-              className="justify-content-end"
-              navbar
-              isOpen={this.state.collapseOpen}
-            >
+            <Collapse className="justify-content-end" navbar isOpen={this.state.collapseOpen}>
               <Nav navbar>
                 <NavItem>
                   <NavLink
                     href="#new"
                     onClick={e =>
-                      e.preventDefault() ||
-                      this.props.history.push("/admin/trainings_new")
+                      e.preventDefault() || this.props.history.push("/admin/trainings/new")
                     }
                   >
                     New
@@ -152,22 +140,13 @@ class AdminNavbar extends React.Component {
                     </p>
                   </DropdownToggle>
                   <DropdownMenu aria-labelledby="navbarDropdownMenuLink" right>
-                    <DropdownItem
-                      href="#pablo"
-                      onClick={e => e.preventDefault()}
-                    >
+                    <DropdownItem href="#pablo" onClick={e => e.preventDefault()}>
                       Action
                     </DropdownItem>
-                    <DropdownItem
-                      href="#pablo"
-                      onClick={e => e.preventDefault()}
-                    >
+                    <DropdownItem href="#pablo" onClick={e => e.preventDefault()}>
                       Another action
                     </DropdownItem>
-                    <DropdownItem
-                      href="#pablo"
-                      onClick={e => e.preventDefault()}
-                    >
+                    <DropdownItem href="#pablo" onClick={e => e.preventDefault()}>
                       Something else here
                     </DropdownItem>
                   </DropdownMenu>

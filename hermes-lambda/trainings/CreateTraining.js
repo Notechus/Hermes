@@ -5,22 +5,25 @@ const ddb = new AWS.DynamoDB.DocumentClient();
 AWS.config.update({ region: "eu-west-1" });
 
 exports.handler = async (event, context) => {
-  if (!event.requestContext.authorizer) {
-    return errorResponse("Authorization not configured", context.awsRequestId);
+  const { awsRequestId } = context;
+  const { requestContext, body } = event;
+
+  if (!requestContext.authorizer) {
+    return errorResponse("Authorization not configured", awsRequestId);
   }
 
   const trainingId = uuid.v4();
   console.log(`Received event ("${trainingId}"):`, event);
-  const username = event.requestContext.authorizer.claims["cognito:username"];
+  const username = requestContext.authorizer.claims["cognito:username"];
 
-  const requestBody = JSON.parse(event.body);
+  const requestBody = JSON.parse(body);
 
   console.log("Received request body: ", requestBody);
 
   const training = {
     trainingId: trainingId,
     coach: username,
-    trainingDescription: requestBody.trainingDescription,
+    description: requestBody.trainingDescription,
     runner: requestBody.runner,
     trainingDate: requestBody.trainingDate,
     creationDate: new Date().toISOString(),
@@ -33,30 +36,25 @@ exports.handler = async (event, context) => {
 
   console.log("Saving training: ", training);
 
-  let response = await saveTraining(training, context.awsRequestId);
-  console.log("put record", response);
+  try {
+    let trainingResponse = await saveTraining(training);
+    console.log("Successfully saved training", trainingResponse);
 
-  return response;
+    return {
+      statusCode: 201,
+      body: JSON.stringify(training),
+      headers: {
+        "Access-Control-Allow-Origin": "*"
+      }
+    };
+  } catch (err) {
+    console.error(err);
+    return errorResponse(err.message, awsRequestId);
+  }
 };
 
-const saveTraining = (training, awsRequestId) => {
-  return ddb
-    .put({ TableName: "Trainings", Item: training })
-    .promise()
-    .then(() => {
-      console.log("Successfully saved training");
-      return {
-        statusCode: 201,
-        body: JSON.stringify(training),
-        headers: {
-          "Access-Control-Allow-Origin": "*"
-        }
-      };
-    })
-    .catch(err => {
-      console.error(err);
-      return errorResponse(err.message, awsRequestId);
-    });
+const saveTraining = training => {
+  return ddb.put({ TableName: "Trainings", Item: training }).promise();
 };
 
 const errorResponse = (errorMessage, awsRequestId) => {

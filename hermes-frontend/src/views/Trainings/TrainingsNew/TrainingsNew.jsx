@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { getUser } from "reducers/authorizationDataReducer";
 import { createNewTraining } from "actions/trainingsActions";
+import { formatDateAsString } from "utils/functions";
 
 import ReactWizard from "react-bootstrap-wizard";
 import { Col } from "reactstrap";
@@ -61,6 +62,7 @@ class TrainingsNew extends React.Component {
     this.setState({
       alert: null
     });
+    this.props.history.push("/trainings");
   };
 
   componentDidMount() {}
@@ -75,19 +77,20 @@ class TrainingsNew extends React.Component {
       importance,
       trainingComment,
       activities,
-      description
+      trainingDescription
     } = formState;
-    //dispatch action here
+
     this.props
       .createTraining({
         runner: username,
-        trainingDate: trainingDate,
-        trainingDescription: description,
+        trainingDate: formatDateAsString(trainingDate),
+        trainingDescription: trainingDescription,
         activities: activities,
         coachNotes: trainingComment,
         importance: importance,
         intensity: intensity
       })
+      .then(() => this.resetForm())
       .then(() => this.successAlert());
   };
 

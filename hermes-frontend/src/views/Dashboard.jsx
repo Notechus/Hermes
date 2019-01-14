@@ -15,6 +15,8 @@ import {
   Row
 } from "reactstrap";
 
+import DashboardStatisticsCard from "components/Dashboard/DashboardStatisticsCard";
+
 import {
   chartExample1,
   chartExample2,
@@ -34,14 +36,10 @@ class Dashboard extends React.Component {
         <div className="content">
           <Row>
             <Col md="3">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Next Training</CardTitle>
-                  <p className="card-category">
-                    {moment("2018-12-30").format(DATE_FORMAT)}
-                  </p>
-                </CardHeader>
-                <CardBody>
+              <DashboardStatisticsCard
+                title="Next training"
+                subTitle={moment("2018-12-30").format(DATE_FORMAT)}
+                body={
                   <Doughnut
                     data={chartExample5.data}
                     options={chartExample5.options}
@@ -49,29 +47,21 @@ class Dashboard extends React.Component {
                     height={300}
                     width={456}
                   />
-                </CardBody>
-                <CardFooter>
-                  <div className="legend">
-                    <i className="fa fa-circle text-info" />
-                    Completed
-                  </div>
-                  <hr />
-                  <div className="stats">
+                }
+                footerLegend={"Completed"}
+                footerStats={
+                  <>
                     <i className="fa fa-calendar" />
                     Updated {moment().format(DATETIME_FORMAT)}
-                  </div>
-                </CardFooter>
-              </Card>
+                  </>
+                }
+              />
             </Col>
             <Col md="3">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Last Training</CardTitle>
-                  <p className="card-category">
-                    {moment("2018-12-29").format(DATE_FORMAT)}
-                  </p>
-                </CardHeader>
-                <CardBody>
+              <DashboardStatisticsCard
+                title="Last training"
+                subTitle={moment("2018-12-29").format(DATE_FORMAT)}
+                body={
                   <Doughnut
                     data={chartExample8.data}
                     options={chartExample8.options}
@@ -79,27 +69,25 @@ class Dashboard extends React.Component {
                     height={300}
                     width={456}
                   />
-                </CardBody>
-                <CardFooter>
-                  <div className="legend">
-                    <i className="fa fa-circle text-secondary" />
-                    Ended
-                  </div>
-                  <hr />
-                  <div className="stats">
+                }
+                footerLegend={"Finished"}
+                footerStats={
+                  <>
                     <i className="fa fa-history" />
                     Updated today
-                  </div>
-                </CardFooter>
-              </Card>
+                  </>
+                }
+              />
             </Col>
             <Col md="3">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Mileage done</CardTitle>
-                  <p className="card-category">Out Of Total Number</p>
-                </CardHeader>
-                <CardBody>
+              <DashboardStatisticsCard
+                title="Distance run"
+                subTitle={
+                  <>
+                    Out Of Total <b>4.53 / 12km</b>
+                  </>
+                }
+                body={
                   <Doughnut
                     data={chartExample6.data}
                     options={chartExample6.options}
@@ -107,27 +95,21 @@ class Dashboard extends React.Component {
                     height={300}
                     width={456}
                   />
-                </CardBody>
-                <CardFooter>
-                  <div className="legend">
-                    <i className="fa fa-circle text-warning" />
-                    Visited
-                  </div>
-                  <hr />
-                  <div className="stats">
+                }
+                footerLegend="Completed"
+                footerStats={
+                  <>
                     <i className="fa fa-check" />
-                    Campaign sent 2 days ago
-                  </div>
-                </CardFooter>
-              </Card>
+                    Updated 2 minutes ago
+                  </>
+                }
+              />
             </Col>
             <Col md="3">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Current Goal</CardTitle>
-                  <p className="card-category">Total number</p>
-                </CardHeader>
-                <CardBody>
+              <DashboardStatisticsCard
+                title="Current goal"
+                subTitle="Total progress"
+                body={
                   <Doughnut
                     data={chartExample7.data}
                     options={chartExample7.options}
@@ -135,19 +117,15 @@ class Dashboard extends React.Component {
                     height={300}
                     width={456}
                   />
-                </CardBody>
-                <CardFooter>
-                  <div className="legend">
-                    <i className="fa fa-circle text-danger" />
-                    Completed
-                  </div>
-                  <hr />
-                  <div className="stats">
+                }
+                footerLegend="Completed"
+                footerStats={
+                  <>
                     <i className="fa fa-clock-o" />
                     Updated 3 minutes ago
-                  </div>
-                </CardFooter>
-              </Card>
+                  </>
+                }
+              />
             </Col>
           </Row>
           <Row>
@@ -168,9 +146,7 @@ class Dashboard extends React.Component {
                   </Row>
                 </CardHeader>
                 <CardBody>
-                  <h6 className="big-title">
-                    total earnings in last ten quarters
-                  </h6>
+                  <h6 className="big-title">total earnings in last ten quarters</h6>
                   <Line
                     data={chartExample1.data}
                     options={chartExample1.options}
@@ -186,11 +162,7 @@ class Dashboard extends React.Component {
                     </Col>
                     <Col sm="5">
                       <div className="pull-right">
-                        <Button
-                          className="btn-round btn-icon"
-                          color="success"
-                          size="sm"
-                        >
+                        <Button className="btn-round btn-icon" color="success" size="sm">
                           <i className="nc-icon nc-simple-add" />
                         </Button>
                       </div>
@@ -216,9 +188,7 @@ class Dashboard extends React.Component {
                   </Row>
                 </CardHeader>
                 <CardBody>
-                  <h6 className="big-title">
-                    total subscriptions in last 7 days
-                  </h6>
+                  <h6 className="big-title">total subscriptions in last 7 days</h6>
                   <Line
                     data={chartExample2.data}
                     options={chartExample2.options}
@@ -234,11 +204,7 @@ class Dashboard extends React.Component {
                     </Col>
                     <Col sm="5">
                       <div className="pull-right">
-                        <Button
-                          className="btn-round btn-icon"
-                          color="danger"
-                          size="sm"
-                        >
+                        <Button className="btn-round btn-icon" color="danger" size="sm">
                           <i className="nc-icon nc-button-play" />
                         </Button>
                       </div>
@@ -280,11 +246,7 @@ class Dashboard extends React.Component {
                     </Col>
                     <Col sm="5">
                       <div className="pull-right">
-                        <Button
-                          className="btn-round btn-icon"
-                          color="warning"
-                          size="sm"
-                        >
+                        <Button className="btn-round btn-icon" color="warning" size="sm">
                           <i className="nc-icon nc-alert-circle-i" />
                         </Button>
                       </div>

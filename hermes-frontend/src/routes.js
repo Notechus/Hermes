@@ -29,19 +29,19 @@ const routes = [
     layout: "/admin"
   },
   {
-    path: "/trainings",
-    name: "Trainings",
-    icon: "nc-icon nc-user-run",
-    component: Trainings,
-    layout: "/admin"
-  },
-  {
-    path: "/trainings_new",
+    path: "/trainings/new",
     name: "Trainings",
     icon: "nc-icon nc-layout-11",
     component: TrainingsNew,
     layout: "/admin",
     hidden: true
+  },
+  {
+    path: "/trainings",
+    name: "Trainings",
+    icon: "nc-icon nc-user-run",
+    component: Trainings,
+    layout: "/admin"
   },
   {
     hidden: true,

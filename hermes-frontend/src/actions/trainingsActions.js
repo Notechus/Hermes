@@ -29,13 +29,9 @@ export const createNewTraining = training => async dispatch => {
     body: training
   };
   console.log("creating training", training);
-  try {
-    const result = await API.post(API_NAME, TRAININGS_RESOURCE, init);
-    console.log(result);
-    // dispatch(createTrainingSuccess(result));
-  } catch (err) {
-    console.log(err);
-  }
+  const result = await API.post(API_NAME, TRAININGS_RESOURCE, init);
+  console.log(result);
+  return dispatch(createTrainingSuccess(result));
 };
 
 export const fetchTrainingsForUser = username => async dispatch => {
