@@ -1,36 +1,45 @@
 import React from "react";
 import moment from "moment";
+import { connect } from "react-redux";
 // react plugin used to create charts
 import { Doughnut, Line } from "react-chartjs-2";
 // reactstrap components
-import {
-  Badge,
-  Button,
-  Card,
-  CardBody,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-  Col,
-  Row
-} from "reactstrap";
-
+import { Badge, Button, Card, CardBody, CardFooter, CardHeader, Col, Row } from "reactstrap";
+import { fetchTrainingsForUser } from "actions/trainingsActions";
 import DashboardStatisticsCard from "components/Dashboard/DashboardStatisticsCard";
-
+import TrainingCardBody from "components/Dashboard/TrainingCardBody";
+import { getNextTraining, getPreviousTraining } from "reducers/trainingsReducer";
+import { getUser } from "reducers/authorizationDataReducer";
 import {
   chartExample1,
   chartExample2,
   chartExample3,
-  chartExample5,
   chartExample6,
-  chartExample7,
-  chartExample8
+  chartExample7
 } from "variables/charts.jsx";
 
 import { DATE_FORMAT, DATETIME_FORMAT } from "utils/functions";
 
 class Dashboard extends React.Component {
+  componentDidMount() {
+    if (this.props.user && this.props.user.username) {
+      this.props.fetchTrainings(this.props.user.username);
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (
+      this.props.user &&
+      this.props.user.username &&
+      this.props.user.username !== prevProps.user.username
+    ) {
+      this.props.fetchTrainings(this.props.user.username);
+    }
+  }
+
   render() {
+    const { nextTraining, previousTraining } = this.props;
+    console.log(this.props);
     return (
       <>
         <div className="content">
@@ -38,17 +47,14 @@ class Dashboard extends React.Component {
             <Col md="3">
               <DashboardStatisticsCard
                 title="Next training"
-                subTitle={moment("2018-12-30").format(DATE_FORMAT)}
+                subTitle={nextTraining ? moment(nextTraining.trainingDate).format(DATE_FORMAT) : ""}
                 body={
-                  <Doughnut
-                    data={chartExample5.data}
-                    options={chartExample5.options}
-                    className="ct-chart ct-perfect-fourth"
-                    height={300}
-                    width={456}
+                  <TrainingCardBody
+                    intensity={nextTraining ? nextTraining.intensity : 0}
+                    activities={nextTraining ? nextTraining.activities : []}
+                    description={nextTraining ? nextTraining.description : ""}
                   />
                 }
-                footerLegend={"Completed"}
                 footerStats={
                   <>
                     <i className="fa fa-calendar" />
@@ -62,19 +68,17 @@ class Dashboard extends React.Component {
                 title="Last training"
                 subTitle={moment("2018-12-29").format(DATE_FORMAT)}
                 body={
-                  <Doughnut
-                    data={chartExample8.data}
-                    options={chartExample8.options}
-                    className="ct-chart ct-perfect-fourth"
-                    height={300}
-                    width={456}
+                  <TrainingCardBody
+                    intensity={previousTraining ? previousTraining.intensity : 0}
+                    activities={previousTraining ? previousTraining.activities : []}
+                    description={previousTraining ? previousTraining.description : ""}
+                    completed={previousTraining ? previousTraining.completed : false}
                   />
                 }
-                footerLegend={"Finished"}
                 footerStats={
                   <>
                     <i className="fa fa-history" />
-                    Updated today
+                    Updated {moment().format(DATETIME_FORMAT)}
                   </>
                 }
               />
@@ -262,4 +266,17 @@ class Dashboard extends React.Component {
   }
 }
 
-export default Dashboard;
+export const mapStateToProps = state => ({
+  nextTraining: getNextTraining(state),
+  previousTraining: getPreviousTraining(state),
+  user: getUser(state)
+});
+
+export const mapDispatchToProps = dispatch => ({
+  fetchTrainings: username => dispatch(fetchTrainingsForUser(username))
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Dashboard);
