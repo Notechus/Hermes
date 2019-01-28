@@ -32,3 +32,6 @@ export const isDateInRange = (date, rangeStart, rangeEnd) => {
   const d = moment(date, DATE_FORMAT);
   return d.isSameOrAfter(rangeStart) && d.isSameOrBefore(rangeEnd);
 };
+
+export const normalizeToPercentRange = (value, oldMax, oldMin) =>
+  (100 / (oldMax - oldMin)) * (value - oldMin);

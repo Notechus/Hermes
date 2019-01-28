@@ -1,9 +1,9 @@
 import React from "react";
 import { Badge } from "reactstrap";
 
-const getMileage = activities => {
+const getDistance = activities => {
   return activities
-    ? activities.map(e => (e.mileage ? e.mileage : 0.0)).reduce((a, b) => a + b, 0.0)
+    ? activities.map(e => (e.distance ? e.distance : 0.0)).reduce((a, b) => a + b, 0.0)
     : 0.0;
 };
 
@@ -16,7 +16,7 @@ const TrainingCardBody = ({ intensity, description, activities, completed }) => 
             Intensity: {intensity}
           </Badge>
           <Badge color="success" pill>
-            Distance: {getMileage(activities)} km
+            Distance: {getDistance(activities)} km
           </Badge>
           {completed && <Badge>Completed</Badge>}
         </div>
@@ -28,7 +28,8 @@ const TrainingCardBody = ({ intensity, description, activities, completed }) => 
           {activities &&
             activities.map((prop, key) => (
               <p key={key} className="text-muted ml-3">
-                {prop.order}. {prop.mileage} km - {prop.trainingDescription} ({prop.comment})
+                {prop.order}. {prop.distance} km - {prop.description}{" "}
+                {prop.comment && "(" + prop.comment + ")"}
               </p>
             ))}
         </div>

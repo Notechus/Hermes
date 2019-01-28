@@ -4,7 +4,7 @@ import { Card, CardBody, CardFooter, CardHeader, CardTitle } from "reactstrap";
 const DashboardStatisticsCard = ({ title, subTitle, body, footerLegend, footerStats }) => {
   return (
     <>
-      <Card>
+      <Card style={{ minHeight: "420px" }}>
         <CardHeader>
           <CardTitle>{title}</CardTitle>
           <p className="card-category">{subTitle}</p>

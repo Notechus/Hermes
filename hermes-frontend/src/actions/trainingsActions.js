@@ -6,6 +6,8 @@ import {
 import { API } from "aws-amplify";
 import { getApiToken } from "actions/authorizationActions";
 import { API_NAME, TRAININGS_FOR_USER, TRAININGS_RESOURCE, BASIC_HEADERS } from "utils/variables";
+import { updateStatistics } from "actions/webStatisticsActions";
+import moment from "moment";
 
 const loadTrainingsSuccess = trainings => ({
   type: LOAD_TRAININGS_SUCCESS,
@@ -42,6 +44,7 @@ export const fetchTrainingsForUser = username => async dispatch => {
   try {
     const trainings = await API.get(API_NAME, TRAININGS_FOR_USER(username), init);
     console.log("got trainings", trainings);
+    dispatch(updateStatistics("LOAD_USER_TRAININGS", moment()));
     return dispatch(loadTrainingsSuccess(trainings.Items));
   } catch (err) {
     console.log("Could not fetch trainings", err);

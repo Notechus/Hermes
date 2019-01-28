@@ -10,7 +10,7 @@ const ActivitiesTable = ({ data, onEdit, onDelete }) => {
         <thead>
           <tr>
             <th className="text-right">Order</th>
-            <th className="text-right">Mileage</th>
+            <th className="text-right">Distance</th>
             <th className="text-right">Description</th>
             <th className="text-right">Comment</th>
             <th className="text-right">Actions</th>
@@ -20,7 +20,7 @@ const ActivitiesTable = ({ data, onEdit, onDelete }) => {
           {data.map((activity, key) => (
             <tr key={key}>
               <td className="text-right">{activity.order}</td>
-              <td className="text-right">{activity.mileage} km</td>
+              <td className="text-right">{activity.distance} km</td>
               <td className="text-right">{activity.trainingDescription}</td>
               <td className="text-right">{activity.comment}</td>
               <td className="text-right">

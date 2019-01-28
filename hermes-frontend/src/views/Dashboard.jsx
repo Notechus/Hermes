@@ -7,9 +7,11 @@ import { Doughnut, Line } from "react-chartjs-2";
 import { Badge, Button, Card, CardBody, CardFooter, CardHeader, Col, Row } from "reactstrap";
 import { fetchTrainingsForUser } from "actions/trainingsActions";
 import DashboardStatisticsCard from "components/Dashboard/DashboardStatisticsCard";
+import TotalDistanceStatisticCard from "components/Dashboard/TotalDistanceStatisticCard";
 import TrainingCardBody from "components/Dashboard/TrainingCardBody";
-import { getNextTraining, getPreviousTraining } from "reducers/trainingsReducer";
+import { getNextTraining, getPreviousTraining, getTrainings } from "reducers/trainingsReducer";
 import { getUser } from "reducers/authorizationDataReducer";
+import { getWebStatistic } from "reducers/webStatisticsReducer";
 import {
   chartExample1,
   chartExample2,
@@ -19,6 +21,7 @@ import {
 } from "variables/charts.jsx";
 
 import { DATE_FORMAT, DATETIME_FORMAT } from "utils/functions";
+import DashboardUpdateTimeFooter from "components/Dashboard/DashboardUpdateTimeFooter";
 
 class Dashboard extends React.Component {
   componentDidMount() {
@@ -38,7 +41,7 @@ class Dashboard extends React.Component {
   }
 
   render() {
-    const { nextTraining, previousTraining } = this.props;
+    const { nextTraining, previousTraining, trainingsUpdated, trainings } = this.props;
     console.log(this.props);
     return (
       <>
@@ -55,18 +58,15 @@ class Dashboard extends React.Component {
                     description={nextTraining ? nextTraining.description : ""}
                   />
                 }
-                footerStats={
-                  <>
-                    <i className="fa fa-calendar" />
-                    Updated {moment().format(DATETIME_FORMAT)}
-                  </>
-                }
+                footerStats={<DashboardUpdateTimeFooter time={trainingsUpdated} />}
               />
             </Col>
             <Col md="3">
               <DashboardStatisticsCard
                 title="Last training"
-                subTitle={moment("2018-12-29").format(DATE_FORMAT)}
+                subTitle={
+                  previousTraining ? moment(previousTraining.trainingDate).format(DATE_FORMAT) : ""
+                }
                 body={
                   <TrainingCardBody
                     intensity={previousTraining ? previousTraining.intensity : 0}
@@ -75,39 +75,11 @@ class Dashboard extends React.Component {
                     completed={previousTraining ? previousTraining.completed : false}
                   />
                 }
-                footerStats={
-                  <>
-                    <i className="fa fa-history" />
-                    Updated {moment().format(DATETIME_FORMAT)}
-                  </>
-                }
+                footerStats={<DashboardUpdateTimeFooter time={trainingsUpdated} />}
               />
             </Col>
             <Col md="3">
-              <DashboardStatisticsCard
-                title="Distance run"
-                subTitle={
-                  <>
-                    Out Of Total <b>4.53 / 12km</b>
-                  </>
-                }
-                body={
-                  <Doughnut
-                    data={chartExample6.data}
-                    options={chartExample6.options}
-                    className="ct-chart ct-perfect-fourth"
-                    height={300}
-                    width={456}
-                  />
-                }
-                footerLegend="Completed"
-                footerStats={
-                  <>
-                    <i className="fa fa-check" />
-                    Updated 2 minutes ago
-                  </>
-                }
-              />
+              <TotalDistanceStatisticCard trainings={trainings} updateTime={trainingsUpdated} />
             </Col>
             <Col md="3">
               <DashboardStatisticsCard
@@ -123,12 +95,7 @@ class Dashboard extends React.Component {
                   />
                 }
                 footerLegend="Completed"
-                footerStats={
-                  <>
-                    <i className="fa fa-clock-o" />
-                    Updated 3 minutes ago
-                  </>
-                }
+                footerStats={<DashboardUpdateTimeFooter time={trainingsUpdated} />}
               />
             </Col>
           </Row>
@@ -269,7 +236,9 @@ class Dashboard extends React.Component {
 export const mapStateToProps = state => ({
   nextTraining: getNextTraining(state),
   previousTraining: getPreviousTraining(state),
-  user: getUser(state)
+  trainings: getTrainings(state),
+  user: getUser(state),
+  trainingsUpdated: getWebStatistic(state, "LOAD_USER_TRAININGS")
 });
 
 export const mapDispatchToProps = dispatch => ({
