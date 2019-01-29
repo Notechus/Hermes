@@ -23,7 +23,7 @@ const TrainingsTable = ({ header, data, onChange, onEdit, onDelete }) => {
             <td className="text-right">
               <TrainingsTableActionCell
                 color="success"
-                id={"-edit-" + prop.id}
+                tooltipId={"-edit-" + prop.trainingId}
                 size="sm"
                 tooltip="Edit"
                 icon="fa fa-edit"
@@ -31,7 +31,7 @@ const TrainingsTable = ({ header, data, onChange, onEdit, onDelete }) => {
               />
               <TrainingsTableActionCell
                 color="danger"
-                id={"-delete-" + prop.id}
+                tooltipId={"-delete-" + prop.trainingId}
                 size="sm"
                 tooltip="Delete"
                 icon="fa fa-times"

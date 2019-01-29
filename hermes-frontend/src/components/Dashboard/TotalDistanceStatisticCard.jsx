@@ -24,7 +24,9 @@ const chart = (completed, unfinished) => ({
   options: {
     elements: {
       center: {
-        text: completed ? completed + "%" : "0%",
+        text: completed
+          ? normalizeToPercentRange(completed, completed + unfinished, 0).toFixed(1) + "%"
+          : "0%",
         color: "#66615c", // Default is #000000
         fontStyle: "Arial", // Default is Arial
         sidePadding: 60 // Defualt is 20 (as a percentage)
