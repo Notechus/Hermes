@@ -1,32 +1,26 @@
-import React from "react";
-import moment from "moment";
-import { connect } from "react-redux";
+import React from 'react'
+import moment from 'moment'
+import { connect } from 'react-redux'
 // react plugin used to create charts
-import { Doughnut, Line } from "react-chartjs-2";
+import { Doughnut, Line } from 'react-chartjs-2'
 // reactstrap components
-import { Badge, Button, Card, CardBody, CardFooter, CardHeader, Col, Row } from "reactstrap";
-import { fetchTrainingsForUser } from "actions/trainingsActions";
-import DashboardStatisticsCard from "components/Dashboard/DashboardStatisticsCard";
-import TotalDistanceStatisticCard from "components/Dashboard/TotalDistanceStatisticCard";
-import TrainingCardBody from "components/Dashboard/TrainingCardBody";
-import { getNextTraining, getPreviousTraining, getTrainings } from "reducers/trainingsReducer";
-import { getUser } from "reducers/authorizationDataReducer";
-import { getWebStatistic } from "reducers/webStatisticsReducer";
-import {
-  chartExample1,
-  chartExample2,
-  chartExample3,
-  chartExample6,
-  chartExample7
-} from "variables/charts.jsx";
+import { Badge, Button, Card, CardBody, CardFooter, CardHeader, Col, Row } from 'reactstrap'
+import { fetchTrainingsForUser } from 'actions/trainingsActions'
+import DashboardStatisticsCard from 'components/Dashboard/DashboardStatisticsCard'
+import TotalDistanceStatisticCard from 'components/Dashboard/TotalDistanceStatisticCard'
+import TrainingCardBody from 'components/Dashboard/TrainingCardBody'
+import { getNextTraining, getPreviousTraining, getTrainings } from 'reducers/trainingsReducer'
+import { getUser } from 'reducers/authorizationDataReducer'
+import { getWebStatistic } from 'reducers/webStatisticsReducer'
+import { chartExample1, chartExample2, chartExample3, chartExample7 } from 'variables/charts.jsx'
 
-import { DATE_FORMAT, DATETIME_FORMAT } from "utils/functions";
-import DashboardUpdateTimeFooter from "components/Dashboard/DashboardUpdateTimeFooter";
+import { DATE_FORMAT, sortByActivityOrderAsc } from 'utils/functions'
+import DashboardUpdateTimeFooter from 'components/Dashboard/DashboardUpdateTimeFooter'
 
 class Dashboard extends React.Component {
   componentDidMount() {
     if (this.props.user && this.props.user.username) {
-      this.props.fetchTrainings(this.props.user.username);
+      this.props.fetchTrainings(this.props.user.username)
     }
   }
 
@@ -36,13 +30,13 @@ class Dashboard extends React.Component {
       this.props.user.username &&
       this.props.user.username !== prevProps.user.username
     ) {
-      this.props.fetchTrainings(this.props.user.username);
+      this.props.fetchTrainings(this.props.user.username)
     }
   }
 
   render() {
-    const { nextTraining, previousTraining, trainingsUpdated, trainings } = this.props;
-    console.log(this.props);
+    const { nextTraining, previousTraining, trainingsUpdated, trainings } = this.props
+    console.log(this.props)
     return (
       <>
         <div className="content">
@@ -50,12 +44,14 @@ class Dashboard extends React.Component {
             <Col md="3">
               <DashboardStatisticsCard
                 title="Next training"
-                subTitle={nextTraining ? moment(nextTraining.trainingDate).format(DATE_FORMAT) : ""}
+                subTitle={nextTraining ? moment(nextTraining.trainingDate).format(DATE_FORMAT) : ''}
                 body={
                   <TrainingCardBody
                     intensity={nextTraining ? nextTraining.intensity : 0}
-                    activities={nextTraining ? nextTraining.activities : []}
-                    description={nextTraining ? nextTraining.description : ""}
+                    activities={
+                      nextTraining ? nextTraining.activities.sort(sortByActivityOrderAsc) : []
+                    }
+                    description={nextTraining ? nextTraining.description : ''}
                   />
                 }
                 footerStats={<DashboardUpdateTimeFooter time={trainingsUpdated} />}
@@ -65,13 +61,17 @@ class Dashboard extends React.Component {
               <DashboardStatisticsCard
                 title="Last training"
                 subTitle={
-                  previousTraining ? moment(previousTraining.trainingDate).format(DATE_FORMAT) : ""
+                  previousTraining ? moment(previousTraining.trainingDate).format(DATE_FORMAT) : ''
                 }
                 body={
                   <TrainingCardBody
                     intensity={previousTraining ? previousTraining.intensity : 0}
-                    activities={previousTraining ? previousTraining.activities : []}
-                    description={previousTraining ? previousTraining.description : ""}
+                    activities={
+                      previousTraining
+                        ? previousTraining.activities.sort(sortByActivityOrderAsc)
+                        : []
+                    }
+                    description={previousTraining ? previousTraining.description : ''}
                     completed={previousTraining ? previousTraining.completed : false}
                   />
                 }
@@ -229,7 +229,7 @@ class Dashboard extends React.Component {
           </Row>
         </div>
       </>
-    );
+    )
   }
 }
 
@@ -238,14 +238,14 @@ export const mapStateToProps = state => ({
   previousTraining: getPreviousTraining(state),
   trainings: getTrainings(state),
   user: getUser(state),
-  trainingsUpdated: getWebStatistic(state, "LOAD_USER_TRAININGS")
-});
+  trainingsUpdated: getWebStatistic(state, 'LOAD_USER_TRAININGS'),
+})
 
 export const mapDispatchToProps = dispatch => ({
-  fetchTrainings: username => dispatch(fetchTrainingsForUser(username))
-});
+  fetchTrainings: username => dispatch(fetchTrainingsForUser(username)),
+})
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Dashboard);
+)(Dashboard)
