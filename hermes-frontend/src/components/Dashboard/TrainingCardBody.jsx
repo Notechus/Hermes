@@ -1,10 +1,12 @@
 import React from 'react'
 import { Badge } from 'reactstrap'
+import { round } from 'utils/functions'
 
 const getDistance = activities => {
-  return activities
+  const distance = activities
     ? activities.map(e => (e.distance ? e.distance : 0.0)).reduce((a, b) => a + b, 0.0)
     : 0.0
+  return round(distance)
 }
 
 const TrainingCardBody = ({ intensity, description, activities, completed }) => {

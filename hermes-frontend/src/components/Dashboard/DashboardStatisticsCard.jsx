@@ -1,10 +1,17 @@
-import React from "react";
-import { Card, CardBody, CardFooter, CardHeader, CardTitle } from "reactstrap";
+import React from 'react'
+import { Card, CardBody, CardFooter, CardHeader, CardTitle } from 'reactstrap'
 
-const DashboardStatisticsCard = ({ title, subTitle, body, footerLegend, footerStats }) => {
+const DashboardStatisticsCard = ({
+  title,
+  subTitle,
+  body,
+  footerLegend,
+  footerClass,
+  footerStats,
+}) => {
   return (
     <>
-      <Card style={{ minHeight: "420px" }}>
+      <Card style={{ minHeight: '420px' }}>
         <CardHeader>
           <CardTitle>{title}</CardTitle>
           <p className="card-category">{subTitle}</p>
@@ -13,7 +20,7 @@ const DashboardStatisticsCard = ({ title, subTitle, body, footerLegend, footerSt
         <CardFooter>
           {footerLegend && (
             <div className="legend">
-              <i className="fa fa-circle text-info" />
+              <i className={'fa fa-circle ' + footerClass} />
               {footerLegend}
             </div>
           )}
@@ -22,7 +29,7 @@ const DashboardStatisticsCard = ({ title, subTitle, body, footerLegend, footerSt
         </CardFooter>
       </Card>
     </>
-  );
-};
+  )
+}
 
-export default DashboardStatisticsCard;
+export default DashboardStatisticsCard

@@ -2,7 +2,7 @@ import React from 'react'
 import DashboardStatisticsCard from 'components/Dashboard/DashboardStatisticsCard'
 import DashboardUpdateTimeFooter from 'components/Dashboard/DashboardUpdateTimeFooter'
 import { Doughnut } from 'react-chartjs-2'
-import { normalizeToPercentRange } from 'utils/functions'
+import { normalizeToPercentRange, round } from 'utils/functions'
 
 const chart = (completed, unfinished) => ({
   data: {
@@ -12,7 +12,7 @@ const chart = (completed, unfinished) => ({
         label: 'Trainings',
         pointRadius: 0,
         pointHoverRadius: 0,
-        backgroundColor: ['#fcc468', '#f4f3ef'],
+        backgroundColor: ['#4acccd', '#f4f3ef'],
         borderWidth: 0,
         data: [
           completed ? normalizeToPercentRange(completed, completed + unfinished, 0) / 100.0 : 0,
@@ -93,9 +93,10 @@ const TotalDistanceStatisticCard = ({ trainings, updateTime }) => {
         title="Distance run"
         subTitle={
           <>
-            Out Of Total{' '}
+            This month{' '}
             <b>
-              {totalCompletedDistance}/ {totalCompletedDistance + totalUnfinishedDistance} km
+              {round(totalCompletedDistance)} /{' '}
+              {round(totalCompletedDistance + totalUnfinishedDistance)} km
             </b>
           </>
         }
@@ -109,6 +110,7 @@ const TotalDistanceStatisticCard = ({ trainings, updateTime }) => {
           />
         }
         footerLegend="Completed"
+        footerClass="text-info"
         footerStats={<DashboardUpdateTimeFooter time={updateTime} />}
       />
     </>

@@ -32,8 +32,6 @@ export const fetchAuthorizedUser = dispatch => {
       about: authUser.attributes["custom:about"] || "",
       memo: authUser.attributes["custom:memo"] || ""
     };
-    console.log("user is", authUser);
-    console.log("my user is", user);
 
     return dispatch(loadAuthorizationSuccess(user));
   });

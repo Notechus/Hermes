@@ -9,7 +9,11 @@ import { fetchTrainingsForUser } from 'actions/trainingsActions'
 import DashboardStatisticsCard from 'components/Dashboard/DashboardStatisticsCard'
 import TotalDistanceStatisticCard from 'components/Dashboard/TotalDistanceStatisticCard'
 import TrainingCardBody from 'components/Dashboard/TrainingCardBody'
-import { getNextTraining, getPreviousTraining, getTrainings } from 'reducers/trainingsReducer'
+import {
+  getNextTraining,
+  getPreviousTraining,
+  getCurrentMonthTrainings,
+} from 'reducers/trainingsReducer'
 import { getUser } from 'reducers/authorizationDataReducer'
 import { getWebStatistic } from 'reducers/webStatisticsReducer'
 import { chartExample1, chartExample2, chartExample3, chartExample7 } from 'variables/charts.jsx'
@@ -83,7 +87,7 @@ class Dashboard extends React.Component {
             </Col>
             <Col md="3">
               <DashboardStatisticsCard
-                title="Current goal"
+                title="This month"
                 subTitle="Total progress"
                 body={
                   <Doughnut
@@ -95,6 +99,7 @@ class Dashboard extends React.Component {
                   />
                 }
                 footerLegend="Completed"
+                footerClass="text-danger"
                 footerStats={<DashboardUpdateTimeFooter time={trainingsUpdated} />}
               />
             </Col>
@@ -236,7 +241,7 @@ class Dashboard extends React.Component {
 export const mapStateToProps = state => ({
   nextTraining: getNextTraining(state),
   previousTraining: getPreviousTraining(state),
-  trainings: getTrainings(state),
+  trainings: getCurrentMonthTrainings(state),
   user: getUser(state),
   trainingsUpdated: getWebStatistic(state, 'LOAD_USER_TRAININGS'),
 })

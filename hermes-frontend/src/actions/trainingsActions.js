@@ -2,6 +2,7 @@ import {
   LOAD_TRAININGS_SUCCESS,
   UPDATE_TRAINING_SUCCESS,
   CREATE_TRAINING_SUCCESS,
+  REMOVE_TRAINING_SUCCESS,
 } from 'reducers/trainingsReducer'
 import { API } from 'aws-amplify'
 import { getApiToken } from 'actions/authorizationActions'
@@ -24,6 +25,11 @@ const createTrainingSuccess = training => ({
   training,
 })
 
+const removeTrainingSuccess = trainingId => ({
+  type: REMOVE_TRAINING_SUCCESS,
+  trainingId,
+})
+
 export const createNewTraining = training => async dispatch => {
   const token = await getApiToken()
   const init = {
@@ -40,10 +46,8 @@ export const fetchTrainingsForUser = username => async dispatch => {
   const token = await getApiToken()
   const init = { headers: BASIC_HEADERS(token) }
 
-  console.log(`fetching tasks for user ${username}`)
   try {
     const trainings = await API.get(API_NAME, TRAININGS_FOR_USER(username), init)
-    console.log('got trainings', trainings)
     dispatch(updateStatistics('LOAD_USER_TRAININGS', moment()))
     return dispatch(loadTrainingsSuccess(trainings.Items))
   } catch (err) {
@@ -62,5 +66,19 @@ export const updateTraining = training => async dispatch => {
     return dispatch(updateTrainingSuccess(training))
   } catch (err) {
     console.log('Could not update training', err)
+  }
+}
+
+export const removeTraining = training => async dispatch => {
+  const token = await getApiToken()
+  const init = { headers: BASIC_HEADERS(token), body: {} }
+
+  console.log(`removing training ${training}`)
+  try {
+    const response = await API.del(API_NAME, TRAININGS_RESOURCE, init)
+    console.log('got response after removal', response)
+    return dispatch(removeTrainingSuccess(training.trainingId))
+  } catch (err) {
+    console.log('Could not remove training', err)
   }
 }

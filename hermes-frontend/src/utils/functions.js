@@ -12,17 +12,23 @@ export const formatDateTime = date => moment(date, DATETIME_FORMAT)
 
 export const compareOrders = (order1, order2) => order1 - order2
 
+export const round = number => Number(Math.round(number + 'e2') + 'e-2')
+
+export const getCurrentMonthBoundaries = () => {
+  const startOfMonth = moment()
+    .startOf('month')
+    .format(DATE_FORMAT)
+  const endOfMonth = moment()
+    .endOf('month')
+    .format(DATE_FORMAT)
+  return [startOfMonth, endOfMonth]
+}
+
 export const sortByActivityOrderAsc = (activity1, activity2) =>
   compareOrders(activity1.order, activity2.order)
 
 export const sortByActivityOrderDesc = (activity1, activity2) =>
   compareOrders(activity2.order, activity1.order)
-
-export const getStartOfDayMoment = () =>
-  moment()
-    .set('hour', 0)
-    .set('minute', 0)
-    .set('second', 0)
 
 export const sortByTrainingDateDesc = (a, b) => sortByDateString(a.trainingDate, b.trainingDate)
 export const sortByTrainingDateAsc = (a, b) => sortByDateString(b.trainingDate, a.trainingDate)

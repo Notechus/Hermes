@@ -1,5 +1,9 @@
 import { createActionNamespace } from 'utils/actions'
-import { sortByTrainingDateAsc, sortByTrainingDateDesc } from 'utils/functions'
+import {
+  sortByTrainingDateAsc,
+  sortByTrainingDateDesc,
+  getCurrentMonthBoundaries,
+} from 'utils/functions'
 import moment from 'moment'
 
 const trainingsAction = createActionNamespace('trainingsAction')
@@ -10,9 +14,15 @@ export const UPDATE_TRAINING_SUCCESS = trainingsAction('UPDATE_TRAINING_SUCCESS'
 
 export const REMOVE_TRAININGS_SUCCESS = trainingsAction('REMOVE_TRAININGS_SUCCESS')
 
+export const REMOVE_TRAINING_SUCCESS = trainingsAction('REMOVE_TRAINING_SUCCESS')
+
 export const CREATE_TRAINING_SUCCESS = trainingsAction('CREATE_TRAINING_SUCCESS')
 
 export const getTrainings = state => state.trainings.trainings
+export const getCurrentMonthTrainings = state => {
+  const [start, end] = getCurrentMonthBoundaries()
+  return state.trainings.trainings.filter(e => moment(e.trainingDate).isBetween(start, end))
+}
 export const getNextTraining = state => {
   const now = moment()
   return state.trainings.trainings
@@ -48,6 +58,9 @@ const trainingsReducer = (state = initialState, action) => {
         ...state,
         trainings: [...previous, action.training].sort(sortByTrainingDateDesc),
       }
+    case REMOVE_TRAINING_SUCCESS:
+      const trainings = state.trainings.filter(e => e.trainingId !== action.trainingId)
+      return { ...state, trainings: trainings }
     case REMOVE_TRAININGS_SUCCESS:
       return { ...state, trainings: [] }
     default:

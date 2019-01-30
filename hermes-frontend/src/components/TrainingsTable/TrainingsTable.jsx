@@ -1,10 +1,10 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { Table } from "reactstrap";
-import TrainingsTableActionCell from "components/TrainingsTable/TrainingTableActionCell";
-import TrainingsTableRowData from "components/TrainingsTable/TrainingsTableRowData";
+import React from 'react'
+import PropTypes from 'prop-types'
+import { Table } from 'reactstrap'
+import TrainingsTableActionCell from 'components/TrainingsTable/TrainingTableActionCell'
+import TrainingsTableRowData from 'components/TrainingsTable/TrainingsTableRowData'
 
-const TrainingsTable = ({ header, data, onChange, onEdit, onDelete }) => {
+const TrainingsTable = ({ header, data, onChange, onDelete }) => {
   return (
     <Table responsive>
       <thead className="text-primary">
@@ -22,35 +22,27 @@ const TrainingsTable = ({ header, data, onChange, onEdit, onDelete }) => {
             <TrainingsTableRowData row={prop} onChange={() => onChange(prop)} />
             <td className="text-right">
               <TrainingsTableActionCell
-                color="success"
-                tooltipId={"-edit-" + prop.trainingId}
-                size="sm"
-                tooltip="Edit"
-                icon="fa fa-edit"
-                click={onEdit}
-              />
-              <TrainingsTableActionCell
                 color="danger"
-                tooltipId={"-delete-" + prop.trainingId}
+                tooltipId={'-delete-' + prop.trainingId}
                 size="sm"
                 tooltip="Delete"
                 icon="fa fa-times"
-                click={onDelete}
+                click={() => onDelete(prop)}
               />
             </td>
           </tr>
         ))}
       </tbody>
     </Table>
-  );
-};
+  )
+}
 
 TrainingsTable.propTypes = {
   header: PropTypes.array.isRequired,
   data: PropTypes.array.isRequired,
   onChange: PropTypes.func,
   onEdit: PropTypes.func,
-  onDelete: PropTypes.func
-};
+  onDelete: PropTypes.func,
+}
 
-export default TrainingsTable;
+export default TrainingsTable
