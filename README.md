@@ -9,6 +9,7 @@ Using **Hermes** you are able to:
  - Create multi member teams and share your way of running with them
  - Add new training to designated members
  - Set up goals and keep track of them
+ - Keep track of important statistics
 
 ## Technology
 
