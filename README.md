@@ -2,7 +2,7 @@
 
 **Hermes** is an application which allows teams of running coaches and their trainees to collaborate in easy way. Spread the joy of running with other people!
 
-## Functionalities
+## Functionality
 
 Using **Hermes** you are able to:
 
