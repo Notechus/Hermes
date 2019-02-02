@@ -23,7 +23,7 @@ exports.handler = async (event, context) => {
 
   const team = {
     teamId: teamId,
-    owner: username,
+    teamOwner: username,
     name: requestBody.teamName,
     description: requestBody.teamDescription,
     joinCode: joinCode,
