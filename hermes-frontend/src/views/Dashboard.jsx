@@ -40,7 +40,6 @@ class Dashboard extends React.Component {
 
   render() {
     const { nextTraining, previousTraining, trainingsUpdated, trainings } = this.props
-    console.log(this.props)
     return (
       <>
         <div className="content">

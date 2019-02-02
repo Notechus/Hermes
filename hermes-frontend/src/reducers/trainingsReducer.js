@@ -21,7 +21,9 @@ export const CREATE_TRAINING_SUCCESS = trainingsAction('CREATE_TRAINING_SUCCESS'
 export const getTrainings = state => state.trainings.trainings
 export const getCurrentMonthTrainings = state => {
   const [start, end] = getCurrentMonthBoundaries()
-  return state.trainings.trainings.filter(e => moment(e.trainingDate).isBetween(start, end))
+  return state.trainings.trainings.filter(e =>
+    moment(e.trainingDate).isBetween(start, end, null, '[]')
+  )
 }
 export const getNextTraining = state => {
   const now = moment()
