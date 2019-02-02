@@ -15,7 +15,7 @@ const ImageAvatarUpload = ({ loaded, image, onChange }) => {
       </div>
       <h6 className="description">Choose Picture</h6>
     </div>
-  );
-};
+  )
+}
 
-export default ImageAvatarUpload;
+export default ImageAvatarUpload

@@ -12,6 +12,16 @@ export const formatDateTime = date => moment(date, DATETIME_FORMAT)
 
 export const compareOrders = (order1, order2) => order1 - order2
 
+export const compareStrings = (string1, string2) => {
+  if (string1 > string2) {
+    return 1
+  }
+  if (string1 < string2) {
+    return -1
+  }
+  return 0
+}
+
 export const round = number => Number(Math.round(number + 'e2') + 'e-2')
 
 export const getCurrentMonthBoundaries = () => {
@@ -29,6 +39,10 @@ export const sortByActivityOrderAsc = (activity1, activity2) =>
 
 export const sortByActivityOrderDesc = (activity1, activity2) =>
   compareOrders(activity2.order, activity1.order)
+
+export const sortByNameAsc = (team1, team2) => compareOrders(team1.name, team2.name)
+
+export const sortByNameDesc = (team1, team2) => compareOrders(team2.name, team1.name)
 
 export const sortByTrainingDateDesc = (a, b) => sortByDateString(a.trainingDate, b.trainingDate)
 export const sortByTrainingDateAsc = (a, b) => sortByDateString(b.trainingDate, a.trainingDate)

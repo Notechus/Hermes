@@ -1,198 +1,206 @@
-import Buttons from "views/components/Buttons.jsx";
-import Calendar from "views/Calendar.jsx";
-import Charts from "views/Charts.jsx";
-import Dashboard from "views/Dashboard.jsx";
-import ExtendedForms from "views/forms/ExtendedForms.jsx";
-import ExtendedTables from "views/tables/ExtendedTables.jsx";
-import GridSystem from "views/components/GridSystem.jsx";
-import Icons from "views/components/Icons.jsx";
-import Notifications from "views/components/Notifications.jsx";
-import Panels from "views/components/Panels.jsx";
-import ReactTables from "views/tables/ReactTables.jsx";
-import RegularForms from "views/forms/RegularForms.jsx";
-import RegularTables from "views/tables/RegularTables.jsx";
-import SweetAlert from "views/components/SweetAlert.jsx";
-import Timeline from "views/pages/Timeline.jsx";
-import Typography from "views/components/Typography.jsx";
-import UserProfile from "views/pages/UserProfile.jsx";
-import ValidationForms from "views/forms/ValidationForms.jsx";
-import Wizard from "views/forms/Wizard.jsx";
-import Trainings from "views/Trainings/TrainingsPage/TrainingsPage";
-import TrainingsNew from "views/Trainings/TrainingsNew/TrainingsNew";
+import Buttons from 'views/components/Buttons.jsx'
+import Calendar from 'views/Calendar.jsx'
+import Charts from 'views/Charts.jsx'
+import Dashboard from 'views/Dashboard.jsx'
+import ExtendedForms from 'views/forms/ExtendedForms.jsx'
+import ExtendedTables from 'views/tables/ExtendedTables.jsx'
+import GridSystem from 'views/components/GridSystem.jsx'
+import Icons from 'views/components/Icons.jsx'
+import Notifications from 'views/components/Notifications.jsx'
+import Panels from 'views/components/Panels.jsx'
+import ReactTables from 'views/tables/ReactTables.jsx'
+import RegularForms from 'views/forms/RegularForms.jsx'
+import RegularTables from 'views/tables/RegularTables.jsx'
+import SweetAlert from 'views/components/SweetAlert.jsx'
+import Timeline from 'views/pages/Timeline.jsx'
+import Typography from 'views/components/Typography.jsx'
+import UserProfile from 'views/pages/UserProfile.jsx'
+import ValidationForms from 'views/forms/ValidationForms.jsx'
+import Wizard from 'views/forms/Wizard.jsx'
+import Trainings from 'views/Trainings/TrainingsPage/TrainingsPage.jsx'
+import TrainingsNew from 'views/Trainings/TrainingsNew/TrainingsNew.jsx'
+import TeamsPage from 'views/Teams/TeamsPage.jsx'
 
 const routes = [
   {
-    path: "/dashboard",
-    name: "Dashboard",
-    icon: "nc-icon nc-bank",
+    path: '/dashboard',
+    name: 'Dashboard',
+    icon: 'nc-icon nc-bank',
     component: Dashboard,
-    layout: "/admin"
+    layout: '/admin',
   },
   {
-    path: "/trainings/new",
-    name: "Trainings",
-    icon: "nc-icon nc-layout-11",
+    path: '/trainings/new',
+    name: 'Trainings',
+    icon: 'nc-icon nc-layout-11',
     component: TrainingsNew,
-    layout: "/admin",
-    hidden: true
+    layout: '/admin',
+    hidden: true,
   },
   {
-    path: "/trainings",
-    name: "Trainings",
-    icon: "nc-icon nc-user-run",
+    path: '/trainings',
+    name: 'Trainings',
+    icon: 'nc-icon nc-user-run',
     component: Trainings,
-    layout: "/admin"
+    layout: '/admin',
+  },
+  {
+    path: '/teams',
+    name: 'Teams',
+    icon: 'nc-icon nc-tile-56',
+    component: TeamsPage,
+    layout: '/admin',
   },
   {
     hidden: true,
-    path: "/user-profile",
-    name: "UserProfile",
+    path: '/user-profile',
+    name: 'UserProfile',
     component: UserProfile,
-    layout: "/admin"
+    layout: '/admin',
   },
   {
-    path: "/timeline",
-    name: "Timeline",
-    icon: "nc-icon nc-book-bookmark",
+    path: '/timeline',
+    name: 'Timeline',
+    icon: 'nc-icon nc-book-bookmark',
     component: Timeline,
-    layout: "/admin"
+    layout: '/admin',
   },
   {
     collapse: true,
-    name: "Components",
-    icon: "nc-icon nc-layout-11",
-    state: "componentsCollapse",
+    name: 'Components',
+    icon: 'nc-icon nc-layout-11',
+    state: 'componentsCollapse',
     views: [
       {
-        path: "/buttons",
-        name: "Buttons",
-        mini: "B",
+        path: '/buttons',
+        name: 'Buttons',
+        mini: 'B',
         component: Buttons,
-        layout: "/admin"
+        layout: '/admin',
       },
       {
-        path: "/grid-system",
-        name: "Grid System",
-        mini: "GS",
+        path: '/grid-system',
+        name: 'Grid System',
+        mini: 'GS',
         component: GridSystem,
-        layout: "/admin"
+        layout: '/admin',
       },
       {
-        path: "/panels",
-        name: "Panels",
-        mini: "P",
+        path: '/panels',
+        name: 'Panels',
+        mini: 'P',
         component: Panels,
-        layout: "/admin"
+        layout: '/admin',
       },
       {
-        path: "/sweet-alert",
-        name: "Sweet Alert",
-        mini: "SA",
+        path: '/sweet-alert',
+        name: 'Sweet Alert',
+        mini: 'SA',
         component: SweetAlert,
-        layout: "/admin"
+        layout: '/admin',
       },
       {
-        path: "/notifications",
-        name: "Notifications",
-        mini: "N",
+        path: '/notifications',
+        name: 'Notifications',
+        mini: 'N',
         component: Notifications,
-        layout: "/admin"
+        layout: '/admin',
       },
       {
-        path: "/icons",
-        name: "Icons",
-        mini: "I",
+        path: '/icons',
+        name: 'Icons',
+        mini: 'I',
         component: Icons,
-        layout: "/admin"
+        layout: '/admin',
       },
       {
-        path: "/typography",
-        name: "Typography",
-        mini: "T",
+        path: '/typography',
+        name: 'Typography',
+        mini: 'T',
         component: Typography,
-        layout: "/admin"
-      }
-    ]
+        layout: '/admin',
+      },
+    ],
   },
   {
     collapse: true,
-    name: "Forms",
-    icon: "nc-icon nc-ruler-pencil",
-    state: "formsCollapse",
+    name: 'Forms',
+    icon: 'nc-icon nc-ruler-pencil',
+    state: 'formsCollapse',
     views: [
       {
-        path: "/regular-forms",
-        name: "Regular Forms",
-        mini: "RF",
+        path: '/regular-forms',
+        name: 'Regular Forms',
+        mini: 'RF',
         component: RegularForms,
-        layout: "/admin"
+        layout: '/admin',
       },
       {
-        path: "/extended-forms",
-        name: "Extended Forms",
-        mini: "EF",
+        path: '/extended-forms',
+        name: 'Extended Forms',
+        mini: 'EF',
         component: ExtendedForms,
-        layout: "/admin"
+        layout: '/admin',
       },
       {
-        path: "/validation-forms",
-        name: "Validation Forms",
-        mini: "VF",
+        path: '/validation-forms',
+        name: 'Validation Forms',
+        mini: 'VF',
         component: ValidationForms,
-        layout: "/admin"
+        layout: '/admin',
       },
       {
-        path: "/wizard",
-        name: "Wizard",
-        mini: "W",
+        path: '/wizard',
+        name: 'Wizard',
+        mini: 'W',
         component: Wizard,
-        layout: "/admin"
-      }
-    ]
+        layout: '/admin',
+      },
+    ],
   },
   {
     collapse: true,
-    name: "Tables",
-    icon: "nc-icon nc-single-copy-04",
-    state: "tablesCollapse",
+    name: 'Tables',
+    icon: 'nc-icon nc-single-copy-04',
+    state: 'tablesCollapse',
     views: [
       {
-        path: "/regular-tables",
-        name: "Regular Tables",
-        mini: "RT",
+        path: '/regular-tables',
+        name: 'Regular Tables',
+        mini: 'RT',
         component: RegularTables,
-        layout: "/admin"
+        layout: '/admin',
       },
       {
-        path: "/extended-tables",
-        name: "Extended Tables",
-        mini: "ET",
+        path: '/extended-tables',
+        name: 'Extended Tables',
+        mini: 'ET',
         component: ExtendedTables,
-        layout: "/admin"
+        layout: '/admin',
       },
       {
-        path: "/react-tables",
-        name: "React Tables",
-        mini: "RT",
+        path: '/react-tables',
+        name: 'React Tables',
+        mini: 'RT',
         component: ReactTables,
-        layout: "/admin"
-      }
-    ]
+        layout: '/admin',
+      },
+    ],
   },
   {
-    path: "/charts",
-    name: "Charts",
-    icon: "nc-icon nc-chart-bar-32",
+    path: '/charts',
+    name: 'Charts',
+    icon: 'nc-icon nc-chart-bar-32',
     component: Charts,
-    layout: "/admin"
+    layout: '/admin',
   },
   {
-    path: "/calendar",
-    name: "Calendar",
-    icon: "nc-icon nc-calendar-60",
+    path: '/calendar',
+    name: 'Calendar',
+    icon: 'nc-icon nc-calendar-60',
     component: Calendar,
-    layout: "/admin"
-  }
-];
+    layout: '/admin',
+  },
+]
 
-export default routes;
+export default routes
