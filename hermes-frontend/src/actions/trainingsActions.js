@@ -1,14 +1,15 @@
+import moment from 'moment'
+import { API } from 'aws-amplify'
 import {
   LOAD_TRAININGS_SUCCESS,
   UPDATE_TRAINING_SUCCESS,
   CREATE_TRAINING_SUCCESS,
   REMOVE_TRAINING_SUCCESS,
 } from 'reducers/trainingsReducer'
-import { API } from 'aws-amplify'
 import { getApiToken } from 'actions/authorizationActions'
 import { API_NAME, TRAININGS_FOR_USER, TRAININGS_RESOURCE, BASIC_HEADERS } from 'utils/variables'
 import { updateStatistics } from 'actions/webStatisticsActions'
-import moment from 'moment'
+import { DATETIME_FORMAT } from 'utils/functions'
 
 const loadTrainingsSuccess = trainings => ({
   type: LOAD_TRAININGS_SUCCESS,
@@ -48,7 +49,7 @@ export const fetchTrainingsForUser = username => async dispatch => {
 
   try {
     const trainings = await API.get(API_NAME, TRAININGS_FOR_USER(username), init)
-    dispatch(updateStatistics('LOAD_USER_TRAININGS', moment()))
+    dispatch(updateStatistics('LOAD_USER_TRAININGS', moment().format(DATETIME_FORMAT)))
     return dispatch(loadTrainingsSuccess(trainings.Items))
   } catch (err) {
     console.log('Could not fetch trainings', err)
