@@ -39,7 +39,7 @@ const fetchTeam = (username, type, awsRequestId) => {
   if (type === 'Coach') {
     console.log('fetching user coach teams')
     return fetchCoachTeam(username, awsRequestId)
-  } else {
+  } else if (type === 'Member') {
     console.log('fetching membership teams')
     return fetchRunnerTeam(username, awsRequestId)
   }
@@ -69,13 +69,24 @@ const fetchRunnerTeam = async username => {
 }
 
 const fetchCoachTeam = async username => {
-  return ddb
+  const teams = await ddb
     .scan({
       TableName: 'Teams',
       FilterExpression: 'teamOwner = :r',
       ExpressionAttributeValues: { ':r': username },
     })
     .promise()
+
+  console.log('fetched coach teams', teams)
+  if (teams.Items.length === 1) {
+    const team = teams.Items[0]
+    console.log('team is ', team)
+    const teamMembers = await fetchTeamMembersByTeamId(team.teamId)
+    console.log('fetched team members', teamMembers)
+    return Object.assign({}, team, { members: teamMembers.Items })
+  } else {
+    return {}
+  }
 }
 
 const fetchTeamById = async teamId => {
@@ -86,6 +97,17 @@ const fetchTeamById = async teamId => {
       Key: {
         teamId: teamId,
       },
+    })
+    .promise()
+}
+
+const fetchTeamMembersByTeamId = async teamId => {
+  console.log('fetching team members ', teamId)
+  return ddb
+    .scan({
+      TableName: 'TeamMembers',
+      FilterExpression: 'teamId = :tid',
+      ExpressionAttributeValues: { ':tid': teamId },
     })
     .promise()
 }
