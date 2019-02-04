@@ -1,8 +1,7 @@
 import React from 'react'
 import moment from 'moment'
 import { Card, CardBody, CardFooter, CardHeader, CardTitle, Col, Row } from 'reactstrap'
-import { DATETIME_FORMAT } from 'utils/functions'
-import ImageAvatarNoUpload from 'components/CustomUpload/ImageAvatarNoUpload.jsx'
+import TeamCoachCard from 'components/Teams/TeamCoachCard.jsx'
 
 const RunnerTeamPage = ({ team, leave }) => {
   return (
@@ -10,23 +9,7 @@ const RunnerTeamPage = ({ team, leave }) => {
       <div className="content">
         <Row>
           <Col md={4}>
-            <Card>
-              <CardHeader>
-                <CardTitle tag="h4" className="text-center">
-                  Coach
-                </CardTitle>
-              </CardHeader>
-              <CardBody className="text-center">
-                <div className="icon icon-primary">
-                  <i className="fa fa-quote-right" />
-                </div>
-                <p className="card-description">{team.description}</p>
-              </CardBody>
-              <CardFooter className="text-center">
-                <ImageAvatarNoUpload />
-                <h6 className="card-category">@{team.teamOwner}</h6>
-              </CardFooter>
-            </Card>
+            <TeamCoachCard description={team.description} owner={team.teamOwner} />
           </Col>
           <Col md={8}>
             <Card>
@@ -38,7 +21,7 @@ const RunnerTeamPage = ({ team, leave }) => {
               <CardBody>
                 <Row>
                   <Col md={4}>
-                    <p className="text-muted">
+                    <p className="text-muted card-category">
                       Members: <b>1</b>
                     </p>
                   </Col>
@@ -54,7 +37,6 @@ const RunnerTeamPage = ({ team, leave }) => {
                   Personal note: {'\n'}
                   {team.coachNote}
                 </pre>
-                {/*{team.coachNote.split('\n').map((prop, key) => <p key={key}>{prop}</p>)}*/}
               </CardBody>
               <CardFooter>
                 <hr />
