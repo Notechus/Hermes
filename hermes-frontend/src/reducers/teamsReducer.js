@@ -11,7 +11,7 @@ export const getTeam = state => state.teams.team
 export const getTeams = state => state.teams.teams
 
 const initialState = {
-  team: {},
+  team: null,
   teams: [],
 }
 

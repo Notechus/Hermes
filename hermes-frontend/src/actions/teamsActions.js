@@ -20,7 +20,9 @@ export const fetchUserTeam = username => async dispatch => {
   try {
     const team = await API.get(API_NAME, USER_TEAM(username), init)
     console.log('team', team)
-    return dispatch(loadUserTeamSuccess(team))
+    if (Object.keys(team).length) {
+      return dispatch(loadUserTeamSuccess(team))
+    }
   } catch (err) {
     console.log('Could not fetch team', err)
   }

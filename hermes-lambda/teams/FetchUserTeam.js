@@ -21,33 +21,13 @@ exports.handler = async (event, context) => {
   console.log(`Fetching ${authUsername} team`)
   try {
     const team = await fetchTeam(authUsername, userType, awsRequestId)
-    console.log('teams records', team)
-    const teams = team.Items
-    if (teams.length === 1) {
-      console.log('team', teams)
-      return {
-        statusCode: 200,
-        body: JSON.stringify(teams[0]),
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-        },
-      }
-    } else if (teams.length === 0) {
-      return {
-        statusCode: 200,
-        body: JSON.stringify({}),
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-        },
-      }
-    } else {
-      return {
-        statusCode: 500,
-        body: 'Wrong number of assigned teams',
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-        },
-      }
+    console.log('team', team)
+    return {
+      statusCode: 200,
+      body: JSON.stringify(team),
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+      },
     }
   } catch (err) {
     console.error(err)
@@ -65,22 +45,47 @@ const fetchTeam = (username, type, awsRequestId) => {
   }
 }
 
-const fetchRunnerTeam = username => {
-  return ddb
+const fetchRunnerTeam = async username => {
+  const teams = await ddb
     .scan({
-      TableName: 'Teams',
-      FilterExpression: 'contains(members, :r)',
-      ExpressionAttributeValues: { ':r': username },
+      TableName: 'TeamMembers',
+      FilterExpression: 'username = :r',
+      ExpressionAttributeValues: {
+        ':r': username,
+      },
     })
     .promise()
+
+  console.log('fetched from team members', teams)
+
+  if (teams.Items.length === 1) {
+    console.log('team', teams)
+    const team = teams.Items[0]
+    const teamDetails = await fetchTeamById(team.teamId)
+    return Object.assign({}, team, teamDetails.Item)
+  } else {
+    return {}
+  }
 }
 
-const fetchCoachTeam = username => {
+const fetchCoachTeam = async username => {
   return ddb
     .scan({
       TableName: 'Teams',
       FilterExpression: 'teamOwner = :r',
       ExpressionAttributeValues: { ':r': username },
+    })
+    .promise()
+}
+
+const fetchTeamById = async teamId => {
+  console.log('fetching team by id', teamId)
+  return ddb
+    .get({
+      TableName: 'Teams',
+      Key: {
+        teamId: teamId,
+      },
     })
     .promise()
 }
