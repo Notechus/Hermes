@@ -1,6 +1,6 @@
-import React from "react";
-import { connect } from "react-redux";
-import { isEqual } from "lodash";
+import React from 'react'
+import { connect } from 'react-redux'
+import { isEqual } from 'lodash'
 // reactstrap components
 import {
   Button,
@@ -12,50 +12,55 @@ import {
   Form,
   FormGroup,
   Input,
-  Row
-} from "reactstrap";
+  Row,
+} from 'reactstrap'
 
-import { EMPTY_USER, getUser } from "reducers/authorizationDataReducer";
-import { updateUser, updateUserAvatar } from "actions/authorizationActions";
-import ImageAvatarUpload from "components/CustomUpload/ImageAvatarUpload.jsx";
+import { EMPTY_USER, getUser } from 'reducers/authorizationDataReducer'
+import { updateUser, updateUserAvatar } from 'actions/authorizationActions'
+import ImageAvatarUpload from 'components/CustomUpload/ImageAvatarUpload.jsx'
+import Select from 'react-select'
 
 class UserProfile extends React.Component {
-  state = { ...EMPTY_USER };
+  state = { ...EMPTY_USER }
 
   componentDidMount() {}
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (!isEqual(this.props.user, prevProps.user)) {
-      this.setState({ ...this.props.user });
+      this.setState({
+        ...this.props.user,
+        gender: { value: this.props.user.gender, label: this.props.user.gender },
+      })
     }
   }
 
   handleImageChange = e => {
-    e.preventDefault();
-    const file = e.target.files[0];
-    const { username } = this.props.user;
-    this.props.changeAvatar(`${username}-avatar.png`, file);
-  };
+    e.preventDefault()
+    const file = e.target.files[0]
+    const { username } = this.props.user
+    this.props.changeAvatar(`${username}-avatar.png`, file)
+  }
 
   onChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
-  };
+    this.setState({ [e.target.name]: e.target.value })
+  }
 
   handleUpdate = () => {
-    const { name, surname, gender, about, memo } = this.state;
+    const { name, surname, gender, about, memo } = this.state
 
     const userToUpdate = {
       name: name,
-      "custom:surname": surname,
-      gender: gender,
-      "custom:about": about,
-      "custom:memo": memo
-    };
-    this.props.updateUser(userToUpdate);
-  };
+      'custom:surname': surname,
+      gender: gender.value,
+      'custom:about': about,
+      'custom:memo': memo,
+    }
+    console.log('want to update', userToUpdate)
+    this.props.updateUser(userToUpdate)
+  }
 
   render() {
-    const user = this.props.user;
+    const user = this.props.user
     return (
       <>
         <div className="content">
@@ -66,11 +71,11 @@ class UserProfile extends React.Component {
                 <CardBody>
                   <div className="author">
                     <ImageAvatarUpload
-                      loaded={!!(user.avatar && user.avatar !== "")}
+                      loaded={!!(user.avatar && user.avatar !== '')}
                       image={user.avatar}
                       onChange={this.handleImageChange}
                     />
-                    <h5 className="title">{user.name + " " + user.surname}</h5>
+                    <h5 className="title">{user.name + ' ' + user.surname}</h5>
                     <p className="description">@{user.username}</p>
                   </div>
                   <p className="description text-center">{user.memo}</p>
@@ -141,7 +146,7 @@ class UserProfile extends React.Component {
                       </Col>
                     </Row>
                     <Row>
-                      <Col className="pr-1" md="6">
+                      <Col className="pr-1" md="4">
                         <FormGroup>
                           <label>First Name</label>
                           <Input
@@ -153,7 +158,7 @@ class UserProfile extends React.Component {
                           />
                         </FormGroup>
                       </Col>
-                      <Col className="pl-1" md="6">
+                      <Col className="pl-1" md="4">
                         <FormGroup>
                           <label>Last Name</label>
                           <Input
@@ -162,6 +167,23 @@ class UserProfile extends React.Component {
                             placeholder="Last Name"
                             type="text"
                             onChange={this.onChange}
+                          />
+                        </FormGroup>
+                      </Col>
+                      <Col className="pl-1" md="4">
+                        <FormGroup>
+                          <label>Gender</label>
+                          <Select
+                            className="react-select primary"
+                            classNamePrefix="react-select"
+                            name="gender"
+                            value={this.state.gender}
+                            onChange={v => this.setState({ gender: v })}
+                            options={[
+                              { value: 'Male', label: 'Male' },
+                              { value: 'Female', label: 'Female' },
+                            ]}
+                            placeholder="Gender"
                           />
                         </FormGroup>
                       </Col>
@@ -210,20 +232,20 @@ class UserProfile extends React.Component {
           </Row>
         </div>
       </>
-    );
+    )
   }
 }
 
 const mapStateToProps = state => ({
-  user: getUser(state)
-});
+  user: getUser(state),
+})
 
 const mapDispatchToProps = dispatch => ({
   changeAvatar: (name, file) => dispatch(updateUserAvatar(name, file)),
-  updateUser: attributes => dispatch(updateUser(attributes))
-});
+  updateUser: attributes => dispatch(updateUser(attributes)),
+})
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(UserProfile);
+)(UserProfile)

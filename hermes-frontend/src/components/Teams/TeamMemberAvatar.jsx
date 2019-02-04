@@ -4,14 +4,16 @@ import defaultImage from 'assets/img/default-avatar.png'
 
 const AVATAR_SUFFIX = '-avatar.png'
 
-const TeamMemberAvatar = ({ image }) => {
+const TeamMemberAvatar = ({ image, userId }) => {
+  console.log('identity id is', userId)
   return (
     <div className="picture-container">
       <div className="avatar">
         {image ? (
           <S3Image
-            imgKey={image + AVATAR_SUFFIX}
+            imgKey={image.toLowerCase() + AVATAR_SUFFIX}
             level="protected"
+            identityId={userId}
             className="img-circle img-no-padding img-responsive"
           />
         ) : (

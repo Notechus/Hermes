@@ -4,6 +4,7 @@ import { getUser } from 'reducers/authorizationDataReducer'
 import { getTeam, getTeams } from 'reducers/teamsReducer'
 import { fetchUserTeam } from 'actions/teamsActions'
 import CoachTeamPage from 'views/Teams/CoachTeamPage.jsx'
+import RunnerTeamPage from 'views/Teams/RunnerTeamPage.jsx'
 
 class TeamsPage extends Component {
   state = {}
@@ -28,12 +29,10 @@ class TeamsPage extends Component {
     const { team, teams, user } = this.props
     if (user.type === 'Coach') {
       return team ? <CoachTeamPage team={team} /> : <div className="content">Create a team</div>
+    } else if (user.type === 'Member') {
+      return team ? <RunnerTeamPage team={team} /> : <div className="content">Join a team</div>
     } else {
-      return team ? (
-        <div className="content">Your team</div>
-      ) : (
-        <div className="content">Join a team</div>
-      )
+      return <div className="content" />
     }
   }
 }

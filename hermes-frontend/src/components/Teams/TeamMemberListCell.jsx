@@ -7,10 +7,10 @@ const TeamMemberListCell = ({ member, click }) => {
     <>
       <Row>
         <Col md="2" xs="2">
-          <TeamMemberAvatar image={member} />
+          <TeamMemberAvatar image={member.username} userId={member.userId} />
         </Col>
         <Col md="7" xs="7">
-          {member} <br />
+          {member.username} <br />
           <span className="text-muted">
             <small>1 month</small>
           </span>

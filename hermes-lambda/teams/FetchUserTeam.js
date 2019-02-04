@@ -14,6 +14,7 @@ exports.handler = async (event, context) => {
   const username = pathParameters.username
   const authUsername = requestContext.authorizer.claims['cognito:username']
   const userType = requestContext.authorizer.claims['custom:type']
+  console.log('authorizer', requestContext.authorizer)
   if (username !== authUsername) {
     return errorResponse(403, "You don't have permissions to that resource", awsRequestId)
   }
@@ -21,7 +22,7 @@ exports.handler = async (event, context) => {
   console.log(`Fetching ${authUsername} team`)
   try {
     const team = await fetchTeam(authUsername, userType, awsRequestId)
-    console.log('team', team)
+    console.log('returning team', team)
     return {
       statusCode: 200,
       body: JSON.stringify(team),
@@ -36,6 +37,7 @@ exports.handler = async (event, context) => {
 }
 
 const fetchTeam = (username, type, awsRequestId) => {
+  console.log(`Fetching ${username} - ${type}`)
   if (type === 'Coach') {
     console.log('fetching user coach teams')
     return fetchCoachTeam(username, awsRequestId)
