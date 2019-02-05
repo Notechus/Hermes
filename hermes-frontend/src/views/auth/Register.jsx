@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react'
 
 // reactstrap components
 import {
@@ -17,87 +17,109 @@ import {
   InputGroup,
   Container,
   Row,
-  Col
-} from "reactstrap";
-import { SignUp } from "aws-amplify-react";
-import Select from "react-select";
-import AuthNavbar from "components/Navbars/AuthNavbar";
-import Footer from "components/Footer/Footer";
-import countryDialCodes from "utils/countryDialCodes";
-import { Auth } from "aws-amplify";
+  Col,
+} from 'reactstrap'
+import { SignUp } from 'aws-amplify-react'
+import Select from 'react-select'
+import AuthNavbar from 'components/Navbars/AuthNavbar'
+import Footer from 'components/Footer/Footer'
+import countryDialCodes from 'utils/countryDialCodes'
+import { Auth } from 'aws-amplify'
+import ReactBSAlert from 'react-bootstrap-sweetalert'
+
+const SIGNUP_DISABLED = true
 
 class Register extends SignUp {
   componentDidMount() {
-    document.body.classList.toggle("register-page");
+    document.body.classList.toggle('register-page')
+    if (SIGNUP_DISABLED) {
+      this.warningWithConfirmMessage()
+    }
   }
 
   componentWillUnmount() {
-    document.body.classList.toggle("register-page");
+    document.body.classList.toggle('register-page')
+    if (SIGNUP_DISABLED) {
+      this.hideAlert()
+    }
   }
 
   signUp() {
-    if (!this.inputs.dial_code || this.inputs.dial_code === "") {
-      this.inputs.dial_code = this.getDefaultDialCode();
+    if (SIGNUP_DISABLED) {
+      this.warningWithConfirmMessage()
+      return
     }
-    const validation = this.validate();
+
+    if (!this.inputs.dial_code || this.inputs.dial_code === '') {
+      this.inputs.dial_code = this.getDefaultDialCode()
+    }
+    const validation = this.validate()
     if (validation && validation.length > 0) {
-      return this.error(
-        `The following fields need to be filled out: ${validation.join(", ")}`
-      );
+      return this.error(`The following fields need to be filled out: ${validation.join(', ')}`)
     }
-    if (!Auth || typeof Auth.signUp !== "function") {
-      throw new Error(
-        "No Auth module found, please ensure @aws-amplify/auth is imported"
-      );
+    if (!Auth || typeof Auth.signUp !== 'function') {
+      throw new Error('No Auth module found, please ensure @aws-amplify/auth is imported')
     }
 
-    const {
-      username,
-      password,
-      dial_code,
-      phone_line_number,
-      name,
-      surname,
-      email
-    } = this.inputs;
+    const { username, password, dial_code, phone_line_number, name, surname, email } = this.inputs
 
-    let signup_info = {
+    const signupInfo = {
       username: username,
       password: password,
       attributes: {
-        phone_number: `${dial_code}${phone_line_number.replace(/[-()]/g, "")}`,
-        name: name || "",
+        phone_number: `${dial_code}${phone_line_number.replace(/[-()]/g, '')}`,
+        name: name || '',
         email: email,
-        "custom:surname": surname || ""
-      }
-    };
+        'custom:surname': surname || '',
+      },
+    }
 
-    Auth.signUp(signup_info)
+    Auth.signUp(signupInfo)
       .then(data => {
-        this.changeState("confirmSignUp", data.user.username);
+        this.changeState('confirmSignUp', data.user.username)
       })
-      .catch(err => this.error(err));
+      .catch(err => this.error(err))
+  }
+
+  hideAlert = () => {
+    this.setState({ alert: null })
+  }
+
+  warningWithConfirmMessage = () => {
+    this.setState({
+      alert: (
+        <ReactBSAlert
+          warning
+          style={{ display: 'block', marginTop: '-100px' }}
+          title="Sign up is currently disabled"
+          onConfirm={() => this.hideAlert()}
+          onCancel={() => this.hideAlert()}
+          confirmBtnBsStyle="info"
+          cancelBtnBsStyle="danger"
+          confirmBtnText="Ok"
+          cancelBtnText="Cancel"
+          showCancel
+        />
+      ),
+    })
   }
 
   render() {
-    const { authState } = this.props;
-    if (authState !== "signUp") {
-      return null;
+    const { authState } = this.props
+    if (authState !== 'signUp') {
+      return null
     }
 
     if (this.checkCustomSignUpFields()) {
-      this.signUpFields = this.props.signUpConfig.signUpFields;
+      this.signUpFields = this.props.signUpConfig.signUpFields
     }
-    this.sortFields();
+    this.sortFields()
 
     return (
       <div className="wrapper wrapper-full-page" ref="fullPages">
+        {this.state.alert}
         <div className="full-page section-image">
-          <AuthNavbar
-            signUp={false}
-            signIn={true}
-            changeState={this.changeState}
-          />
+          <AuthNavbar signUp={false} signIn={true} changeState={this.changeState} />
           <div className="register-page">
             <Container>
               <Row>
@@ -161,14 +183,14 @@ class Register extends SignUp {
                               onChange={code =>
                                 this.handleInputChange({
                                   target: {
-                                    name: "dial_code",
-                                    value: code.value
-                                  }
+                                    name: 'dial_code',
+                                    value: code.value,
+                                  },
                                 })
                               }
-                              options={["", ...countryDialCodes].map(code => ({
+                              options={['', ...countryDialCodes].map(code => ({
                                 value: code,
-                                label: code
+                                label: code,
                               }))}
                             />
                           </Col>
@@ -216,7 +238,7 @@ class Register extends SignUp {
                         <FormGroup check className="text-left">
                           <Label check>
                             <Input defaultChecked type="checkbox" />
-                            <span className="form-check-sign" />I agree to the{" "}
+                            <span className="form-check-sign" />I agree to the{' '}
                             <a href="#pablo" onClick={e => e.preventDefault()}>
                               terms and conditions
                             </a>
@@ -242,15 +264,15 @@ class Register extends SignUp {
             <div
               className="full-page-background"
               style={{
-                backgroundImage: `url(${require("../../assets/img/bg/jan-sendereks.jpg")})`
+                backgroundImage: `url(${require('../../assets/img/bg/jan-sendereks.jpg')})`,
               }}
             />
           </div>
           <Footer fluid />
         </div>
       </div>
-    );
+    )
   }
 }
 
-export default Register;
+export default Register
