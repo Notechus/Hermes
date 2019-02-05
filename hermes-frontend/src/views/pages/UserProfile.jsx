@@ -24,16 +24,12 @@ class UserProfile extends React.Component {
   state = { ...EMPTY_USER }
 
   componentDidMount() {
-    this.props.fetchUser()
-  }
-
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    if (!isEqual(this.props.user, prevProps.user)) {
+    this.props.fetchUser().then(() =>
       this.setState({
         ...this.props.user,
         gender: { value: this.props.user.gender, label: this.props.user.gender },
       })
-    }
+    )
   }
 
   handleImageChange = e => {
