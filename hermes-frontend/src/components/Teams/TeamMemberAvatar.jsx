@@ -5,7 +5,6 @@ import defaultImage from 'assets/img/default-avatar.png'
 const AVATAR_SUFFIX = '-avatar.png'
 
 const TeamMemberAvatar = ({ image, userId }) => {
-  console.log('identity id is', userId)
   return (
     <div className="picture-container">
       <div className="avatar">

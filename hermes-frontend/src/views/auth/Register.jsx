@@ -83,7 +83,7 @@ class Register extends SignUp {
 
   hideAlert = () => {
     this.setState({ alert: null })
-  }
+  };
 
   warningWithConfirmMessage = () => {
     this.setState({

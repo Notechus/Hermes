@@ -16,14 +16,16 @@ import {
 } from 'reactstrap'
 
 import { EMPTY_USER, getUser } from 'reducers/authorizationDataReducer'
-import { updateUser, updateUserAvatar } from 'actions/authorizationActions'
+import { updateUser, updateUserAvatar, fetchAuthorizedUser } from 'actions/authorizationActions'
 import ImageAvatarUpload from 'components/CustomUpload/ImageAvatarUpload.jsx'
 import Select from 'react-select'
 
 class UserProfile extends React.Component {
   state = { ...EMPTY_USER }
 
-  componentDidMount() {}
+  componentDidMount() {
+    this.props.fetchUser()
+  }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (!isEqual(this.props.user, prevProps.user)) {
@@ -55,7 +57,6 @@ class UserProfile extends React.Component {
       'custom:about': about,
       'custom:memo': memo,
     }
-    console.log('want to update', userToUpdate)
     this.props.updateUser(userToUpdate)
   }
 
@@ -243,6 +244,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   changeAvatar: (name, file) => dispatch(updateUserAvatar(name, file)),
   updateUser: attributes => dispatch(updateUser(attributes)),
+  fetchUser: () => dispatch(fetchAuthorizedUser),
 })
 
 export default connect(

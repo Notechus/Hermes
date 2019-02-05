@@ -20,18 +20,19 @@ export const getApiToken = async () => {
 
 export const fetchAuthorizedUser = async dispatch => {
   try {
-    const authUser = await Auth.currentUserInfo()
-    let user = {
-      avatar: authUser.attributes.picture || '',
+    const authUser = await Auth.currentAuthenticatedUser()
+    const attributes = await Auth.userAttributes(authUser)
+    const user = {
+      avatar: findAttributeInList(attributes, 'picture') || '',
       cognitoId: authUser.id || '',
       username: authUser.username,
-      name: authUser.attributes.name || '',
-      email: authUser.attributes.email,
-      gender: authUser.attributes.gender || '',
-      surname: authUser.attributes['custom:surname'] || '',
-      type: authUser.attributes['custom:type'] || '',
-      about: authUser.attributes['custom:about'] || '',
-      memo: authUser.attributes['custom:memo'] || '',
+      name: findAttributeInList(attributes, 'name') || '',
+      email: findAttributeInList(attributes, 'email'),
+      gender: findAttributeInList(attributes, 'gender') || '',
+      surname: findAttributeInList(attributes, 'custom:surname') || '',
+      type: findAttributeInList(attributes, 'custom:type') || '',
+      about: findAttributeInList(attributes, 'custom:about') || '',
+      memo: findAttributeInList(attributes, 'custom:memo') || '',
     }
 
     return dispatch(loadAuthorizationSuccess(user))
@@ -62,7 +63,9 @@ export const updateUserAvatar = (name, file) => async dispatch => {
     })
     const authUser = await Auth.currentAuthenticatedUser()
     const updateResult = await Auth.updateUserAttributes(authUser, { picture: result.key })
-    return dispatch(updateAvatarSuccess(finalName))
+    if (updateResult === 'SUCCESS') {
+      return dispatch(updateAvatarSuccess(finalName))
+    }
   } catch (err) {
     console.log(err)
   }
@@ -80,3 +83,9 @@ export const updateUserAvatar = (name, file) => async dispatch => {
     })
     .catch(err => console.log(err))
 }
+
+const findAttributeInList = (list, attr) =>
+  list
+    .filter(e => e.Name === attr)
+    .map(e => e.Value)
+    .find(e => e)

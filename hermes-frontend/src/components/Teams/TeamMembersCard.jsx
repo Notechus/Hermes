@@ -3,7 +3,6 @@ import { Card, CardHeader, CardTitle, CardBody, Row, Col, Button } from 'reactst
 import TeamMemberListCell from 'components/Teams/TeamMemberListCell.jsx'
 
 const TeamMembersCard = ({ members }) => {
-  console.log('got members', members)
   return (
     <>
       <Card>
