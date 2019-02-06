@@ -1,26 +1,13 @@
 import React from 'react'
-import {
-  Button,
-  Modal,
-  ModalBody,
-  ModalFooter,
-  Card,
-  InputGroup,
-  InputGroupAddon,
-  InputGroupText,
-  Form,
-  CardBody,
-  CardHeader,
-  CardTitle,
-} from 'reactstrap'
+import { Button, Card, CardBody, CardHeader, Modal, ModalBody, ModalFooter } from 'reactstrap'
 
-const x = {
-  completionDate: '2018-12-10', //datepicker
-  distance: '', //sumaric distance
-  time: '', //sumaric time
-  hr: '', // sumaric HR
-  pace: '', //
-}
+// const x = {
+//   completionDate: '2018-12-10', //datepicker
+//   distance: '', //sumaric distance
+//   time: '', //sumaric time
+//   hr: '', // sumaric HR
+//   pace: '', //
+// }
 
 const SingleTrainingPage = ({ opened, training, toggle, save, onChange }) => {
   return (
@@ -41,7 +28,8 @@ const SingleTrainingPage = ({ opened, training, toggle, save, onChange }) => {
         <Card>
           <CardHeader>{training ? training.trainingId : ''}</CardHeader>
           <CardBody>
-            {training && training.activities.map((prop, key) => <p>{prop.description}</p>)}
+            {training &&
+              training.activities.map((prop, key) => <p key={key}>{prop.description}</p>)}
           </CardBody>
         </Card>
       </ModalBody>

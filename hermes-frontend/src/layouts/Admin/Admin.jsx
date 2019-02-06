@@ -87,6 +87,7 @@ class Admin extends React.Component {
             {...this.props}
             handleMiniClick={this.handleMiniClick}
             onStateChange={this.props.onStateChange}
+            user={this.props.user}
           />
           <Switch>{this.getRoutes(routes)}</Switch>
           <Footer fluid />

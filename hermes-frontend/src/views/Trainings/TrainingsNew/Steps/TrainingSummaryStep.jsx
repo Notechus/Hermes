@@ -1,36 +1,36 @@
-import React from "react";
-import { Col, Row } from "reactstrap";
+import React from 'react'
+import { Col, Row } from 'reactstrap'
 
-import TrainingSummaryCollapse from "components/TrainingsNew/TrainingSummaryCollapse";
-import BasicInfoTrainingSummary from "components/TrainingsNew/BasicInfoTrainingSummary";
-import ActivitiesTrainingSummary from "components/TrainingsNew/ActivitiesTrainingSummary";
-import AdditionalInfoTrainingSummary from "components/TrainingsNew/AdditionalInfoTrainingSummary";
+import TrainingSummaryCollapse from 'components/TrainingsNew/TrainingSummaryCollapse'
+import BasicInfoTrainingSummary from 'components/TrainingsNew/BasicInfoTrainingSummary'
+import ActivitiesTrainingSummary from 'components/TrainingsNew/ActivitiesTrainingSummary'
+import AdditionalInfoTrainingSummary from 'components/TrainingsNew/AdditionalInfoTrainingSummary'
 
 class TrainingSummaryStep extends React.Component {
   state = {
-    openedCollapses: ["basicInfo"]
-  };
+    openedCollapses: ['basicInfo'],
+  }
 
   componentDidMount() {}
 
-  isOpen = collapse => this.state.openedCollapses.includes(collapse);
+  isOpen = collapse => this.state.openedCollapses.includes(collapse)
 
   collapsesToggle = collapse => {
-    let openedCollapses = this.state.openedCollapses;
+    let openedCollapses = this.state.openedCollapses
     if (openedCollapses.includes(collapse)) {
       this.setState({
-        openedCollapses: openedCollapses.filter(item => item !== collapse)
-      });
+        openedCollapses: openedCollapses.filter(item => item !== collapse),
+      })
     } else {
-      openedCollapses.push(collapse);
+      openedCollapses.push(collapse)
       this.setState({
-        openedCollapses: openedCollapses
-      });
+        openedCollapses: openedCollapses,
+      })
     }
-  };
+  }
 
   render() {
-    const { wizardData } = this.props;
+    const { wizardData } = this.props
     return (
       <>
         <Row className="justify-content-center">
@@ -50,13 +50,13 @@ class TrainingSummaryStep extends React.Component {
                   <BasicInfoTrainingSummary
                     username={wizardData.username}
                     avatar={wizardData.memberAvatar}
-                    loaded={wizardData.loaded}
+                    userId={wizardData.userId}
                     trainingDate={wizardData.trainingDate}
                   />
                 }
                 title="Basic Info"
-                isOpen={this.isOpen("basicInfo")}
-                toggle={() => this.collapsesToggle("basicInfo")}
+                isOpen={this.isOpen('basicInfo')}
+                toggle={() => this.collapsesToggle('basicInfo')}
               />
               <TrainingSummaryCollapse
                 parent="#summary-accordion"
@@ -66,8 +66,8 @@ class TrainingSummaryStep extends React.Component {
                   />
                 }
                 title="Activities Info"
-                isOpen={this.isOpen("activitiesInfo")}
-                toggle={() => this.collapsesToggle("activitiesInfo")}
+                isOpen={this.isOpen('activitiesInfo')}
+                toggle={() => this.collapsesToggle('activitiesInfo')}
               />
               <TrainingSummaryCollapse
                 parent="#summary-accordion"
@@ -79,15 +79,15 @@ class TrainingSummaryStep extends React.Component {
                   />
                 }
                 title="Additional Info"
-                isOpen={this.isOpen("additionalInfo")}
-                toggle={() => this.collapsesToggle("additionalInfo")}
+                isOpen={this.isOpen('additionalInfo')}
+                toggle={() => this.collapsesToggle('additionalInfo')}
               />
             </div>
           </Col>
         </Row>
       </>
-    );
+    )
   }
 }
 
-export default TrainingSummaryStep;
+export default TrainingSummaryStep

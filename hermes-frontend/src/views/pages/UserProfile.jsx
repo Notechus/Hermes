@@ -1,6 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { isEqual } from 'lodash'
 // reactstrap components
 import {
   Button,

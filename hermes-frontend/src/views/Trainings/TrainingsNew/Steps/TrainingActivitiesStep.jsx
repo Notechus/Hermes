@@ -1,104 +1,86 @@
-import React from "react";
+import React from 'react'
 // reactstrap components
-import { Col, Row } from "reactstrap";
+import { Col, Row } from 'reactstrap'
 
-import { compareOrders } from "utils/functions";
-import { verifyIsPositiveNumber, verifyRangeInclusive } from "utils/validation";
-import ActivitiesTable from "components/TrainingsNew/ActivitiesTable";
-import NewActivityForm from "components/TrainingsNew/NewActivityForm";
+import { compareOrders } from 'utils/functions'
+import { verifyIsPositiveNumber, verifyRangeInclusive } from 'utils/validation'
+import ActivitiesTable from 'components/TrainingsNew/ActivitiesTable'
+import NewActivityForm from 'components/TrainingsNew/NewActivityForm'
 
 class TrainingActivitiesStep extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       activities: [],
-      order: 0,
-      mileage: 0.0,
-      description: "",
-      comment: "",
-      mileageState: "",
-      descriptionState: "",
-      commentState: ""
-    };
+      order: 1,
+      distance: 0.0,
+      description: '',
+      comment: '',
+      distanceState: '',
+      descriptionState: '',
+      commentState: '',
+    }
   }
 
   isValidated = () => {
-    return true;
-  };
+    return true
+  }
 
   addActivity = () => {
-    const { description, comment } = this.state;
-    const order = Number.parseInt(this.state.order);
-    const mileage = Number.parseFloat(this.state.mileage);
-
-    if (this.state.activities.find(e => e.order === order)) {
-      this.setState({
-        activities: [
-          ...this.state.activities.filter(e => !(e.order === order)),
-          { order, mileage, description, comment }
-        ].sort((a, b) => compareOrders(a.order, b.order)),
-        order: 0,
-        mileage: 0.0,
-        description: "",
-        comment: ""
-      });
-    } else {
-      this.setState({
-        activities: [
-          ...this.state.activities,
-          { order, mileage, description, comment }
-        ].sort((a, b) => compareOrders(a.order, b.order)),
-        order: 0,
-        mileage: 0.0,
-        description: "",
-        comment: ""
-      });
-    }
-  };
+    const { description, comment, order } = this.state
+    const distance = Number.parseFloat(this.state.distance)
+    this.setState({
+      activities: [...this.state.activities, { order, distance, description, comment }].sort(
+        (a, b) => compareOrders(a.order, b.order)
+      ),
+      order: order + 1,
+      distance: 0.0,
+      description: '',
+      comment: '',
+    })
+  }
 
   removeActivity = order => {
+    const newOrder = this.state.order === 1 ? 1 : this.state.order - 1
     this.setState({
-      activities: this.state.activities.filter(e => !(e.order === order))
-    });
-  };
-
-  editActivity = activity => {
-    this.setState({
-      order: activity.order,
-      mileage: activity.mileage,
-      description: activity.description,
-      comment: activity.comment
-    });
-  };
+      activities: this.state.activities
+        .filter(e => !(e.order === order))
+        .map(e => {
+          e.order = e.order - 1
+          return e
+        }),
+      order: newOrder,
+    })
+  }
 
   changeFocus = (name, value) => {
-    this.setState({ [name + "Focus"]: value });
-  };
+    this.setState({ [name + 'Focus']: value })
+  }
 
   change = (event, type) => {
     switch (type) {
-      case "mileage":
-        const val = event.target.value.includes(".")
+      case 'distance':
+        const val = event.target.value.includes('.')
           ? Number.parseFloat(event.target.value)
-          : Number.parseInt(event.target.value);
-        if (event.target.value !== "" && verifyIsPositiveNumber(val)) {
-          this.setState({ mileageState: "has-success" });
+          : Number.parseInt(event.target.value)
+        if (event.target.value !== '' && verifyIsPositiveNumber(val)) {
+          this.setState({ distanceState: 'has-success' })
         } else {
-          this.setState({ mileageState: "has-danger" });
+          this.setState({ distanceState: 'has-danger' })
         }
-        break;
-      case "description":
+        break
+      case 'description':
         if (verifyRangeInclusive(event.target.value.length, 1, 150)) {
-          this.setState({ descriptionState: "has-success" });
+          this.setState({ descriptionState: 'has-success' })
         } else {
-          this.setState({ descriptionState: "has-danger" });
+          this.setState({ descriptionState: 'has-danger' })
         }
-        break;
+        break
       default:
-        break;
+        break
     }
-    this.setState({ [event.target.name]: event.target.value });
-  };
+    this.setState({ [event.target.name]: event.target.value })
+  }
 
   render() {
     return (
@@ -108,20 +90,15 @@ class TrainingActivitiesStep extends React.Component {
           <Col lg="10">
             <Row className="justify-content-center">
               <Col sm="12">
-                <ActivitiesTable
-                  data={this.state.activities}
-                  onEdit={this.editActivity}
-                  onDelete={this.removeActivity}
-                />
+                <ActivitiesTable data={this.state.activities} onDelete={this.removeActivity} />
               </Col>
             </Row>
             <Row>
               <Col sm="10">
                 <NewActivityForm
-                  order={this.state.order}
-                  mileage={this.state.mileage}
-                  mileageState={this.state.mileageState}
-                  mileageFocus={this.state.mileageFocus}
+                  distance={this.state.distance}
+                  distanceState={this.state.distanceState}
+                  distanceFocus={this.state.distanceFocus}
                   description={this.state.description}
                   descriptionState={this.state.descriptionState}
                   descriptionFocus={this.state.descriptionFocus}
@@ -138,8 +115,8 @@ class TrainingActivitiesStep extends React.Component {
           </Col>
         </Row>
       </>
-    );
+    )
   }
 }
 
-export default TrainingActivitiesStep;
+export default TrainingActivitiesStep

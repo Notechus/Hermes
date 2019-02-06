@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, CardHeader, CardTitle, CardBody, Row, Col, Button } from 'reactstrap'
+import { Card, CardBody, CardHeader, CardTitle } from 'reactstrap'
 import TeamMemberListCell from 'components/Teams/TeamMemberListCell.jsx'
 
 const TeamMembersCard = ({ members }) => {

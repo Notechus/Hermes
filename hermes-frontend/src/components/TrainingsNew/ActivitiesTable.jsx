@@ -1,9 +1,9 @@
-import React from "react";
+import React from 'react'
 
-import { Table } from "reactstrap";
-import TrainingsTableActionCell from "components/TrainingsTable/TrainingTableActionCell";
+import { Table } from 'reactstrap'
+import TrainingsTableActionCell from 'components/TrainingsTable/TrainingTableActionCell'
 
-const ActivitiesTable = ({ data, onEdit, onDelete }) => {
+const ActivitiesTable = ({ data, onDelete }) => {
   return (
     <>
       <Table responsive>
@@ -25,16 +25,8 @@ const ActivitiesTable = ({ data, onEdit, onDelete }) => {
               <td className="text-right">{activity.comment}</td>
               <td className="text-right">
                 <TrainingsTableActionCell
-                  color="success"
-                  id={"-edit-" + activity.order}
-                  size="sm"
-                  tooltip="Edit"
-                  icon="fa fa-edit"
-                  click={() => onEdit(activity)}
-                />
-                <TrainingsTableActionCell
                   color="danger"
-                  id={"-delete-" + activity.order}
+                  id={'-delete-' + activity.order}
                   size="sm"
                   tooltip="Delete"
                   icon="fa fa-times"
@@ -46,7 +38,7 @@ const ActivitiesTable = ({ data, onEdit, onDelete }) => {
         </tbody>
       </Table>
     </>
-  );
-};
+  )
+}
 
-export default ActivitiesTable;
+export default ActivitiesTable

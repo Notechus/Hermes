@@ -28,6 +28,7 @@ const routes = [
     icon: 'nc-icon nc-bank',
     component: Dashboard,
     layout: '/admin',
+    hidden: true,
   },
   {
     path: '/trainings/new',

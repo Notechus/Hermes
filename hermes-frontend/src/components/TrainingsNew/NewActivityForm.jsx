@@ -1,12 +1,12 @@
-import React from "react";
-import classnames from "classnames";
-import { Button, Col, Form, FormGroup, Input, Row } from "reactstrap";
+import React from 'react'
+import classnames from 'classnames'
+import { Button, Col, Form, FormGroup, Input, Row } from 'reactstrap'
 
 const NewActivityForm = ({
   order,
-  mileage,
-  mileageState,
-  mileageFocus,
+  distance,
+  distanceState,
+  distanceFocus,
   description,
   descriptionState,
   descriptionFocus,
@@ -15,39 +15,28 @@ const NewActivityForm = ({
   commentFocus,
   onChange,
   onFocus,
-  onSubmit
+  onSubmit,
 }) => {
   return (
     <>
       <Form action="#" method="#">
         <Row>
           <Col sm="3">
-            <label>Order</label>
-            <FormGroup>
-              <Input
-                name="order"
-                placeholder="Order"
-                type="number"
-                min={0}
-                value={order}
-                onChange={e => onChange(e, "order")}
-              />
-            </FormGroup>
-            <label>Mileage (in km)</label>
+            <label>Distance (in km)</label>
             <FormGroup
-              className={classnames(mileageState, {
-                "input-group-focus": mileageFocus
+              className={classnames(distanceState, {
+                'input-group-focus': distanceFocus,
               })}
             >
               <Input
-                name="mileage"
+                name="distance"
                 type="text"
-                value={mileage}
-                onChange={e => onChange(e, "mileage")}
-                onFocus={() => onFocus("mileage", true)}
-                onBlur={() => onFocus("mileage", false)}
+                value={distance}
+                onChange={e => onChange(e, 'distance')}
+                onFocus={() => onFocus('distance', true)}
+                onBlur={() => onFocus('distance', false)}
               />
-              {mileageState === "has-danger" && (
+              {distanceState === 'has-danger' && (
                 <label className="error">
                   This field is required and must be a positive number.
                 </label>
@@ -58,21 +47,20 @@ const NewActivityForm = ({
             <label>Description</label>
             <FormGroup
               className={classnames(descriptionState, {
-                "input-group-focus": descriptionFocus
+                'input-group-focus': descriptionFocus,
               })}
             >
               <Input
                 name="description"
-                type="textarea"
+                type="text"
                 value={description}
-                onChange={e => onChange(e, "description")}
-                onFocus={() => onFocus("description", true)}
-                onBlur={() => onFocus("description", false)}
+                onChange={e => onChange(e, 'description')}
+                onFocus={() => onFocus('description', true)}
+                onBlur={() => onFocus('description', false)}
               />
-              {descriptionState === "has-danger" && (
+              {descriptionState === 'has-danger' && (
                 <label className="error">
-                  This field is required and must be between 1 and 150
-                  characters.
+                  This field is required and must be between 1 and 150 characters.
                 </label>
               )}
             </FormGroup>
@@ -82,9 +70,9 @@ const NewActivityForm = ({
             <FormGroup>
               <Input
                 name="comment"
-                type="textarea"
+                type="text"
                 value={comment}
-                onChange={e => onChange(e, "comment")}
+                onChange={e => onChange(e, 'comment')}
               />
             </FormGroup>
           </Col>
@@ -92,12 +80,7 @@ const NewActivityForm = ({
         <Row>
           <Col sm="4">
             <FormGroup>
-              <Button
-                className="btn-default"
-                color="default"
-                type="button"
-                onClick={onSubmit}
-              >
+              <Button className="btn-default" color="default" type="button" onClick={onSubmit}>
                 Add
               </Button>
             </FormGroup>
@@ -105,7 +88,7 @@ const NewActivityForm = ({
         </Row>
       </Form>
     </>
-  );
-};
+  )
+}
 
-export default NewActivityForm;
+export default NewActivityForm

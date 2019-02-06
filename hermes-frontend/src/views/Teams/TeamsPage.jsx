@@ -5,6 +5,7 @@ import { getTeam, getTeams } from 'reducers/teamsReducer'
 import { fetchUserTeam } from 'actions/teamsActions'
 import CoachTeamPage from 'views/Teams/CoachTeamPage.jsx'
 import RunnerTeamPage from 'views/Teams/RunnerTeamPage.jsx'
+import JoinTeamPage from 'views/Teams/JoinTeamPage.jsx'
 
 class TeamsPage extends Component {
   state = {}
@@ -30,7 +31,7 @@ class TeamsPage extends Component {
     if (user.type === 'Coach') {
       return team ? <CoachTeamPage team={team} /> : <div className="content">Create a team</div>
     } else if (user.type === 'Member') {
-      return team ? <RunnerTeamPage team={team} /> : <div className="content">Join a team</div>
+      return team ? <RunnerTeamPage team={team} /> : <JoinTeamPage teams={teams} />
     } else {
       return <div className="content" />
     }

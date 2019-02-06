@@ -1,74 +1,79 @@
-import React from "react";
-import { connect } from "react-redux";
-import { getUser } from "reducers/authorizationDataReducer";
-import { createNewTraining } from "actions/trainingsActions";
-import { formatDateAsString } from "utils/functions";
+import React from 'react'
+import { connect } from 'react-redux'
+import { getUser } from 'reducers/authorizationDataReducer'
+import { createNewTraining } from 'actions/trainingsActions'
+import { formatDateAsString } from 'utils/functions'
 
-import ReactWizard from "react-bootstrap-wizard";
-import { Col } from "reactstrap";
-import ReactBSAlert from "react-bootstrap-sweetalert";
+import ReactWizard from 'react-bootstrap-wizard'
+import { Col } from 'reactstrap'
+import ReactBSAlert from 'react-bootstrap-sweetalert'
 
-import AboutTrainingStep from "./Steps/AboutTrainingStep.jsx";
-import TrainingActivitiesStep from "./Steps/TrainingActivitiesStep.jsx";
-import AdditionalInfoStep from "./Steps/AdditionalInfoStep.jsx";
-import TrainingSummaryStep from "./Steps/TrainingSummaryStep.jsx";
+import AboutTrainingStep from './Steps/AboutTrainingStep.jsx'
+import TrainingActivitiesStep from './Steps/TrainingActivitiesStep.jsx'
+import AdditionalInfoStep from './Steps/AdditionalInfoStep.jsx'
+import TrainingSummaryStep from './Steps/TrainingSummaryStep.jsx'
 
 const steps = [
   {
-    stepName: "About",
-    stepIcon: "nc-icon nc-alert-circle-i",
-    component: AboutTrainingStep
+    stepName: 'About',
+    stepIcon: 'nc-icon nc-alert-circle-i',
+    component: AboutTrainingStep,
   },
   {
-    stepName: "Activities",
-    stepIcon: "nc-icon nc-user-run",
-    component: TrainingActivitiesStep
+    stepName: 'Activities',
+    stepIcon: 'nc-icon nc-user-run',
+    component: TrainingActivitiesStep,
   },
   {
-    stepName: "Additional Information",
-    stepIcon: "nc-icon nc-single-copy-04",
-    component: AdditionalInfoStep
+    stepName: 'Additional Information',
+    stepIcon: 'nc-icon nc-single-copy-04',
+    component: AdditionalInfoStep,
   },
   {
-    stepName: "Summary",
-    stepIcon: "nc-icon nc-bookmark-2",
-    component: TrainingSummaryStep
-  }
-];
+    stepName: 'Summary',
+    stepIcon: 'nc-icon nc-bookmark-2',
+    component: TrainingSummaryStep,
+  },
+]
 
 class TrainingsNew extends React.Component {
   state = {
-    alert: null
-  };
+    alert: null,
+  }
 
-  successAlert = () => {
+  componentDidMount() {
+    const { user, history } = this.props
+    if (user && user.type !== 'Coach') {
+      history.push('/admin/dashboard')
+    }
+  }
+
+  successAlert = username => {
     this.setState({
       alert: (
         <ReactBSAlert
           success
-          style={{ display: "block", marginTop: "-100px" }}
+          style={{ display: 'block', marginTop: '-100px' }}
           title="Good job!"
           onConfirm={() => this.hideAlert()}
           onCancel={() => this.hideAlert()}
           confirmBtnBsStyle="info"
         >
-          You have successfully added a training!
+          You have successfully added new training for {username}!
         </ReactBSAlert>
-      )
-    });
-  };
+      ),
+    })
+  }
 
   hideAlert = () => {
     this.setState({
-      alert: null
-    });
-    this.props.history.push("/trainings");
-  };
-
-  componentDidMount() {}
+      alert: null,
+    })
+    this.props.history.push('/admin/teams')
+  }
 
   createNewTraining = formState => {
-    console.log(formState);
+    console.log(formState)
 
     const {
       trainingDate,
@@ -77,8 +82,8 @@ class TrainingsNew extends React.Component {
       importance,
       trainingComment,
       activities,
-      trainingDescription
-    } = formState;
+      trainingDescription,
+    } = formState
 
     this.props
       .createTraining({
@@ -88,11 +93,10 @@ class TrainingsNew extends React.Component {
         activities: activities,
         coachNotes: trainingComment,
         importance: importance,
-        intensity: intensity
+        intensity: intensity,
       })
-      .then(() => this.resetForm())
-      .then(() => this.successAlert());
-  };
+      .then(() => this.successAlert(username))
+  }
 
   render() {
     return (
@@ -115,19 +119,19 @@ class TrainingsNew extends React.Component {
           </Col>
         </div>
       </>
-    );
+    )
   }
 }
 
 const mapStateToProps = state => ({
-  user: getUser(state)
-});
+  user: getUser(state),
+})
 
 const mapDispatchToProps = dispatch => ({
-  createTraining: training => dispatch(createNewTraining(training))
-});
+  createTraining: training => dispatch(createNewTraining(training)),
+})
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(TrainingsNew);
+)(TrainingsNew)

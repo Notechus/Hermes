@@ -1,5 +1,5 @@
-import React from "react";
-import classnames from "classnames";
+import React from 'react'
+import classnames from 'classnames'
 import {
   Button,
   Collapse,
@@ -12,64 +12,69 @@ import {
   NavbarBrand,
   NavItem,
   NavLink,
-  UncontrolledDropdown
-} from "reactstrap";
-import { Auth } from "aws-amplify";
+  UncontrolledDropdown,
+} from 'reactstrap'
+import { Auth } from 'aws-amplify'
 
 class AdminNavbar extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       collapseOpen: false,
-      color: "navbar-transparent"
-    };
+      color: 'navbar-transparent',
+    }
   }
+
   componentDidMount() {
-    window.addEventListener("resize", this.updateColor);
+    window.addEventListener('resize', this.updateColor)
   }
+
   componentDidUpdate(e) {
     if (
       window.outerWidth < 993 &&
       e.history.location.pathname !== e.location.pathname &&
-      document.documentElement.className.indexOf("nav-open") !== -1
+      document.documentElement.className.indexOf('nav-open') !== -1
     ) {
-      document.documentElement.classList.toggle("nav-open");
+      document.documentElement.classList.toggle('nav-open')
     }
   }
-  // function that adds color white/transparent to the navbar on resize (this is for the collapse)
+
   updateColor = () => {
     if (window.innerWidth < 993 && this.state.collapseOpen) {
       this.setState({
-        color: "bg-white"
-      });
+        color: 'bg-white',
+      })
     } else {
       this.setState({
-        color: "navbar-transparent"
-      });
+        color: 'navbar-transparent',
+      })
     }
-  };
-  // this function opens and closes the sidebar on small devices
+  }
+
   toggleSidebar = () => {
-    document.documentElement.classList.toggle("nav-open");
-  };
-  // this function opens and closes the collapse on small devices
-  // it also adds navbar-transparent class to the navbar when closed
-  // ad bg-white when opened
+    document.documentElement.classList.toggle('nav-open')
+  }
+
   toggleCollapse = () => {
     let newState = {
-      collapseOpen: !this.state.collapseOpen
-    };
-    if (!this.state.collapseOpen) {
-      newState["color"] = "bg-white";
-    } else {
-      newState["color"] = "navbar-transparent";
+      collapseOpen: !this.state.collapseOpen,
     }
-    this.setState(newState);
-  };
+    if (!this.state.collapseOpen) {
+      newState['color'] = 'bg-white'
+    } else {
+      newState['color'] = 'navbar-transparent'
+    }
+    this.setState(newState)
+  }
+
+  isCoachUser = user => user && user.type === 'Coach'
+
   render() {
+    const { user } = this.props
+
     return (
       <>
-        <Navbar className={classnames("navbar-absolute fixed-top", this.state.color)} expand="lg">
+        <Navbar className={classnames('navbar-absolute fixed-top', this.state.color)} expand="lg">
           <Container fluid>
             <div className="navbar-wrapper">
               <div className="navbar-minimize">
@@ -84,8 +89,8 @@ class AdminNavbar extends React.Component {
                 </Button>
               </div>
               <div
-                className={classnames("navbar-toggle", {
-                  toggled: this.state.sidebarOpen
+                className={classnames('navbar-toggle', {
+                  toggled: this.state.sidebarOpen,
                 })}
               >
                 <button className="navbar-toggler" type="button" onClick={this.toggleSidebar}>
@@ -115,16 +120,18 @@ class AdminNavbar extends React.Component {
             </button>
             <Collapse className="justify-content-end" navbar isOpen={this.state.collapseOpen}>
               <Nav navbar>
-                <NavItem>
-                  <NavLink
-                    href="#new"
-                    onClick={e =>
-                      e.preventDefault() || this.props.history.push("/admin/trainings/new")
-                    }
-                  >
-                    New
-                  </NavLink>
-                </NavItem>
+                {this.isCoachUser(user) && (
+                  <NavItem>
+                    <NavLink
+                      href="#new"
+                      onClick={e =>
+                        e.preventDefault() || this.props.history.push('/admin/trainings/new')
+                      }
+                    >
+                      New
+                    </NavLink>
+                  </NavItem>
+                )}
                 <UncontrolledDropdown nav>
                   <DropdownToggle
                     aria-haspopup={true}
@@ -164,7 +171,7 @@ class AdminNavbar extends React.Component {
                     href="#pablo"
                     onClick={() =>
                       Auth.signOut()
-                        .then(() => this.props.onStateChange("signedOut", {}))
+                        .then(() => this.props.onStateChange('signedOut', {}))
                         .catch(err => console.log(err))
                     }
                   >
@@ -179,8 +186,8 @@ class AdminNavbar extends React.Component {
           </Container>
         </Navbar>
       </>
-    );
+    )
   }
 }
 
-export default AdminNavbar;
+export default AdminNavbar

@@ -1,16 +1,16 @@
-import React from "react";
+import React from 'react'
 
-import { Col, Row } from "reactstrap";
+import { Col, Row } from 'reactstrap'
 
-import { formatDateAsString } from "utils/functions";
-import PictureAvatarNoUpload from "components/CustomUpload/PictureAvatarNoUpload.jsx";
+import { formatDateAsString } from 'utils/functions'
+import ImageAvatarNoUpload from 'components/CustomUpload/ImageAvatarNoUpload.jsx'
 
-const BasicInfoTrainingSummary = ({ username, avatar, loaded, trainingDate }) => {
+const BasicInfoTrainingSummary = ({ username, avatar, userId, trainingDate }) => {
   return (
     <>
       <Row className="justify-content-center">
         <Col sm="6">
-          <PictureAvatarNoUpload image={avatar} loaded={loaded} />
+          <ImageAvatarNoUpload image={avatar} userId={userId} />
         </Col>
         <Col sm="6">
           <h6>Member username: {username}</h6>
@@ -18,7 +18,7 @@ const BasicInfoTrainingSummary = ({ username, avatar, loaded, trainingDate }) =>
         </Col>
       </Row>
     </>
-  );
-};
+  )
+}
 
-export default BasicInfoTrainingSummary;
+export default BasicInfoTrainingSummary
