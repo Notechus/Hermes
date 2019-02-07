@@ -1,13 +1,12 @@
 import React from 'react'
 import classnames from 'classnames'
 // reactstrap components
-import { Col, FormGroup, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap'
+import { Col, FormGroup, Input, Row } from 'reactstrap'
 import ReactDatetime from 'react-datetime'
-import Select from 'react-select'
-import { connect } from 'react-redux'
 import { getTeam } from 'reducers/teamsReducer'
 // core components
 import ImageAvatarNoUpload from 'components/CustomUpload/ImageAvatarNoUpload.jsx'
+import UsernameFromTeamDropdown from 'components/TrainingsNew/UsernameFromTeamDropdown.jsx'
 import { verifyFutureDate, verifyLength, verifyRangeInclusive } from 'utils/validation'
 
 class AboutTrainingStep extends React.Component {
@@ -55,15 +54,9 @@ class AboutTrainingStep extends React.Component {
   }
 
   isValidated = () => {
-    if (
-      this.state.usernameState === 'has-success' &&
-      this.state.trainingDateState === 'has-success'
-    ) {
+    if (this.state.trainingDateState === 'has-success') {
       return true
     } else {
-      if (this.state.usernameState !== 'has-success') {
-        this.setState({ usernameState: 'has-danger' })
-      }
       if (this.state.trainingDateState !== 'has-success') {
         this.setState({ trainingDateState: 'has-danger' })
       }
@@ -72,15 +65,6 @@ class AboutTrainingStep extends React.Component {
       }
       return false
     }
-  }
-
-  getUserDropdown = () => {
-    console.log(this.props)
-    const { team } = this.props
-    console.log('got team', team)
-    return team && team.members
-      ? team.members.map(e => ({ label: e.username, value: e.username, id: e.userId }))
-      : []
   }
 
   setUsername = user => {
@@ -103,39 +87,11 @@ class AboutTrainingStep extends React.Component {
               userId={this.state.memberId}
               level="protected"
             />
-            <FormGroup>
-              <Select
-                className="react-select primary"
-                classNamePrefix="react-select"
-                name="username"
-                value={{ label: this.state.username, value: this.state.username }}
-                onChange={v => this.setUsername(v)}
-                options={this.getUserDropdown()}
-                placeholder="Username"
-              />
-            </FormGroup>
-            <InputGroup
-              className={classnames(this.state.usernameState, {
-                'input-group-focus': this.state.usernameFocus,
-              })}
-            >
-              <InputGroupAddon addonType="prepend">
-                <InputGroupText>
-                  <i className="nc-icon nc-single-02" />
-                </InputGroupText>
-              </InputGroupAddon>
-              <Input
-                name="username"
-                placeholder="Username (required)"
-                type="text"
-                onChange={e => this.change(e, 'username', 'length', 3)}
-                onFocus={() => this.setState({ usernameFocus: true })}
-                onBlur={() => this.setState({ usernameFocus: false })}
-              />
-              {this.state.usernameState === 'has-danger' && (
-                <label className="error">This field is required.</label>
-              )}
-            </InputGroup>
+            <UsernameFromTeamDropdown
+              username={this.state.username}
+              memberId={this.state.memberId}
+              onChange={this.setUsername}
+            />
           </Col>
           <Col sm="4" className="mt-4 pt-1">
             <FormGroup
@@ -144,18 +100,12 @@ class AboutTrainingStep extends React.Component {
               })}
             >
               <ReactDatetime
-                inputProps={{
-                  className: 'form-control',
-                  placeholder: 'Training Date (required)',
-                }}
+                inputProps={{ className: 'form-control', placeholder: 'Training Date (required)' }}
                 timeFormat={false}
                 isValidDate={verifyFutureDate}
                 onChange={date => {
                   if (verifyFutureDate(date)) {
-                    this.setState({
-                      trainingDate: date,
-                      trainingDateState: 'has-success',
-                    })
+                    this.setState({ trainingDate: date, trainingDateState: 'has-success' })
                   } else {
                     this.setState({ trainingDateState: 'has-danger' })
                   }
@@ -195,8 +145,4 @@ class AboutTrainingStep extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  team: getTeam(state),
-})
-
-export default connect(mapStateToProps)(AboutTrainingStep)
+export default AboutTrainingStep

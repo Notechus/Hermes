@@ -8,6 +8,7 @@ class ImageAvatarNoUpload extends React.Component {
   }
 
   componentDidMount() {
+    this._isMounted = true
     this.load()
   }
 
@@ -17,7 +18,14 @@ class ImageAvatarNoUpload extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    this._isMounted = false
+  }
+
   load = () => {
+    if (!this._isMounted) {
+      return
+    }
     const { image, userId, level } = this.props
     const key = image ? image.toLowerCase() : '' + '-avatar.png'
     Storage.get(key, { level: level, identityId: userId })

@@ -1,5 +1,4 @@
 import React from 'react'
-import { S3Image } from 'aws-amplify-react'
 import { Storage } from 'aws-amplify'
 import defaultImage from 'assets/img/default-avatar.png'
 
