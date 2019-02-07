@@ -98,7 +98,11 @@ class AboutTrainingStep extends React.Component {
         <h5 className="info-text">Let's start with the basic information</h5>
         <Row className="justify-content-center">
           <Col sm="3">
-            <ImageAvatarNoUpload image={this.state.memberAvatar} userId={this.state.memberId} />
+            <ImageAvatarNoUpload
+              image={this.state.memberAvatar}
+              userId={this.state.memberId}
+              level="protected"
+            />
             <FormGroup>
               <Select
                 className="react-select primary"
