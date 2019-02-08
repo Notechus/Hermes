@@ -26,10 +26,19 @@ class AdminNavbar extends React.Component {
   }
 
   componentDidMount() {
+    this._isMounted = true
     window.addEventListener('resize', this.updateColor)
   }
 
+  componentWillUnmount() {
+    this._isMounted = false
+    window.removeEventListener('resize', this.updateColor)
+  }
+
   componentDidUpdate(e) {
+    if (!this._isMounted) {
+      return
+    }
     if (
       window.outerWidth < 993 &&
       e.history.location.pathname !== e.location.pathname &&
@@ -159,7 +168,10 @@ class AdminNavbar extends React.Component {
                   </DropdownMenu>
                 </UncontrolledDropdown>
                 <NavItem>
-                  <NavLink href="#pablo" onClick={e => e.preventDefault()}>
+                  <NavLink
+                    href="#pablo"
+                    onClick={e => e.preventDefault() || this.props.onStateChange('loading')}
+                  >
                     <i className="nc-icon nc-settings-gear-65" />
                     <p>
                       <span className="d-lg-none d-md-block">Account</span>
