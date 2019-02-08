@@ -3,6 +3,10 @@ import React from 'react'
 import { Loading } from 'aws-amplify-react'
 import LoadingScreen from 'react-loading-screen'
 
+const BG_COLOR = `url(${require('../../assets/img/bg/fabio-mangione.jpg')})`
+const TEXT_COLOR = '#f8f8f8'
+const SPINNER_COLOR = '#70aef8'
+
 class LoadingPage extends Loading {
   componentDidMount() {
     document.body.classList.toggle('login-page')
@@ -11,8 +15,6 @@ class LoadingPage extends Loading {
   componentWillUnmount() {
     document.body.classList.toggle('login-page')
   }
-
-  showComponent = theme => {}
 
   render() {
     if (this.props.authState !== 'loading') {
@@ -25,21 +27,15 @@ class LoadingPage extends Loading {
           <div className="ml-auto mr-auto">
             <LoadingScreen
               loading={true}
-              bgColor="#f1f1f1"
-              spinnerColor="#9ee5f8"
-              textColor="#676767"
-              logoSrc="/apple-icon.png"
+              bgColor={BG_COLOR}
+              spinnerColor={SPINNER_COLOR}
+              textColor={TEXT_COLOR}
+              // logoSrc="/apple-icon.png"
               text="Hermes running app"
             >
               <div>Hermes running app</div>
             </LoadingScreen>
           </div>
-          <div
-            className="full-page-background"
-            style={{
-              backgroundImage: `url(${require('../../assets/img/bg/fabio-mangione.jpg')})`,
-            }}
-          />
         </div>
       </div>
     )
