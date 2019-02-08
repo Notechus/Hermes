@@ -3,7 +3,6 @@ import classnames from 'classnames'
 // reactstrap components
 import { Col, FormGroup, Input, Row } from 'reactstrap'
 import ReactDatetime from 'react-datetime'
-import { getTeam } from 'reducers/teamsReducer'
 // core components
 import ImageAvatarNoUpload from 'components/CustomUpload/ImageAvatarNoUpload.jsx'
 import UsernameFromTeamDropdown from 'components/TrainingsNew/UsernameFromTeamDropdown.jsx'

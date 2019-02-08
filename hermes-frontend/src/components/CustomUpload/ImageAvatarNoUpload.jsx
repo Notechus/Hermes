@@ -27,7 +27,7 @@ class ImageAvatarNoUpload extends React.Component {
       return
     }
     const { image, userId, level } = this.props
-    const key = image ? image.toLowerCase() : '' + '-avatar.png'
+    const key = image ? image.toLowerCase() + '-avatar.png' : ''
     Storage.get(key, { level: level, identityId: userId })
       .then(url => {
         this.setState({

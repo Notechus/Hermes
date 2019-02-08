@@ -168,10 +168,7 @@ class AdminNavbar extends React.Component {
                   </DropdownMenu>
                 </UncontrolledDropdown>
                 <NavItem>
-                  <NavLink
-                    href="#pablo"
-                    onClick={e => e.preventDefault() || this.props.onStateChange('loading')}
-                  >
+                  <NavLink href="#pablo" onClick={e => e.preventDefault()}>
                     <i className="nc-icon nc-settings-gear-65" />
                     <p>
                       <span className="d-lg-none d-md-block">Account</span>

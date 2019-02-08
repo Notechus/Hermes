@@ -28,13 +28,13 @@ export const fetchUserTeam = username => async dispatch => {
   }
 }
 
-export const fetchTeams = () => async dispatch => {
+export const fetchTeams = async dispatch => {
   const token = await getApiToken()
   const init = { headers: BASIC_HEADERS(token) }
 
   console.log(`fetching teams`)
   try {
-    const teams = await API.put(API_NAME, TEAMS_RESOURCE, init)
+    const teams = await API.get(API_NAME, TEAMS_RESOURCE, init)
     console.log('fetched teams', teams)
     return dispatch(loadTeamsSuccess(teams.Items))
   } catch (err) {
