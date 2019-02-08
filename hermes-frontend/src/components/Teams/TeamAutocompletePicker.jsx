@@ -15,7 +15,11 @@ class TeamAutocompletePicker extends React.Component {
     const suggestions =
       inputLength === 0
         ? []
-        : teams.filter(e => e.teamName.toLowerCase().slice(0, inputLength) === inputVal)
+        : teams.filter(
+            e =>
+              e.teamName.toLowerCase().slice(0, inputLength) === inputVal ||
+              e.teamName.toLowerCase().includes(inputVal)
+          )
     return suggestions
   }
 
