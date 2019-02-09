@@ -57,6 +57,7 @@ class JoinTeamPage extends React.Component {
       console.log('joining team', team, user)
       this.props
         .joinTeam(user.username, user.cognitoId, joinCode)
+        .then(() => this.closeModal())
         .then(() => console.log('successfully joined, add sweet alert here'))
     }
   }

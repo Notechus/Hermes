@@ -27,15 +27,14 @@ class TeamsPage extends Component {
   }
 
   render() {
-    const { team } = this.props
-    return <JoinTeamPage />
-    // if (user.type === 'Coach') {
-    //   return team ? <CoachTeamPage team={team} /> : <div className="content">Create a team</div>
-    // } else if (user.type === 'Member') {
-    //   return team ? <RunnerTeamPage team={team} /> : <JoinTeamPage teams={teams} />
-    // } else {
-    //   return <div className="content" />
-    // }
+    const { team, user } = this.props
+    if (user.type === 'Coach') {
+      return team ? <CoachTeamPage team={team} /> : <div className="content">Create a team</div>
+    } else if (user.type === 'Member') {
+      return team ? <RunnerTeamPage team={team} /> : <JoinTeamPage />
+    } else {
+      return <div className="content" />
+    }
   }
 }
 

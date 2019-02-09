@@ -3,7 +3,7 @@ import { Button, Modal, ModalBody, ModalFooter } from 'reactstrap'
 
 const TeamJoinModal = ({ isOpen, toggle, submit }) => {
   return (
-    <Modal isOpen={isOpen} toggle={toggle}>
+    <Modal isOpen={isOpen} toggle={toggle} centered>
       <div className="modal-header justify-content-center">
         <button
           type="button"
