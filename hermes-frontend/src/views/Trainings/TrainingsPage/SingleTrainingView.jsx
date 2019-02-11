@@ -1,18 +1,19 @@
 import React from 'react'
+import moment from 'moment'
 import {
   Button,
   Card,
   CardBody,
   CardHeader,
-  Row,
-  Col,
   CardTitle,
+  Col,
   Form,
   FormGroup,
-  FormText,
-  Label,
   Input,
+  Label,
+  Row,
 } from 'reactstrap'
+import { DATETIME_FORMAT } from 'utils/functions'
 
 const SingleTrainingView = ({ training, onReturn, onUpdate, onChange }) => {
   return (
@@ -23,7 +24,7 @@ const SingleTrainingView = ({ training, onReturn, onUpdate, onChange }) => {
             <CardHeader>
               <span className="ml-auto">
                 <a href="#back" onClick={e => e.preventDefault() || onReturn('trainings', null)}>
-                  <i className="fa fa-arrow-left fa-2x" />
+                  <i className="fa fa-arrow-left fa-2x" style={{ color: 'gray' }} />
                 </a>
               </span>
               <CardTitle tag="h4" className="text-center">
@@ -40,6 +41,7 @@ const SingleTrainingView = ({ training, onReturn, onUpdate, onChange }) => {
                           <small>{e.description}</small>
                           <hr />
                           <Row form>
+                            <Col md={2} />
                             <Col md={2}>
                               <FormGroup>
                                 <Label>Distance</Label>
@@ -83,6 +85,9 @@ const SingleTrainingView = ({ training, onReturn, onUpdate, onChange }) => {
                       </Col>
                     </Row>
                     <Row form>
+                      <Col md={6} className="mr-auto mt-4 text-muted">
+                        Modified at: {moment().format(DATETIME_FORMAT)}
+                      </Col>
                       <Col md={2} className="ml-auto">
                         <Button color="success">Update</Button>
                       </Col>

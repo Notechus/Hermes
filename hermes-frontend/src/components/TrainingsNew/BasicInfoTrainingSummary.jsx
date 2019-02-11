@@ -3,14 +3,14 @@ import React from 'react'
 import { Col, Row } from 'reactstrap'
 
 import { formatDateAsString } from 'utils/functions'
-import ImageAvatarNoUpload from 'components/CustomUpload/ImageAvatarNoUpload.jsx'
+import ImageAvatar from 'components/TrainingsNew/ImageAvatar.jsx'
 
-const BasicInfoTrainingSummary = ({ username, avatar, description, userId, trainingDate }) => {
+const BasicInfoTrainingSummary = ({ username, avatar, description, trainingDate }) => {
   return (
     <>
       <Row className="justify-content-center">
         <Col sm="6">
-          <ImageAvatarNoUpload image={avatar} level="protected" userId={userId} />
+          <ImageAvatar src={avatar} />
         </Col>
         <Col sm="6">
           <h6>Member username: {username}</h6>
