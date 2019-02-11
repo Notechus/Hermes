@@ -28,13 +28,15 @@ class ImageAvatarNoUpload extends React.Component {
     }
     const { image, userId, level } = this.props
     const key = image ? image.toLowerCase() + '-avatar.png' : ''
-    Storage.get(key, { level: level, identityId: userId })
-      .then(url => {
-        this.setState({
-          src: url,
+    if (image) {
+      Storage.get(key, { level: level, identityId: userId })
+        .then(url => {
+          this.setState({
+            src: url,
+          })
         })
-      })
-      .catch(err => console.log(err))
+        .catch(err => console.log(err))
+    }
   }
 
   render() {

@@ -70,7 +70,7 @@ class AboutTrainingStep extends React.Component {
     console.log('setting username and avatar', user)
     this.setState({
       username: user.value,
-      memberAvatar: user.value.toLowerCase() + '-avatar.png',
+      memberAvatar: user.value,
       memberId: user.id,
     })
   }

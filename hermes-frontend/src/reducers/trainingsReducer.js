@@ -3,6 +3,7 @@ import {
   sortByTrainingDateAsc,
   sortByTrainingDateDesc,
   getCurrentMonthBoundaries,
+  isDateInRange,
 } from 'utils/functions'
 import moment from 'moment'
 
@@ -38,6 +39,22 @@ export const getPreviousTraining = state => {
     .filter(e => e.completed && moment(e.trainingDate).isSameOrBefore(now, 'day'))
     .sort(sortByTrainingDateAsc)
     .find(e => e)
+}
+
+export const getCurrentWeekTrainings = state => {
+  const startWeek = moment().startOf('isoWeek')
+  const endWeek = moment().endOf('isoWeek')
+  return state.trainings.trainings.filter(training =>
+    isDateInRange(training.trainingDate, startWeek, endWeek)
+  )
+}
+
+export const getTrainingsExceptCurrentWeek = state => {
+  const startWeek = moment().startOf('isoWeek')
+  const endWeek = moment().endOf('isoWeek')
+  return state.trainings.trainings.filter(
+    training => !isDateInRange(training.trainingDate, startWeek, endWeek)
+  )
 }
 
 const initialState = {

@@ -92,7 +92,13 @@ class TrainingsNew extends React.Component {
         runner: username,
         trainingDate: formatDateAsString(trainingDate),
         trainingDescription: trainingDescription,
-        activities: activities,
+        activities: activities.map(e =>
+          Object.assign(
+            {},
+            { order: e.order, distance: e.distance, description: e.description },
+            e.comment ? { comment: e.comment } : null
+          )
+        ),
         coachNotes: trainingComment,
         importance: importance,
         intensity: intensity,
