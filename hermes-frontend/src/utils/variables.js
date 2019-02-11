@@ -7,7 +7,7 @@ export const GOALS_RESOURCE = '/goals'
 export const ACHIEVEMENTS_RESOURCE = '/achievements'
 
 const APP_VERSION_SUFFIX = 'alpha'
-export const APPLICATION_VERSION = `0.0.3.${APP_VERSION_SUFFIX}`
+export const APPLICATION_VERSION = `0.0.5.${APP_VERSION_SUFFIX}`
 
 export const BASIC_HEADERS = token => ({
   Authorization: token,

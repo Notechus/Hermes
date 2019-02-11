@@ -14,8 +14,9 @@ import {
   Row,
 } from 'reactstrap'
 import { DATETIME_FORMAT } from 'utils/functions'
+import TrainingActivityCompleteForm from 'components/TrainingsPage/TrainingActivityCompleteForm.jsx'
 
-const SingleTrainingView = ({ training, onReturn, onUpdate, onChange }) => {
+const SingleTrainingView = ({ training, onReturn, onUpdate, onChange, onCompleted }) => {
   return (
     <div className="content">
       <Row>
@@ -36,38 +37,17 @@ const SingleTrainingView = ({ training, onReturn, onUpdate, onChange }) => {
                 <Col>
                   <Form>
                     {training.activities &&
-                      training.activities.map(e => (
-                        <>
-                          <small>{e.description}</small>
-                          <hr />
-                          <Row form>
-                            <Col md={2} />
-                            <Col md={2}>
-                              <FormGroup>
-                                <Label>Distance</Label>
-                                <Input type="text" value="0.0" />
-                              </FormGroup>
-                            </Col>
-                            <Col md={2}>
-                              <FormGroup>
-                                <Label>Time</Label>
-                                <Input type="text" value="0.0" />
-                              </FormGroup>
-                            </Col>
-                            <Col md={2}>
-                              <FormGroup>
-                                <Label>Pace</Label>
-                                <Input type="text" value="0.0" />
-                              </FormGroup>
-                            </Col>
-                            <Col md={2}>
-                              <FormGroup>
-                                <Label>Avg HR</Label>
-                                <Input type="text" value="0.0" />
-                              </FormGroup>
-                            </Col>
-                          </Row>
-                        </>
+                      training.activities.map((e, key) => (
+                        <TrainingActivityCompleteForm
+                          key={key}
+                          order={e.order}
+                          description={e.description}
+                          distance={e.distance}
+                          time={e.time}
+                          hr={e.hr}
+                          pace={e.pace}
+                          onChange={onChange}
+                        />
                       ))}
                     <Row form className="mt-4">
                       <Col md={6}>
@@ -76,7 +56,7 @@ const SingleTrainingView = ({ training, onReturn, onUpdate, onChange }) => {
                             <Input
                               checked={training.completed}
                               type="checkbox"
-                              onChange={onChange}
+                              onChange={onCompleted}
                             />
                             Did you finish the training?
                             <span className="form-check-sign" />
@@ -85,11 +65,21 @@ const SingleTrainingView = ({ training, onReturn, onUpdate, onChange }) => {
                       </Col>
                     </Row>
                     <Row form>
-                      <Col md={6} className="mr-auto mt-4 text-muted">
-                        Modified at: {moment().format(DATETIME_FORMAT)}
-                      </Col>
+                      {training.modificationDate && (
+                        <Col md={6} className="mr-auto mt-4 text-muted">
+                          Modified at: {moment(training.modificationDate).format(DATETIME_FORMAT)}
+                        </Col>
+                      )}
                       <Col md={2} className="ml-auto">
-                        <Button color="success">Update</Button>
+                        <Button
+                          color="success"
+                          onClick={e => {
+                            e.preventDefault()
+                            onUpdate()
+                          }}
+                        >
+                          Update
+                        </Button>
                       </Col>
                     </Row>
                   </Form>

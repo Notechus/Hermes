@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
-import { Label, Input, FormGroup } from 'reactstrap'
 import { DAY_FORMAT } from 'utils/functions'
 
 const TrainingsTableRowData = ({ row, onChange }) => {
