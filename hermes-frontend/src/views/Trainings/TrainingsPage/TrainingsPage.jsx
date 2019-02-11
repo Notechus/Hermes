@@ -46,16 +46,6 @@ class TrainingsPage extends React.Component {
     this.setState({ activePage, training })
   }
 
-  markCompleted = training => {
-    training.completed = !training.completed
-    this.props.updateTraining(training)
-  }
-
-  updateTraining = training => {
-    training.completed = !training.completed
-    this.props.updateTraining(training).then(() => this.toggleModal())
-  }
-
   onChange = (field, order, value) => {
     const { training } = this.state
     const activity = training.activities.find(e => e.order === order)

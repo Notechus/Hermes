@@ -6,6 +6,7 @@ import {
   CardBody,
   CardHeader,
   CardTitle,
+  CardFooter,
   Col,
   Form,
   FormGroup,
@@ -70,25 +71,52 @@ const SingleTrainingView = ({ training, onReturn, onUpdate, onChange, onComplete
                           Modified at: {moment(training.modificationDate).format(DATETIME_FORMAT)}
                         </Col>
                       )}
-                      <Col md={2} className="ml-auto">
-                        <Button
-                          color="success"
-                          onClick={e => {
-                            e.preventDefault()
-                            onUpdate()
-                          }}
-                        >
-                          Update
-                        </Button>
-                      </Col>
+                      <Col md={2} className="ml-auto" />
                     </Row>
                   </Form>
                 </Col>
               </Row>
             </CardBody>
+            <CardFooter>
+              <Button
+                size="sm"
+                color="success"
+                className="btn-round"
+                onClick={e => {
+                  e.preventDefault()
+                  onUpdate()
+                }}
+              >
+                Update
+              </Button>
+            </CardFooter>
           </Card>
         </Col>
       </Row>
+      {/*<Row>*/}
+      {/*<Col lg={6} md={10} sm={12} xs={12} className="ml-auto mr-auto">*/}
+      {/*<Card>*/}
+      {/*<CardHeader>*/}
+      {/*<CardTitle tag="h4" className="text-center">*/}
+      {/*Comments*/}
+      {/*</CardTitle>*/}
+      {/*</CardHeader>*/}
+      {/*<CardBody>comments here</CardBody>*/}
+      {/*<CardFooter>*/}
+      {/*<Button*/}
+      {/*size="sm"*/}
+      {/*className="btn-round"*/}
+      {/*color="success"*/}
+      {/*onClick={e => {*/}
+      {/*e.preventDefault()*/}
+      {/*}}*/}
+      {/*>*/}
+      {/*Add comment*/}
+      {/*</Button>*/}
+      {/*</CardFooter>*/}
+      {/*</Card>*/}
+      {/*</Col>*/}
+      {/*</Row>*/}
     </div>
   )
 }
