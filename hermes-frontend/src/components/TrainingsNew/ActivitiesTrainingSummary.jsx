@@ -19,4 +19,4 @@ const ActivitiesTrainingSummary = ({ activities }) => {
   )
 }
 
-export default ActivitiesTrainingSummary
+export default React.memo(ActivitiesTrainingSummary)

@@ -65,4 +65,4 @@ const TrainingActivityCompleteForm = ({
   )
 }
 
-export default TrainingActivityCompleteForm
+export default React.memo(TrainingActivityCompleteForm)

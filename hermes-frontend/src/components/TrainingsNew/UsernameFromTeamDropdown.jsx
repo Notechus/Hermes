@@ -34,4 +34,4 @@ const mapStateToProps = state => ({
   team: getTeam(state),
 })
 
-export default connect(mapStateToProps)(UsernameFromTeamDropdown)
+export default connect(mapStateToProps)(React.memo(UsernameFromTeamDropdown))

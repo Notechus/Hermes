@@ -25,4 +25,4 @@ TrainingsTableRowData.propTypes = {
   onChange: PropTypes.func.isRequired,
 }
 
-export default TrainingsTableRowData
+export default React.memo(TrainingsTableRowData)

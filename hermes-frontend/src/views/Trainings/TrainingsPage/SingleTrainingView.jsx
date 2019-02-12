@@ -121,4 +121,4 @@ const SingleTrainingView = ({ training, onReturn, onUpdate, onChange, onComplete
   )
 }
 
-export default SingleTrainingView
+export default React.memo(SingleTrainingView)

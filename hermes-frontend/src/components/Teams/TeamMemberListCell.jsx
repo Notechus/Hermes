@@ -26,4 +26,4 @@ const TeamMemberListCell = ({ member, click }) => {
   )
 }
 
-export default TeamMemberListCell
+export default React.memo(TeamMemberListCell)

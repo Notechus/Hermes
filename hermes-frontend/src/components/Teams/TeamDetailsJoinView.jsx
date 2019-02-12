@@ -29,4 +29,4 @@ const TeamDetailsJoinView = ({ team, join }) => {
   )
 }
 
-export default TeamDetailsJoinView
+export default React.memo(TeamDetailsJoinView)

@@ -46,42 +46,39 @@ class TrainingSummaryStep extends React.Component {
             >
               <TrainingSummaryCollapse
                 parent="#summary-accordion"
-                content={
-                  <BasicInfoTrainingSummary
-                    username={wizardData.username}
-                    description={wizardData.trainingDescription}
-                    avatar={wizardData.memberAvatar}
-                    trainingDate={wizardData.trainingDate}
-                  />
-                }
                 title="Basic Info"
                 isOpen={this.isOpen('basicInfo')}
                 toggle={() => this.collapsesToggle('basicInfo')}
-              />
+              >
+                <BasicInfoTrainingSummary
+                  username={wizardData.username}
+                  description={wizardData.trainingDescription}
+                  avatar={wizardData.memberAvatar}
+                  trainingDate={wizardData.trainingDate}
+                />
+              </TrainingSummaryCollapse>
               <TrainingSummaryCollapse
                 parent="#summary-accordion"
-                content={
-                  <ActivitiesTrainingSummary
-                    activities={wizardData.activities ? wizardData.activities : []}
-                  />
-                }
                 title="Activities Info"
                 isOpen={this.isOpen('activitiesInfo')}
                 toggle={() => this.collapsesToggle('activitiesInfo')}
-              />
+              >
+                <ActivitiesTrainingSummary
+                  activities={wizardData.activities ? wizardData.activities : []}
+                />
+              </TrainingSummaryCollapse>
               <TrainingSummaryCollapse
                 parent="#summary-accordion"
-                content={
-                  <AdditionalInfoTrainingSummary
-                    comment={wizardData.trainingComment}
-                    importance={wizardData.importance}
-                    intensity={wizardData.intensity}
-                  />
-                }
                 title="Additional Info"
                 isOpen={this.isOpen('additionalInfo')}
                 toggle={() => this.collapsesToggle('additionalInfo')}
-              />
+              >
+                <AdditionalInfoTrainingSummary
+                  comment={wizardData.trainingComment}
+                  importance={wizardData.importance}
+                  intensity={wizardData.intensity}
+                />
+              </TrainingSummaryCollapse>
             </div>
           </Col>
         </Row>

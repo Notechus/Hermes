@@ -32,4 +32,4 @@ const DashboardStatisticsCard = ({
   )
 }
 
-export default DashboardStatisticsCard
+export default React.memo(DashboardStatisticsCard)

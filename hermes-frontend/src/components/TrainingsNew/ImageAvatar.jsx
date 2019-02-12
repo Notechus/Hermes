@@ -15,4 +15,4 @@ const ImageAvatar = ({ src }) => {
   )
 }
 
-export default ImageAvatar
+export default React.memo(ImageAvatar)

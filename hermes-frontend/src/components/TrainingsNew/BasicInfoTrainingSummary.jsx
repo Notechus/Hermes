@@ -22,4 +22,4 @@ const BasicInfoTrainingSummary = ({ username, avatar, description, trainingDate 
   )
 }
 
-export default BasicInfoTrainingSummary
+export default React.memo(BasicInfoTrainingSummary)

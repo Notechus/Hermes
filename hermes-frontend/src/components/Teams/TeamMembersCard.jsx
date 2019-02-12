@@ -26,4 +26,4 @@ const TeamMembersCard = ({ members }) => {
   )
 }
 
-export default TeamMembersCard
+export default React.memo(TeamMembersCard)

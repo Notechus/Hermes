@@ -36,4 +36,4 @@ const CoachTeamPage = ({ team }) => {
   )
 }
 
-export default CoachTeamPage
+export default React.memo(CoachTeamPage)

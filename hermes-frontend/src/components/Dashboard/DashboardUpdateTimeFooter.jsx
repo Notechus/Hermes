@@ -11,4 +11,4 @@ export const DashboardUpdateTimeFooter = ({ time }) => {
   )
 }
 
-export default DashboardUpdateTimeFooter
+export default React.memo(DashboardUpdateTimeFooter)

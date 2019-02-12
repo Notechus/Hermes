@@ -117,4 +117,4 @@ const TotalDistanceStatisticCard = ({ trainings, updateTime }) => {
   )
 }
 
-export default TotalDistanceStatisticCard
+export default React.memo(TotalDistanceStatisticCard)

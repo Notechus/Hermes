@@ -26,4 +26,4 @@ const TeamCoachCard = ({ description, owner, ownerId }) => {
   )
 }
 
-export default TeamCoachCard
+export default React.memo(TeamCoachCard)

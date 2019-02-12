@@ -1,6 +1,6 @@
-import React from "react";
-import { S3Image } from "aws-amplify-react";
-import defaultImage from "assets/img/default-avatar.png";
+import React from 'react'
+import { S3Image } from 'aws-amplify-react'
+import defaultImage from 'assets/img/default-avatar.png'
 
 const ImageAvatarUpload = ({ loaded, image, onChange }) => {
   return (
@@ -18,4 +18,4 @@ const ImageAvatarUpload = ({ loaded, image, onChange }) => {
   )
 }
 
-export default ImageAvatarUpload
+export default React.memo(ImageAvatarUpload)

@@ -5,33 +5,6 @@ import { sortByTrainingDateAsc, sortByTrainingDateDesc } from 'utils/functions'
 import { getCurrentWeekTrainings, getTrainingsExceptCurrentWeek } from 'reducers/trainingsReducer'
 import { connect } from 'react-redux'
 
-// hideAlert = () => {
-//   this.setState({
-//     alert: null,
-//   })
-// }
-//
-// warningWithConfirmMessage = training => {
-//   this.setState({
-//     alert: (
-//       <ReactBSAlert
-//         warning
-//         style={{ display: 'block', marginTop: '-100px' }}
-//         title="Are you sure?"
-//         onConfirm={() => this.removeTraining(training)}
-//         onCancel={() => this.hideAlert()}
-//         confirmBtnBsStyle="info"
-//         cancelBtnBsStyle="danger"
-//         confirmBtnText="Yes, delete it!"
-//         cancelBtnText="Cancel"
-//         showCancel
-//       >
-//         You will not be able to recover this training!
-//       </ReactBSAlert>
-//     ),
-//   })
-// }
-
 const RunnerTrainingsView = ({ currentWeek, trainings, onLink }) => {
   return (
     <>
@@ -76,4 +49,4 @@ const mapStateToProps = state => ({
   trainings: getTrainingsExceptCurrentWeek(state),
 })
 
-export default connect(mapStateToProps)(RunnerTrainingsView)
+export default connect(mapStateToProps)(React.memo(RunnerTrainingsView))

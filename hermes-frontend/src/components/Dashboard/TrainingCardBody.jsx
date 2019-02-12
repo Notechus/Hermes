@@ -33,4 +33,4 @@ const TrainingCardBody = ({ intensity, description, activities, completed }) => 
   )
 }
 
-export default TrainingCardBody
+export default React.memo(TrainingCardBody)

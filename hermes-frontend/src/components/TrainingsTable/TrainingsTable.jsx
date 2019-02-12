@@ -32,4 +32,4 @@ TrainingsTable.propTypes = {
   onChange: PropTypes.func,
 }
 
-export default TrainingsTable
+export default React.memo(TrainingsTable)

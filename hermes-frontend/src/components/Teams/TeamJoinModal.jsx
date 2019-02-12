@@ -31,4 +31,4 @@ const TeamJoinModal = ({ isOpen, toggle, submit }) => {
   )
 }
 
-export default TeamJoinModal
+export default React.memo(TeamJoinModal)
