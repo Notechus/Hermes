@@ -43,7 +43,7 @@ class TrainingsPage extends React.Component {
         }
       })
 
-    this.setState({ activePage, training })
+    this.setState({ activePage, training: training ? Object.assign({}, training) : null })
   }
 
   onChange = (field, order, value) => {
@@ -64,6 +64,14 @@ class TrainingsPage extends React.Component {
   updateTrainingInfo = () => {
     const { updateTraining } = this.props
     const { training } = this.state
+    training.activities.forEach(e => {
+      if (e.hr) {
+        e.hr = Number.parseInt(e.hr)
+      }
+      if (e.distance) {
+        e.distance = Number.parseFloat(e.distance)
+      }
+    })
     console.log('updating training', training)
     updateTraining(training).then(() => this.successAlert())
   }
@@ -109,7 +117,9 @@ class TrainingsPage extends React.Component {
           <>
             {alert}
             <SingleTrainingView
-              training={training}
+              activities={training.activities}
+              completed={training.completed}
+              modificationTime={training.modificationTime}
               onReturn={this.changeState}
               onUpdate={this.updateTrainingInfo}
               onChange={this.onChange}

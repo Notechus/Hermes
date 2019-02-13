@@ -78,12 +78,14 @@ const updateTrainingCompletion = (training, username) => {
       trainingId: training.trainingId,
       runner: username,
     },
-    UpdateExpression: `set activities = :activities, completed = :completed`,
+    UpdateExpression:
+      'set activities = :activities, completed = :completed, modificationTime = :time',
     ConditionExpression: 'runner = :runner',
     ExpressionAttributeValues: {
       ':runner': username,
       ':completed': training.completed,
       ':activities': training.activities,
+      ':time': new Date(),
     },
     ReturnValues: 'UPDATED_NEW',
   }

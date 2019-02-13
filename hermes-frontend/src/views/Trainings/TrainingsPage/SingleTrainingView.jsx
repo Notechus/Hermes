@@ -17,7 +17,15 @@ import {
 import { DATETIME_FORMAT } from 'utils/functions'
 import TrainingActivityCompleteForm from 'components/TrainingsPage/TrainingActivityCompleteForm.jsx'
 
-const SingleTrainingView = ({ training, onReturn, onUpdate, onChange, onCompleted }) => {
+const SingleTrainingView = ({
+  activities,
+  completed,
+  modificationTime,
+  onReturn,
+  onUpdate,
+  onChange,
+  onCompleted,
+}) => {
   return (
     <div className="content">
       <Row>
@@ -37,8 +45,8 @@ const SingleTrainingView = ({ training, onReturn, onUpdate, onChange, onComplete
               <Row>
                 <Col>
                   <Form>
-                    {training.activities &&
-                      training.activities.map((e, key) => (
+                    {activities &&
+                      activities.map((e, key) => (
                         <TrainingActivityCompleteForm
                           key={key}
                           order={e.order}
@@ -54,11 +62,7 @@ const SingleTrainingView = ({ training, onReturn, onUpdate, onChange, onComplete
                       <Col md={6}>
                         <FormGroup check>
                           <Label check>
-                            <Input
-                              checked={training.completed}
-                              type="checkbox"
-                              onChange={onCompleted}
-                            />
+                            <Input checked={completed} type="checkbox" onChange={onCompleted} />
                             Did you finish the training?
                             <span className="form-check-sign" />
                           </Label>
@@ -66,9 +70,9 @@ const SingleTrainingView = ({ training, onReturn, onUpdate, onChange, onComplete
                       </Col>
                     </Row>
                     <Row form>
-                      {training.modificationDate && (
+                      {modificationTime && (
                         <Col md={6} className="mr-auto mt-4 text-muted">
-                          Modified at: {moment(training.modificationDate).format(DATETIME_FORMAT)}
+                          Modified at: {moment(modificationTime).format(DATETIME_FORMAT)}
                         </Col>
                       )}
                       <Col md={2} className="ml-auto" />
@@ -93,30 +97,6 @@ const SingleTrainingView = ({ training, onReturn, onUpdate, onChange, onComplete
           </Card>
         </Col>
       </Row>
-      {/*<Row>*/}
-      {/*<Col lg={6} md={10} sm={12} xs={12} className="ml-auto mr-auto">*/}
-      {/*<Card>*/}
-      {/*<CardHeader>*/}
-      {/*<CardTitle tag="h4" className="text-center">*/}
-      {/*Comments*/}
-      {/*</CardTitle>*/}
-      {/*</CardHeader>*/}
-      {/*<CardBody>comments here</CardBody>*/}
-      {/*<CardFooter>*/}
-      {/*<Button*/}
-      {/*size="sm"*/}
-      {/*className="btn-round"*/}
-      {/*color="success"*/}
-      {/*onClick={e => {*/}
-      {/*e.preventDefault()*/}
-      {/*}}*/}
-      {/*>*/}
-      {/*Add comment*/}
-      {/*</Button>*/}
-      {/*</CardFooter>*/}
-      {/*</Card>*/}
-      {/*</Col>*/}
-      {/*</Row>*/}
     </div>
   )
 }
