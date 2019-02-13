@@ -22,6 +22,7 @@ import { chartExample1, chartExample2, chartExample3 } from 'variables/charts.js
 
 import { DATE_FORMAT, sortByActivityOrderAsc } from 'utils/functions'
 import DashboardUpdateTimeFooter from 'components/Dashboard/DashboardUpdateTimeFooter'
+import DashboardDistanceLineChart from 'components/Dashboard/DashboardDistanceLineChart'
 
 class Dashboard extends React.Component {
   componentDidMount() {
@@ -89,46 +90,7 @@ class Dashboard extends React.Component {
           </Row>
           <Row>
             <Col lg="4" sm="6">
-              <Card>
-                <CardHeader>
-                  <Row>
-                    <Col sm="7">
-                      <div className="numbers pull-left">$34,657</div>
-                    </Col>
-                    <Col sm="5">
-                      <div className="pull-right">
-                        <Badge color="success" pill>
-                          +18%
-                        </Badge>
-                      </div>
-                    </Col>
-                  </Row>
-                </CardHeader>
-                <CardBody>
-                  <h6 className="big-title">total earnings in last ten quarters</h6>
-                  <Line
-                    data={chartExample1.data}
-                    options={chartExample1.options}
-                    height={380}
-                    width={826}
-                  />
-                </CardBody>
-                <CardFooter>
-                  <hr />
-                  <Row>
-                    <Col sm="7">
-                      <div className="footer-title">Financial Statistics</div>
-                    </Col>
-                    <Col sm="5">
-                      <div className="pull-right">
-                        <Button className="btn-round btn-icon" color="success" size="sm">
-                          <i className="nc-icon nc-simple-add" />
-                        </Button>
-                      </div>
-                    </Col>
-                  </Row>
-                </CardFooter>
-              </Card>
+              <DashboardDistanceLineChart />
             </Col>
             <Col lg="4" sm="6">
               <Card>
