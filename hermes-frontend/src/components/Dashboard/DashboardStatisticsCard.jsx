@@ -4,7 +4,7 @@ import { Card, CardBody, CardFooter, CardHeader, CardTitle } from 'reactstrap'
 const DashboardStatisticsCard = ({
   title,
   subTitle,
-  body,
+  children,
   footerLegend,
   footerClass,
   footerStats,
@@ -16,7 +16,7 @@ const DashboardStatisticsCard = ({
           <CardTitle>{title}</CardTitle>
           <p className="card-category">{subTitle}</p>
         </CardHeader>
-        <CardBody>{body}</CardBody>
+        <CardBody>{children}</CardBody>
         <CardFooter>
           {footerLegend && (
             <div className="legend">

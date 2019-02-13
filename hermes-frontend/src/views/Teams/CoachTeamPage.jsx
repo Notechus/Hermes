@@ -7,10 +7,6 @@ const CoachTeamPage = ({ team }) => {
     <>
       <div className="content">
         <Row>
-          {/*<Col md="6">*/}
-          {/*<TeamMemoCard owner={team.teamOwner} memo={team.description} />*/}
-          {/*</Col>*/}
-          {/*<Col md="6" />*/}
           <Col md={3}>
             <TeamMembersCard members={team.members} />
           </Col>
