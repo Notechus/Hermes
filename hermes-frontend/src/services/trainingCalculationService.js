@@ -13,6 +13,9 @@ export const aggregateTrainingActivitiesDistanceWithRounding = activities => {
   return round(distance)
 }
 
+export const countTrainingsWithStatus = (trainings, status) =>
+  trainings ? trainings.filter(e => e.completed === status).length : 0
+
 const aggregateTrainingActivitiesDistance = activities => {
   return activities
     ? activities.map(e => (e.distance ? e.distance : 0.0)).reduce((a, b) => a + b, 0.0)

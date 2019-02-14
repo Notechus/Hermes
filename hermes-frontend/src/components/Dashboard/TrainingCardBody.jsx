@@ -1,13 +1,6 @@
 import React from 'react'
 import { Badge } from 'reactstrap'
-import { round } from 'utils/functions'
-
-const getDistance = activities => {
-  const distance = activities
-    ? activities.map(e => (e.distance ? e.distance : 0.0)).reduce((a, b) => a + b, 0.0)
-    : 0.0
-  return round(distance)
-}
+import { aggregateTrainingActivitiesDistanceWithRounding } from 'services/trainingCalculationService'
 
 const TrainingCardBody = ({ intensity, description, activities, completed }) => {
   return (
@@ -18,7 +11,7 @@ const TrainingCardBody = ({ intensity, description, activities, completed }) => 
             Intensity: {intensity}
           </Badge>
           <Badge color="success" pill>
-            Distance: {getDistance(activities)} km
+            Distance: {aggregateTrainingActivitiesDistanceWithRounding(activities)} km
           </Badge>
           {completed && <Badge>Completed</Badge>}
         </div>
