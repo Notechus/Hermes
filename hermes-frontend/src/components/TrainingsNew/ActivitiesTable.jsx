@@ -41,4 +41,4 @@ const ActivitiesTable = ({ data, onDelete }) => {
   )
 }
 
-export default ActivitiesTable
+export default React.memo(ActivitiesTable)

@@ -50,4 +50,4 @@ const RunnerTeamPage = ({ team, leave }) => {
   )
 }
 
-export default RunnerTeamPage
+export default React.memo(RunnerTeamPage)

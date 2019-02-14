@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { getUser } from 'reducers/authorizationDataReducer'
-import { getTeam, getTeams } from 'reducers/teamsReducer'
+import { getTeam } from 'reducers/teamsReducer'
 import { fetchUserTeam } from 'actions/teamsActions'
 import CoachTeamPage from 'views/Teams/CoachTeamPage.jsx'
 import RunnerTeamPage from 'views/Teams/RunnerTeamPage.jsx'
@@ -27,11 +27,11 @@ class TeamsPage extends Component {
   }
 
   render() {
-    const { team, teams, user } = this.props
+    const { team, user } = this.props
     if (user.type === 'Coach') {
       return team ? <CoachTeamPage team={team} /> : <div className="content">Create a team</div>
     } else if (user.type === 'Member') {
-      return team ? <RunnerTeamPage team={team} /> : <JoinTeamPage teams={teams} />
+      return team ? <RunnerTeamPage team={team} /> : <JoinTeamPage />
     } else {
       return <div className="content" />
     }
@@ -41,7 +41,6 @@ class TeamsPage extends Component {
 const mapStateToProps = state => ({
   user: getUser(state),
   team: getTeam(state),
-  teams: getTeams(state),
 })
 
 const mapDispatchToProps = dispatch => ({

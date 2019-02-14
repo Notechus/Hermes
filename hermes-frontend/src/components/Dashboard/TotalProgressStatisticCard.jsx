@@ -2,17 +2,17 @@ import React from 'react'
 import DashboardStatisticsCard from 'components/Dashboard/DashboardStatisticsCard'
 import DashboardUpdateTimeFooter from 'components/Dashboard/DashboardUpdateTimeFooter'
 import { Doughnut } from 'react-chartjs-2'
-import { normalizeToPercentRange, round } from 'utils/functions'
+import { normalizeToPercentRange } from 'utils/functions'
 
 const chart = (completed, unfinished) => ({
   data: {
     labels: [1, 2],
     datasets: [
       {
-        label: 'Trainings',
+        label: 'Activities',
         pointRadius: 0,
         pointHoverRadius: 0,
-        backgroundColor: ['#4acccd', '#f4f3ef'],
+        backgroundColor: ['#f17e5d', '#f4f3ef'],
         borderWidth: 0,
         data: [
           completed ? normalizeToPercentRange(completed, completed + unfinished, 0) / 100.0 : 0,
@@ -69,39 +69,17 @@ const chart = (completed, unfinished) => ({
   },
 })
 
-const getTotalDistanceFromTrainingsWithStatus = (trainings, status) => {
-  return trainings
-    .filter(t => t.completed === status)
-    .map(t => t.activities)
-    .map(a => aggregateActivitiesDistanceAndStatus(a))
-    .reduce((a, b) => a + b, 0.0)
-}
-
-const aggregateActivitiesDistanceAndStatus = activities => {
-  return activities
-    ? activities.map(e => (e.distance ? e.distance : 0.0)).reduce((a, b) => a + b, 0.0)
-    : 0.0
-}
-
-const TotalDistanceStatisticCard = ({ trainings, updateTime }) => {
-  const totalCompletedDistance = getTotalDistanceFromTrainingsWithStatus(trainings, true)
-  const totalUnfinishedDistance = getTotalDistanceFromTrainingsWithStatus(trainings, false)
-  const chartData = chart(totalCompletedDistance, totalUnfinishedDistance)
+const TotalProgressStatisticCard = ({ trainings, updateTime }) => {
+  const totalCompletedActivities = trainings ? trainings.filter(e => e.completed).length : 0
+  const totalUnfinishedActivities = trainings ? trainings.filter(e => !e.completed).length : 0
+  const chartData = chart(totalCompletedActivities, totalUnfinishedActivities)
   return (
     <>
       <DashboardStatisticsCard
-        title="Distance run"
-        subTitle={
-          <>
-            This month{' '}
-            <b>
-              {round(totalCompletedDistance)} /{' '}
-              {round(totalCompletedDistance + totalUnfinishedDistance)} km
-            </b>
-          </>
-        }
+        title="This month"
+        subTitle="Total progress"
         footerLegend="Completed"
-        footerClass="text-info"
+        footerClass="text-danger"
         footerStats={<DashboardUpdateTimeFooter time={updateTime} />}
       >
         <Doughnut
@@ -116,4 +94,4 @@ const TotalDistanceStatisticCard = ({ trainings, updateTime }) => {
   )
 }
 
-export default React.memo(TotalDistanceStatisticCard)
+export default React.memo(TotalProgressStatisticCard)

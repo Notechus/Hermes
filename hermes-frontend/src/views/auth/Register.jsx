@@ -26,6 +26,7 @@ import Footer from 'components/Footer/Footer'
 import countryDialCodes from 'utils/countryDialCodes'
 import { Auth } from 'aws-amplify'
 import ReactBSAlert from 'react-bootstrap-sweetalert'
+import { APPLICATION_VERSION } from 'utils/variables'
 
 const SIGNUP_DISABLED = true
 
@@ -83,7 +84,7 @@ class Register extends SignUp {
 
   hideAlert = () => {
     this.setState({ alert: null })
-  };
+  }
 
   warningWithConfirmMessage = () => {
     this.setState({
@@ -268,7 +269,7 @@ class Register extends SignUp {
               }}
             />
           </div>
-          <Footer fluid />
+          <Footer fluid version={APPLICATION_VERSION} />
         </div>
       </div>
     )

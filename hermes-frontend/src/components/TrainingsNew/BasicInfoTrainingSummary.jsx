@@ -3,22 +3,23 @@ import React from 'react'
 import { Col, Row } from 'reactstrap'
 
 import { formatDateAsString } from 'utils/functions'
-import ImageAvatarNoUpload from 'components/CustomUpload/ImageAvatarNoUpload.jsx'
+import ImageAvatar from 'components/TrainingsNew/ImageAvatar.jsx'
 
-const BasicInfoTrainingSummary = ({ username, avatar, userId, trainingDate }) => {
+const BasicInfoTrainingSummary = ({ username, avatar, description, trainingDate }) => {
   return (
     <>
       <Row className="justify-content-center">
         <Col sm="6">
-          <ImageAvatarNoUpload image={avatar} userId={userId} />
+          <ImageAvatar src={avatar} />
         </Col>
         <Col sm="6">
           <h6>Member username: {username}</h6>
           <h6>Training Date: {formatDateAsString(trainingDate)}</h6>
+          <h6>Description: {description}</h6>
         </Col>
       </Row>
     </>
   )
 }
 
-export default BasicInfoTrainingSummary
+export default React.memo(BasicInfoTrainingSummary)

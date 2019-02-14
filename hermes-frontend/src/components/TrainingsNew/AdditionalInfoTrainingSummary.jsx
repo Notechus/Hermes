@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react'
 
-import { Col, Row } from "reactstrap";
+import { Col, Row } from 'reactstrap'
 
 const AdditionalInfoTrainingSummary = ({ intensity, importance, comment }) => {
   return (
@@ -14,7 +14,7 @@ const AdditionalInfoTrainingSummary = ({ intensity, importance, comment }) => {
         </Col>
       </Row>
     </>
-  );
-};
+  )
+}
 
-export default AdditionalInfoTrainingSummary;
+export default React.memo(AdditionalInfoTrainingSummary)

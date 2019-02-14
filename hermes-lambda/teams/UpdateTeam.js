@@ -3,6 +3,13 @@ const ddb = new AWS.DynamoDB.DocumentClient()
 
 AWS.config.update({ region: 'eu-west-1' })
 
+/*
+  1. if runner Create record for team using teamId
+  2. if coach, update fields coach provided in Teams:
+    (description, joinCode)
+  3. create event
+ */
+
 exports.handler = async (event, context) => {
   const { awsRequestId } = context
   const { requestContext, body } = event
@@ -16,33 +23,6 @@ exports.handler = async (event, context) => {
   const userType = requestContext.authorizer.claims['custom:type']
 
   const requestBody = JSON.parse(body)
-  try {
-    if (userType === 'Member') {
-      const updatedTraining = await updateTrainingCompletion(requestBody, username)
-      console.log('Successfully updated training', updatedTraining)
-      return {
-        statusCode: 204,
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-        },
-      }
-    } else if (userType === 'Coach') {
-      const updatedTraining = await updateTrainingDetails(requestBody, awsRequestId)
-      console.log('Successfully updated training', updatedTraining)
-      return {
-        statusCode: 204,
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-        },
-      }
-    }
-  } catch (err) {
-    console.error(err)
-    return errorResponse(err.message, awsRequestId)
-  }
-}
-
-const updateTrainingDetails = async requestBody => {
   const itemProperties = Object.keys(requestBody).filter(
     e => !['trainingId', 'runner', 'creationDate', 'coach'].includes(e)
   )
@@ -68,32 +48,44 @@ const updateTrainingDetails = async requestBody => {
   })
 
   console.log('Updating training: ', params)
-  return updateTraining(params)
-}
-
-const updateTrainingCompletion = (training, username) => {
-  const params = {
-    TableName: 'Trainings',
-    Key: {
-      trainingId: training.trainingId,
-      runner: username,
-    },
-    UpdateExpression:
-      'set activities = :activities, completed = :completed, modificationTime = :time',
-    ConditionExpression: 'runner = :runner',
-    ExpressionAttributeValues: {
-      ':runner': username,
-      ':completed': training.completed,
-      ':activities': training.activities,
-      ':time': new Date(),
-    },
-    ReturnValues: 'UPDATED_NEW',
+  try {
+    const { teamId, username, userId, joinCode } = requestBody
+    //fetch team, compare codes, update training
+    const team = await fetchTeamById(teamId)
+    if (team && team.joinCode === joinCode) {
+      const updated = await joinTeam(teamId, userId, username)
+      console.log('Successfully added member', updated)
+      return {
+        statusCode: 204,
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+        },
+      }
+    } else {
+      return errorResponse('Could not join the team. Wrong join code', awsRequestId)
+    }
+  } catch (err) {
+    console.error(err)
+    return errorResponse(err.message, awsRequestId)
   }
-  return updateTraining(params)
 }
 
-const updateTraining = params => {
-  return ddb.update(params).promise()
+const fetchTeamById = teamId => {
+  return ddb.get({})
+}
+
+const joinTeam = (teamId, userId, username) => {
+  return ddb
+    .put({
+      TableName: 'TeamMembers',
+      Item: {
+        teamId,
+        userId,
+        username,
+        joinedAt: new Date(),
+      },
+    })
+    .promise()
 }
 
 const errorResponse = (errorMessage, awsRequestId) => {

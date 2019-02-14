@@ -1,14 +1,8 @@
-import React from "react";
+import React from 'react'
 
-import { Card, CardBody, CardHeader, Collapse } from "reactstrap";
+import { Card, CardBody, CardHeader, Collapse } from 'reactstrap'
 
-const TrainingSummaryCollapse = ({
-  parent,
-  content,
-  title,
-  isOpen,
-  toggle
-}) => {
+const TrainingSummaryCollapse = ({ parent, children, title, isOpen, toggle }) => {
   return (
     <>
       <Card className="card-plain">
@@ -24,11 +18,11 @@ const TrainingSummaryCollapse = ({
           </a>
         </CardHeader>
         <Collapse role="tabpanel" isOpen={isOpen}>
-          <CardBody>{content}</CardBody>
+          <CardBody>{children}</CardBody>
         </Collapse>
       </Card>
     </>
-  );
-};
+  )
+}
 
-export default TrainingSummaryCollapse;
+export default React.memo(TrainingSummaryCollapse)

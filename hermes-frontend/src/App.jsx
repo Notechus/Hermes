@@ -1,24 +1,24 @@
-import React from "react";
-import { Provider } from "react-redux";
-import { Redirect, Route, Router, Switch } from "react-router-dom";
-import AdminLayout from "layouts/Admin/Admin.jsx";
-import { createBrowserHistory } from "history";
+import React from 'react'
+import { Provider } from 'react-redux'
+import { Redirect, Route, Router, Switch } from 'react-router-dom'
+import AdminLayout from 'layouts/Admin/Admin.jsx'
+import { createBrowserHistory } from 'history'
 import {
   ConfirmSignIn,
   ForgotPassword,
   RequireNewPassword,
-  Loading,
   VerifyContact,
-  withAuthenticator
-} from "aws-amplify-react";
+  withAuthenticator,
+} from 'aws-amplify-react'
 
-import Login from "views/auth/Login";
-import Register from "views/auth/Register";
-import ConfirmRegister from "views/auth/ConfirmRegister";
-import configureStore from "store/configureStore";
+import Login from 'views/auth/Login'
+import Loading from 'views/auth/LoadingPage'
+import Register from 'views/auth/Register'
+import ConfirmRegister from 'views/auth/ConfirmRegister'
+import configureStore from 'store/configureStore'
 
-const hist = createBrowserHistory();
-const store = configureStore();
+const hist = createBrowserHistory()
+const store = configureStore()
 
 class App extends React.Component {
   render() {
@@ -41,7 +41,7 @@ class App extends React.Component {
           </Switch>
         </Router>
       </Provider>
-    );
+    )
   }
 }
 
@@ -53,5 +53,5 @@ export default withAuthenticator(App, false, [
   <Loading />,
   <ConfirmRegister />,
   <ForgotPassword />,
-  <RequireNewPassword />
-]);
+  <RequireNewPassword />,
+])

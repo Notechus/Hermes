@@ -28,16 +28,30 @@ export const fetchUserTeam = username => async dispatch => {
   }
 }
 
-export const fetchTeams = () => async dispatch => {
+export const fetchTeams = async dispatch => {
   const token = await getApiToken()
   const init = { headers: BASIC_HEADERS(token) }
 
   console.log(`fetching teams`)
   try {
-    const teams = await API.put(API_NAME, TEAMS_RESOURCE, init)
+    const teams = await API.get(API_NAME, TEAMS_RESOURCE, init)
     console.log('fetched teams', teams)
     return dispatch(loadTeamsSuccess(teams.Items))
   } catch (err) {
     console.log('Could not fetch teams', err)
+  }
+}
+
+export const joinTeam = (username, userId, joinCode) => async dispatch => {
+  const token = await getApiToken()
+  const init = { headers: BASIC_HEADERS(token), body: { userId, username, joinCode } }
+
+  console.log('joining team using code', joinCode)
+  try {
+    const response = await API.put(API_NAME, TEAMS_RESOURCE, init)
+    console.log('got response from join', response)
+    return dispatch(fetchUserTeam(username))
+  } catch (err) {
+    console.log('Could not join team', err)
   }
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react'
 // reactstrap components
 import {
   Button,
@@ -13,53 +13,48 @@ import {
   InputGroup,
   InputGroupAddon,
   InputGroupText,
-  Row
-} from "reactstrap";
+  Row,
+} from 'reactstrap'
 
-import AuthNavbar from "components/Navbars/AuthNavbar";
-import Footer from "components/Footer/Footer";
-import { ForgotPassword, SignIn } from "aws-amplify-react";
-import Register from "views/auth/Register";
+import AuthNavbar from 'components/Navbars/AuthNavbar'
+import Footer from 'components/Footer/Footer'
+import { ForgotPassword, SignIn } from 'aws-amplify-react'
+import Register from 'views/auth/Register'
+import { APPLICATION_VERSION } from 'utils/variables'
 
 class Login extends SignIn {
   componentDidMount() {
-    window.addEventListener("keydown", this.onKeyDown);
-    document.body.classList.toggle("login-page");
+    window.addEventListener('keydown', this.onKeyDown)
+    document.body.classList.toggle('login-page')
   }
 
   componentWillUnmount() {
-    window.removeEventListener("keydown", this.onKeyDown);
-    document.body.classList.toggle("login-page");
+    window.removeEventListener('keydown', this.onKeyDown)
+    document.body.classList.toggle('login-page')
   }
 
   onKeyDown = e => {
-    if (e.keyCode !== 13) return;
+    if (e.keyCode !== 13) return
 
-    const { hide = [] } = this.props;
-    if (this.props.authState === "signIn" && !hide.includes(Login)) {
-      this.signIn();
+    const { hide = [] } = this.props
+    if (this.props.authState === 'signIn' && !hide.includes(Login)) {
+      this.signIn()
     }
-  };
+  }
 
   render() {
-    const { hide = [], override = [] } = this.props;
-    if (this.props.authState !== "signIn") {
-      return null;
+    const { hide = [], override = [] } = this.props
+    if (this.props.authState !== 'signIn') {
+      return null
     }
     const showSignUp =
-      override.includes("SignUp") ||
-      !hide.some(component => component === Register);
+      override.includes('SignUp') || !hide.some(component => component === Register)
     const showForgotPassword =
-      override.includes("ForgotPassword") ||
-      !hide.some(component => component === ForgotPassword);
+      override.includes('ForgotPassword') || !hide.some(component => component === ForgotPassword)
     return (
       <div className="wrapper wrapper-full-page" ref="fullPages">
         <div className="full-page section-image">
-          <AuthNavbar
-            signUp={showSignUp}
-            signIn={false}
-            changeState={this.changeState}
-          />
+          <AuthNavbar signUp={showSignUp} signIn={false} changeState={this.changeState} />
           <div className="login-page">
             <Container>
               <Row>
@@ -121,13 +116,8 @@ class Login extends SignIn {
                           <Col md={12} lg={12} sm={12}>
                             {showForgotPassword && (
                               <p>
-                                Forgot your password?{" "}
-                                <a
-                                  href="#pablo"
-                                  onClick={() =>
-                                    this.changeState("forgotPassword")
-                                  }
-                                >
+                                Forgot your password?{' '}
+                                <a href="#pablo" onClick={() => this.changeState('forgotPassword')}>
                                   Reset password
                                 </a>
                               </p>
@@ -143,15 +133,15 @@ class Login extends SignIn {
             <div
               className="full-page-background"
               style={{
-                backgroundImage: `url(${require("../../assets/img/bg/fabio-mangione.jpg")})`
+                backgroundImage: `url(${require('../../assets/img/bg/fabio-mangione.jpg')})`,
               }}
             />
           </div>
-          <Footer fluid />
+          <Footer fluid version={APPLICATION_VERSION} />
         </div>
       </div>
-    );
+    )
   }
 }
 
-export default Login;
+export default Login

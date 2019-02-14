@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, CardBody, CardFooter, CardTitle } from 'reactstrap'
+import { Card, CardBody, CardFooter } from 'reactstrap'
 
 const TeamMemoCard = ({ memo, owner }) => {
   return (
@@ -20,4 +20,4 @@ const TeamMemoCard = ({ memo, owner }) => {
   )
 }
 
-export default TeamMemoCard
+export default React.memo(TeamMemoCard)

@@ -91,4 +91,4 @@ const NewActivityForm = ({
   )
 }
 
-export default NewActivityForm
+export default React.memo(NewActivityForm)

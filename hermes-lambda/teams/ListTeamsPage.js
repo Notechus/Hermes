@@ -5,19 +5,14 @@ AWS.config.update({ region: 'eu-west-1' })
 
 exports.handler = async (event, context) => {
   const { awsRequestId } = context
-  const { requestContext, pathParameters } = event
+  const { requestContext } = event
   console.log(`Received event ("${awsRequestId}"):`, event)
 
   if (!requestContext.authorizer) {
     return errorResponse(500, 'Authorization not configured', awsRequestId)
   }
-  const username = pathParameters.username
-  const authUsername = requestContext.authorizer.claims['cognito:username']
-  if (username !== authUsername) {
-    return errorResponse(403, "You don't have permissions to that resource", awsRequestId)
-  }
 
-  console.log(`Fetching ${authUsername} team`)
+  console.log(`Fetching teams list`)
   try {
     const teams = await fetchTeams()
     console.log('Successfully fetched teams:', teams)

@@ -11,6 +11,7 @@ import { fetchAuthorizedUser } from 'actions/authorizationActions'
 
 import routes from 'routes.js'
 import { getUser } from 'reducers/authorizationDataReducer'
+import { APPLICATION_VERSION } from 'utils/variables'
 
 let ps
 
@@ -90,7 +91,7 @@ class Admin extends React.Component {
             user={this.props.user}
           />
           <Switch>{this.getRoutes(routes)}</Switch>
-          <Footer fluid />
+          <Footer fluid version={APPLICATION_VERSION} />
         </div>
       </div>
     )

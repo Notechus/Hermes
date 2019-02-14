@@ -70,6 +70,26 @@ export const updateTraining = training => async dispatch => {
   }
 }
 
+export const updateRunnerTraining = training => async dispatch => {
+  const token = await getApiToken()
+  const init = {
+    headers: BASIC_HEADERS(token),
+    body: {
+      trainingId: training.trainingId,
+      activities: training.activities,
+      completed: training.completed,
+    },
+  }
+  console.log('runner completing training', training)
+  try {
+    const response = await API.put(API_NAME, TRAININGS_RESOURCE, init)
+    console.log('got response after update', response)
+    return dispatch(updateTrainingSuccess(training))
+  } catch (err) {
+    console.log('Could not update training', err)
+  }
+}
+
 export const removeTraining = training => async dispatch => {
   const token = await getApiToken()
   const init = { headers: BASIC_HEADERS(token), body: {} }

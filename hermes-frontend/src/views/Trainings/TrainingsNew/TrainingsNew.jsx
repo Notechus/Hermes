@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { getUser } from 'reducers/authorizationDataReducer'
+import { getTeam } from 'reducers/teamsReducer'
 import { createNewTraining } from 'actions/trainingsActions'
 import { formatDateAsString } from 'utils/functions'
 
@@ -13,11 +14,12 @@ import TrainingActivitiesStep from './Steps/TrainingActivitiesStep.jsx'
 import AdditionalInfoStep from './Steps/AdditionalInfoStep.jsx'
 import TrainingSummaryStep from './Steps/TrainingSummaryStep.jsx'
 
-const steps = [
+const steps = team => [
   {
     stepName: 'About',
     stepIcon: 'nc-icon nc-alert-circle-i',
     component: AboutTrainingStep,
+    componentProp: team,
   },
   {
     stepName: 'Activities',
@@ -90,7 +92,13 @@ class TrainingsNew extends React.Component {
         runner: username,
         trainingDate: formatDateAsString(trainingDate),
         trainingDescription: trainingDescription,
-        activities: activities,
+        activities: activities.map(e =>
+          Object.assign(
+            {},
+            { order: e.order, distance: e.distance, description: e.description },
+            e.comment ? { comment: e.comment } : null
+          )
+        ),
         coachNotes: trainingComment,
         importance: importance,
         intensity: intensity,
@@ -99,13 +107,14 @@ class TrainingsNew extends React.Component {
   }
 
   render() {
+    const wizardSteps = steps(this.props.team)
     return (
       <>
         <div className="content">
           {this.state.alert}
           <Col className="ml-auto mr-auto" md="10">
             <ReactWizard
-              steps={steps}
+              steps={wizardSteps}
               navSteps
               validate
               title="Add a new training"
@@ -125,6 +134,7 @@ class TrainingsNew extends React.Component {
 
 const mapStateToProps = state => ({
   user: getUser(state),
+  team: getTeam(state),
 })
 
 const mapDispatchToProps = dispatch => ({
