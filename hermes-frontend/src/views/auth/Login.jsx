@@ -49,8 +49,6 @@ class Login extends SignIn {
     }
     const showSignUp =
       override.includes('SignUp') || !hide.some(component => component === Register)
-    const showForgotPassword =
-      override.includes('ForgotPassword') || !hide.some(component => component === ForgotPassword)
     return (
       <div className="wrapper wrapper-full-page" ref="fullPages">
         <div className="full-page section-image">
@@ -114,14 +112,12 @@ class Login extends SignIn {
                         </Row>
                         <Row className="justify-content-center">
                           <Col md={12} lg={12} sm={12}>
-                            {showForgotPassword && (
-                              <p>
-                                Forgot your password?{' '}
-                                <a href="#pablo" onClick={() => this.changeState('forgotPassword')}>
-                                  Reset password
-                                </a>
-                              </p>
-                            )}
+                            <p>
+                              Forgot your password?{' '}
+                              <a href="#pablo" onClick={() => this.changeState('forgotPassword')}>
+                                Reset password
+                              </a>
+                            </p>
                           </Col>
                         </Row>
                       </CardFooter>

@@ -5,7 +5,6 @@ import AdminLayout from 'layouts/App/App.jsx'
 import { createBrowserHistory } from 'history'
 import {
   ConfirmSignIn,
-  ForgotPassword,
   RequireNewPassword,
   VerifyContact,
   withAuthenticator,
@@ -15,6 +14,7 @@ import Login from 'views/auth/Login'
 import Loading from 'views/auth/LoadingPage'
 import Register from 'views/auth/Register'
 import ConfirmRegister from 'views/auth/ConfirmRegister'
+import ForgotPassword from 'views/auth/ForgotPassword'
 import configureStore from 'store/configureStore'
 
 const hist = createBrowserHistory()
