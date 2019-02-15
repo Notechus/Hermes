@@ -15,10 +15,11 @@ import {
   getCurrentMonthTrainings,
   getNextTraining,
   getPreviousTraining,
+  getTrainings,
 } from 'reducers/trainingsReducer'
 import { getUser } from 'reducers/authorizationDataReducer'
 import { getWebStatistic } from 'reducers/webStatisticsReducer'
-import { chartExample1, chartExample2, chartExample3 } from 'variables/charts.jsx'
+import { chartExample2, chartExample3 } from 'variables/charts.jsx'
 
 import { DATE_FORMAT, sortByActivityOrderAsc } from 'utils/functions'
 import DashboardUpdateTimeFooter from 'components/Dashboard/DashboardUpdateTimeFooter'
@@ -183,15 +184,16 @@ class Dashboard extends React.Component {
   }
 }
 
-export const mapStateToProps = state => ({
+const mapStateToProps = state => ({
   nextTraining: getNextTraining(state),
   previousTraining: getPreviousTraining(state),
   trainings: getCurrentMonthTrainings(state),
+  yearTrainings: getTrainings(state),
   user: getUser(state),
   trainingsUpdated: getWebStatistic(state, 'LOAD_USER_TRAININGS'),
 })
 
-export const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = dispatch => ({
   fetchTrainings: username => dispatch(fetchTrainingsForUser(username)),
   fetchTeam: username => dispatch(fetchUserTeam(username)),
 })

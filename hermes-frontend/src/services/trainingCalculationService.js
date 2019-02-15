@@ -1,11 +1,15 @@
 import { round } from 'utils/functions'
 
 export const aggregateDistanceFromTrainingsWithStatus = (trainings, status) => {
+  return aggregateDistanceFromTrainings(trainings.filter(t => t.completed === status))
+}
+
+export const aggregateDistanceFromTrainings = trainings => {
   return trainings
-    .filter(t => t.completed === status)
-    .map(t => t.activities)
-    .map(a => aggregateTrainingActivitiesDistance(a))
-    .reduce((a, b) => a + b, 0.0)
+    ? trainings
+        .map(t => aggregateTrainingActivitiesDistance(t.activities))
+        .reduce((a, b) => a + b, 0.0)
+    : 0.0
 }
 
 export const aggregateTrainingActivitiesDistanceWithRounding = activities => {
@@ -16,7 +20,7 @@ export const aggregateTrainingActivitiesDistanceWithRounding = activities => {
 export const countTrainingsWithStatus = (trainings, status) =>
   trainings ? trainings.filter(e => e.completed === status).length : 0
 
-const aggregateTrainingActivitiesDistance = activities => {
+export const aggregateTrainingActivitiesDistance = activities => {
   return activities
     ? activities.map(e => (e.distance ? e.distance : 0.0)).reduce((a, b) => a + b, 0.0)
     : 0.0

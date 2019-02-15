@@ -4,6 +4,7 @@ import {
   sortByTrainingDateDesc,
   getCurrentMonthBoundaries,
   isDateInRange,
+  getYearInterval,
 } from 'utils/functions'
 import moment from 'moment'
 
@@ -54,6 +55,13 @@ export const getTrainingsExceptCurrentWeek = state => {
   const endWeek = moment().endOf('isoWeek')
   return state.trainings.trainings.filter(
     training => !isDateInRange(training.trainingDate, startWeek, endWeek)
+  )
+}
+
+export const getLastYearOfTrainings = state => {
+  const [start, end] = getYearInterval()
+  return state.trainings.trainings.filter(training =>
+    moment(training.trainingDate).isBetween(start, end, null, '[]')
   )
 }
 

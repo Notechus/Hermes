@@ -1,4 +1,4 @@
-import { normalizeToPercentRange } from '../utils/functions'
+import { normalizeToPercentRange } from 'utils/functions'
 
 export const createTotalDistanceDoughnutChart = (
   label,
@@ -25,48 +25,18 @@ export const createTotalDistanceDoughnutChart = (
     ],
   },
   options: {
-    elements: {
-      center: {
-        text: text ? text + '%' : '0%',
-        color: chartColor,
-        fontStyle: 'Arial',
-        sidePadding: 60,
+    ...{
+      elements: {
+        center: {
+          text: text ? text + '%' : '0%',
+          color: chartColor,
+          fontStyle: 'Arial',
+          sidePadding: 60,
+        },
       },
+      cutoutPercentage: 90,
     },
-    cutoutPercentage: 90,
-    legend: {
-      display: false,
-    },
-    tooltips: {
-      enabled: false,
-    },
-    scales: {
-      yAxes: [
-        {
-          ticks: {
-            display: false,
-          },
-          gridLines: {
-            drawBorder: false,
-            zeroLineColor: 'transparent',
-            color: 'rgba(255,255,255,0.05)',
-          },
-        },
-      ],
-      xAxes: [
-        {
-          barPercentage: 1.6,
-          gridLines: {
-            drawBorder: false,
-            color: 'rgba(255,255,255,0.1)',
-            zeroLineColor: 'transparent',
-          },
-          ticks: {
-            display: false,
-          },
-        },
-      ],
-    },
+    ...chartOptions(false, false),
   },
 })
 
@@ -95,47 +65,112 @@ export const createTotalActivitiesCountChart = (
     ],
   },
   options: {
-    elements: {
-      center: {
-        text: text ? text + '%' : '0%',
-        color: color, // Default is #000000
-        fontStyle: 'Arial', // Default is Arial
-        sidePadding: 60, // Defualt is 20 (as a percentage)
+    ...{
+      elements: {
+        center: {
+          text: text ? text + '%' : '0%',
+          color: color,
+          fontStyle: 'Arial',
+          sidePadding: 60,
+        },
       },
+      cutoutPercentage: 90,
     },
-    cutoutPercentage: 90,
+    ...chartOptions(false, false),
+  },
+})
+
+export const createDistanceHistoryBarChart = (labels, data) => ({
+  data: {
+    labels: labels,
+    datasets: [
+      {
+        label: 'Distance',
+        fill: true,
+        backgroundColor: '#6bd098',
+        hoverBorderColor: '#6bd098',
+        borderWidth: 5,
+        data: data,
+      },
+    ],
+  },
+  options: {
     legend: {
       display: false,
     },
     tooltips: {
-      enabled: false,
+      enabled: true,
     },
     scales: {
       yAxes: [
         {
           ticks: {
-            display: false,
+            fontColor: '#9f9f9f',
+            fontStyle: 'bold',
+            beginAtZero: true,
+            maxTicksLimit: 6,
+            padding: 15,
           },
           gridLines: {
-            drawBorder: false,
             zeroLineColor: 'transparent',
-            color: 'rgba(255,255,255,0.05)',
+            display: true,
+            drawBorder: false,
+            color: '#9f9f9f',
           },
         },
       ],
       xAxes: [
         {
-          barPercentage: 1.6,
+          barPercentage: 0.4,
           gridLines: {
+            zeroLineColor: 'white',
+            display: false,
             drawBorder: false,
-            color: 'rgba(255,255,255,0.1)',
-            zeroLineColor: 'transparent',
+            color: 'transparent',
           },
           ticks: {
-            display: false,
+            padding: 20,
+            fontColor: '#9f9f9f',
+            fontStyle: 'bold',
           },
         },
       ],
     },
+  },
+})
+
+const chartOptions = (legend, tooltips) => ({
+  legend: {
+    display: legend,
+  },
+  tooltips: {
+    enabled: tooltips,
+  },
+  scales: {
+    yAxes: [
+      {
+        ticks: {
+          display: false,
+        },
+        gridLines: {
+          drawBorder: false,
+          zeroLineColor: 'transparent',
+          color: 'rgba(255,255,255,0.05)',
+        },
+      },
+    ],
+    xAxes: [
+      {
+        barPercentage: 1.6,
+        gridLines: {
+          drawBorder: false,
+          color: 'rgba(255,255,255,0.1)',
+          zeroLineColor: 'transparent',
+        },
+        ticks: {
+          display: false,
+        },
+      },
+    ],
   },
 })

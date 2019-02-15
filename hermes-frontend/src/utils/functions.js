@@ -1,5 +1,6 @@
 import moment from 'moment'
 
+export const YEAR_WITH_MONTH_FORMAT = 'YYYY-MM'
 export const DATE_FORMAT = 'YYYY-MM-DD'
 export const DATETIME_FORMAT = DATE_FORMAT + ' HH:mm:ss'
 export const DAY_FORMAT = 'dddd'
@@ -58,6 +59,14 @@ export const sortByDateString = (date1, date2) => {
   } else {
     return 0
   }
+}
+
+export const getYearInterval = () => {
+  const now = moment().endOf('month')
+  const yearAgo = moment(now)
+    .subtract(1, 'year')
+    .startOf('month')
+  return [yearAgo, now]
 }
 
 export const isDateInRange = (date, rangeStart, rangeEnd) => {
