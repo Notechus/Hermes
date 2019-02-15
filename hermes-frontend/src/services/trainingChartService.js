@@ -89,7 +89,7 @@ export const createDistanceHistoryBarChart = (labels, data) => ({
         fill: true,
         backgroundColor: '#6bd098',
         hoverBorderColor: '#6bd098',
-        borderWidth: 5,
+        borderWidth: 3,
         data: data,
       },
     ],

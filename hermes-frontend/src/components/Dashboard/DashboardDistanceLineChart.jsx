@@ -22,7 +22,8 @@ const DashboardDistanceLineChart = ({ trainings }) => {
   const totalDistance = values.reduce((a, b) => a + b, 0.0)
   const thisMonth = values[values.length - 1]
   const previousMonth = values[values.length - 2]
-  const lastMonthDiff = round(((thisMonth - previousMonth) / previousMonth) * 100)
+  const lastMonthDiff =
+    thisMonth && previousMonth ? round(((thisMonth - previousMonth) / previousMonth) * 100) : 0
   return (
     <>
       <Card>
@@ -53,7 +54,7 @@ const DashboardDistanceLineChart = ({ trainings }) => {
             <Col sm="5">
               <div className="pull-right">
                 <Button className="btn-round btn-icon" color="success" size="sm">
-                  <i className="nc-icon nc-simple-add" />
+                  <i className="nc-icon nc-button-play" />
                 </Button>
               </div>
             </Col>
