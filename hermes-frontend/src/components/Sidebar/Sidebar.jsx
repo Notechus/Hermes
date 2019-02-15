@@ -151,7 +151,7 @@ class Sidebar extends React.Component {
               )}
             </div>
             <div className="info justify-content-center pl-4">
-              <NavLink to="/admin/user-profile" activeClassName="">
+              <NavLink to="/app/user-profile" activeClassName="">
                 <span>{user ? user.username : 'Unknown User'}</span>
               </NavLink>
             </div>

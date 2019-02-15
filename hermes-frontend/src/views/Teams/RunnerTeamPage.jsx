@@ -32,11 +32,9 @@ const RunnerTeamPage = ({ team, leave }) => {
                     </a>
                   </Col>
                 </Row>
+                <p>Personal note: </p>
                 <hr />
-                <pre>
-                  Personal note: {'\n'}
-                  {team.coachNote}
-                </pre>
+                <pre>{team.coachNote}</pre>
               </CardBody>
               <CardFooter>
                 <hr />

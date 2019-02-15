@@ -16,7 +16,7 @@ import {
 } from 'reactstrap'
 import { Auth } from 'aws-amplify'
 
-class AdminNavbar extends React.Component {
+class ApplicationNavbar extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -134,7 +134,7 @@ class AdminNavbar extends React.Component {
                     <NavLink
                       href="#new"
                       onClick={e =>
-                        e.preventDefault() || this.props.history.push('/admin/trainings/new')
+                        e.preventDefault() || this.props.history.push('/app/trainings/new')
                       }
                     >
                       New
@@ -199,4 +199,4 @@ class AdminNavbar extends React.Component {
   }
 }
 
-export default AdminNavbar
+export default ApplicationNavbar

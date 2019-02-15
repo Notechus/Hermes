@@ -2,7 +2,7 @@ import React from 'react'
 import { Badge } from 'reactstrap'
 import { aggregateTrainingActivitiesDistanceWithRounding } from 'services/trainingCalculationService'
 
-const TrainingCardBody = ({ intensity, description, activities, completed }) => {
+const TrainingCardBody = ({ intensity, description, activities }) => {
   return (
     <>
       <div className="timeline-panel">
@@ -13,9 +13,8 @@ const TrainingCardBody = ({ intensity, description, activities, completed }) => 
           <Badge color="success" pill>
             Distance: {aggregateTrainingActivitiesDistanceWithRounding(activities)} km
           </Badge>
-          {completed && <Badge>Completed</Badge>}
         </div>
-        <div className="timeline-body mt-2">
+        <div className="timeline-body mt-5">
           <h5 className="text-center">
             <strong>Activities: {activities ? activities.length : 0}</strong>
           </h5>

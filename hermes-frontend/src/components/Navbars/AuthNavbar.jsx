@@ -65,7 +65,7 @@ class AuthNavbar extends React.Component {
           >
             <Nav navbar>
               <NavItem>
-                <a href="/admin/dashboard" className="nav-link">
+                <a href="/app/dashboard" className="nav-link">
                   <i className="nc-icon nc-layout-11" />
                   Dashboard
                 </a>

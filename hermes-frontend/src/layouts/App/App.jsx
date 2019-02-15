@@ -4,7 +4,7 @@ import PerfectScrollbar from 'perfect-scrollbar'
 import { Route, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
 
-import AdminNavbar from 'components/Navbars/AdminNavbar.jsx'
+import ApplicationNavbar from 'components/Navbars/ApplicationNavbar.jsx'
 import Footer from 'components/Footer/Footer.jsx'
 import Sidebar from 'components/Sidebar/Sidebar.jsx'
 import { fetchAuthorizedUser } from 'actions/authorizationActions'
@@ -15,7 +15,7 @@ import { APPLICATION_VERSION } from 'utils/variables'
 
 let ps
 
-class Admin extends React.Component {
+class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -45,14 +45,13 @@ class Admin extends React.Component {
       document.scrollingElement.scrollTop = 0
       this.refs.mainPanel.scrollTop = 0
     }
-    // this.props.fetchUser();
   }
   getRoutes = routes => {
     return routes.map((prop, key) => {
       if (prop.collapse) {
         return this.getRoutes(prop.views)
       }
-      if (prop.layout === '/admin') {
+      if (prop.layout === '/app') {
         return <Route path={prop.layout + prop.path} component={prop.component} key={key} />
       } else {
         return null
@@ -84,7 +83,7 @@ class Admin extends React.Component {
           user={this.props.user}
         />
         <div className="main-panel" ref="mainPanel">
-          <AdminNavbar
+          <ApplicationNavbar
             {...this.props}
             handleMiniClick={this.handleMiniClick}
             onStateChange={this.props.onStateChange}
@@ -109,4 +108,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Admin)
+)(App)

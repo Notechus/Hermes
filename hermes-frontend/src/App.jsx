@@ -1,7 +1,7 @@
 import React from 'react'
 import { Provider } from 'react-redux'
 import { Redirect, Route, Router, Switch } from 'react-router-dom'
-import AdminLayout from 'layouts/Admin/Admin.jsx'
+import AdminLayout from 'layouts/App/App.jsx'
 import { createBrowserHistory } from 'history'
 import {
   ConfirmSignIn,
@@ -27,7 +27,7 @@ class App extends React.Component {
         <Router history={hist}>
           <Switch>
             <Route
-              path="/admin"
+              path="/app"
               render={props => (
                 <AdminLayout
                   {...props}
@@ -37,7 +37,7 @@ class App extends React.Component {
                 />
               )}
             />
-            <Redirect from="/" to="/admin/dashboard" />
+            <Redirect from="/" to="/app/dashboard" />
           </Switch>
         </Router>
       </Provider>

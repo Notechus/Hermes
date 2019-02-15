@@ -112,8 +112,8 @@ export const createDistanceHistoryBarChart = (labels, data) => ({
             padding: 15,
           },
           gridLines: {
-            zeroLineColor: 'transparent',
-            display: true,
+            zeroLineColor: '#9f9f9f',
+            display: false,
             drawBorder: false,
             color: '#9f9f9f',
           },

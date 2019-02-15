@@ -46,7 +46,7 @@ class TrainingsNew extends React.Component {
   componentDidMount() {
     const { user, history } = this.props
     if (user && user.type !== 'Coach') {
-      history.push('/admin/dashboard')
+      history.push('/app/dashboard')
     }
   }
 
@@ -71,7 +71,7 @@ class TrainingsNew extends React.Component {
     this.setState({
       alert: null,
     })
-    this.props.history.push('/admin/teams')
+    this.props.history.push('/app/teams')
   }
 
   createNewTraining = formState => {

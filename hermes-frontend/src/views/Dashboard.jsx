@@ -78,7 +78,6 @@ class Dashboard extends React.Component {
                     previousTraining ? previousTraining.activities.sort(sortByActivityOrderAsc) : []
                   }
                   description={previousTraining ? previousTraining.description : ''}
-                  completed={previousTraining ? previousTraining.completed : false}
                 />
               </DashboardStatisticsCard>
             </Col>
