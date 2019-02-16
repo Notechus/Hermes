@@ -5,7 +5,7 @@ AWS.config.update({ region: 'eu-west-1' })
 
 exports.handler = async (event, context) => {
   const { awsRequestId } = context
-  const { requestContext, body } = event
+  const { requestContext, body, pathParameters } = event
 
   if (!requestContext.authorizer) {
     return errorResponse('Authorization not configured', awsRequestId)
@@ -14,11 +14,12 @@ exports.handler = async (event, context) => {
   console.log(`Received event ("${awsRequestId}"):`, event)
   const username = requestContext.authorizer.claims['cognito:username']
   const userType = requestContext.authorizer.claims['custom:type']
+  const trainingId = pathParameters.trainingId
 
   const requestBody = JSON.parse(body)
   try {
     if (userType === 'Member') {
-      const updatedTraining = await updateTrainingCompletion(requestBody, username)
+      const updatedTraining = await updateTrainingCompletion(trainingId, requestBody, username)
       console.log('Successfully updated training', updatedTraining)
       return {
         statusCode: 204,
@@ -27,7 +28,7 @@ exports.handler = async (event, context) => {
         },
       }
     } else if (userType === 'Coach') {
-      const updatedTraining = await updateTrainingDetails(requestBody, awsRequestId)
+      const updatedTraining = await updateTrainingDetails(trainingId, username, requestBody)
       console.log('Successfully updated training', updatedTraining)
       return {
         statusCode: 204,
@@ -42,7 +43,7 @@ exports.handler = async (event, context) => {
   }
 }
 
-const updateTrainingDetails = async requestBody => {
+const updateTrainingDetails = async (trainingId, username, requestBody) => {
   const itemProperties = Object.keys(requestBody).filter(
     e => !['trainingId', 'runner', 'creationDate', 'coach'].includes(e)
   )
@@ -52,7 +53,7 @@ const updateTrainingDetails = async requestBody => {
   const params = {
     TableName: 'Trainings',
     Key: {
-      trainingId: requestBody.trainingId,
+      trainingId: trainingId,
       runner: username,
     },
     UpdateExpression: `set ${firstProperty} = :${firstProperty}`,
@@ -71,11 +72,11 @@ const updateTrainingDetails = async requestBody => {
   return updateTraining(params)
 }
 
-const updateTrainingCompletion = (training, username) => {
+const updateTrainingCompletion = (trainingId, training, username) => {
   const params = {
     TableName: 'Trainings',
     Key: {
-      trainingId: training.trainingId,
+      trainingId: trainingId,
       runner: username,
     },
     UpdateExpression:
@@ -85,7 +86,7 @@ const updateTrainingCompletion = (training, username) => {
       ':runner': username,
       ':completed': training.completed,
       ':activities': training.activities,
-      ':time': new Date(),
+      ':time': new Date().toISOString(),
     },
     ReturnValues: 'UPDATED_NEW',
   }
