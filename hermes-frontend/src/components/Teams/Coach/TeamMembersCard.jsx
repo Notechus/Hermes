@@ -1,6 +1,6 @@
 import React from 'react'
 import { Card, CardBody, CardHeader, CardTitle } from 'reactstrap'
-import TeamMemberListCell from 'components/Teams/TeamMemberListCell.jsx'
+import TeamMemberListCell from 'components/Teams/Coach/TeamMemberListCell.jsx'
 
 const TeamMembersCard = ({ members }) => {
   return (

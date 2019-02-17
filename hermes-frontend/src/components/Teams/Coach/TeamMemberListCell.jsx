@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button, Col, Row } from 'reactstrap'
-import TeamMemberAvatar from 'components/Teams/TeamMemberAvatar.jsx'
+import TeamMemberAvatar from 'components/Teams/Coach/TeamMemberAvatar.jsx'
 
 const TeamMemberListCell = ({ member, click }) => {
   return (

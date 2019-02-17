@@ -50,7 +50,7 @@ export const fetchTrainingsForUser = username => async dispatch => {
   try {
     const trainings = await API.get(API_NAME, TRAININGS_FOR_USER(username), init)
     dispatch(updateStatistics('LOAD_USER_TRAININGS', moment().format(DATETIME_FORMAT)))
-    return dispatch(loadTrainingsSuccess(trainings.Items))
+    return dispatch(loadTrainingsSuccess(trainings))
   } catch (err) {
     console.log('Could not fetch trainings', err)
   }

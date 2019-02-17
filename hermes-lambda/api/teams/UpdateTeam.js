@@ -3,12 +3,7 @@ const ddb = new AWS.DynamoDB.DocumentClient()
 
 AWS.config.update({ region: 'eu-west-1' })
 
-/*
-  1. if runner Create record for team using teamId
-  2. if coach, update fields coach provided in Teams:
-    (description, joinCode)
-  3. create event
- */
+const ALLOWED_PROPERTIES = ['trainingId', 'runner', 'creationDate', 'coach']
 
 exports.handler = async (event, context) => {
   const { awsRequestId } = context
@@ -23,9 +18,7 @@ exports.handler = async (event, context) => {
   const userType = requestContext.authorizer.claims['custom:type']
 
   const requestBody = JSON.parse(body)
-  const itemProperties = Object.keys(requestBody).filter(
-    e => !['trainingId', 'runner', 'creationDate', 'coach'].includes(e)
-  )
+  const itemProperties = Object.keys(requestBody).filter(e => !ALLOWED_PROPERTIES.includes(e))
   console.log('Received request body: ', requestBody)
 
   const firstProperty = itemProperties.splice(0, 1)

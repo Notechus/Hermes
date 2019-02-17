@@ -18,7 +18,7 @@ import {
 
 import AuthNavbar from 'components/Navbars/AuthNavbar'
 import Footer from 'components/Footer/Footer'
-import { ForgotPassword, SignIn } from 'aws-amplify-react'
+import { SignIn } from 'aws-amplify-react'
 import Register from 'views/auth/Register'
 import { APPLICATION_VERSION } from 'utils/variables'
 

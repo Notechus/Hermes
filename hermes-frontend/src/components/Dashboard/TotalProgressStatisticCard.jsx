@@ -9,11 +9,14 @@ import { createTotalActivitiesCountChart } from 'services/trainingChartService'
 const TotalProgressStatisticCard = ({ trainings, updateTime }) => {
   const totalCompletedActivities = countTrainingsWithStatus(trainings, true)
   const totalUnfinishedActivities = countTrainingsWithStatus(trainings, false)
-  const chartLabel = normalizeToPercentRange(
-    totalCompletedActivities,
-    totalCompletedActivities + totalUnfinishedActivities,
-    0
-  ).toFixed(1)
+  const chartLabel =
+    totalCompletedActivities && totalUnfinishedActivities
+      ? normalizeToPercentRange(
+          totalCompletedActivities,
+          totalCompletedActivities + totalUnfinishedActivities,
+          0
+        ).toFixed(1)
+      : 0.0
   const chartData = createTotalActivitiesCountChart(
     'Activities',
     chartLabel,

@@ -9,11 +9,13 @@ import { aggregateDistanceFromTrainingsWithStatus } from 'services/trainingCalcu
 const TotalDistanceStatisticCard = ({ trainings, updateTime }) => {
   const totalCompletedDistance = aggregateDistanceFromTrainingsWithStatus(trainings, true)
   const totalUnfinishedDistance = aggregateDistanceFromTrainingsWithStatus(trainings, false)
-  const chartLabel = normalizeToPercentRange(
-    totalCompletedDistance,
-    totalUnfinishedDistance + totalCompletedDistance,
-    0
-  ).toFixed(1)
+  const chartLabel = totalCompletedDistance
+    ? normalizeToPercentRange(
+        totalCompletedDistance,
+        totalUnfinishedDistance + totalCompletedDistance,
+        0
+      ).toFixed(1)
+    : 0.0
   const chartData = createTotalDistanceDoughnutChart(
     'Trainings',
     chartLabel,

@@ -30,7 +30,7 @@ const DashboardDistanceLineChart = ({ trainings }) => {
         <CardHeader>
           <Row>
             <Col sm="7">
-              <div className="numbers pull-left">{totalDistance} km</div>
+              <div className="numbers pull-left">{round(totalDistance)} km</div>
             </Col>
             <Col sm="5">
               <div className="pull-right">

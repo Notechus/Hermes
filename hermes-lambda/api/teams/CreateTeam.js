@@ -15,6 +15,11 @@ exports.handler = async (event, context) => {
   const teamId = uuid.v4()
   console.log(`Received event ("${teamId}"):`, event)
   const username = requestContext.authorizer.claims['cognito:username']
+  const userType = requestContext.authorizer.claims['custom:type']
+
+  if (userType !== 'Coach') {
+    return errorResponse(403, "You don't have permissions to that resource", awsRequestId)
+  }
 
   const joinCode = Math.floor(Math.random() * 900000) + 100000
   const requestBody = JSON.parse(body)
@@ -27,7 +32,6 @@ exports.handler = async (event, context) => {
     name: requestBody.teamName,
     description: requestBody.teamDescription,
     joinCode: joinCode,
-    members: [],
     creationDate: new Date().toISOString(),
   }
 
