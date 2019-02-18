@@ -7,7 +7,7 @@ import {
   REMOVE_TRAINING_SUCCESS,
 } from 'reducers/trainingsReducer'
 import { getApiToken } from 'actions/authorizationActions'
-import { API_NAME, TRAININGS_FOR_USER, TRAININGS_RESOURCE, BASIC_HEADERS } from 'utils/variables'
+import { API_NAME, TRAININGS_RESOURCE, BASIC_HEADERS, TRAININGS_ID } from 'utils/variables'
 import { updateStatistics } from 'actions/webStatisticsActions'
 import { DATETIME_FORMAT } from 'utils/functions'
 
@@ -45,10 +45,15 @@ export const createNewTraining = training => async dispatch => {
 
 export const fetchTrainingsForUser = username => async dispatch => {
   const token = await getApiToken()
-  const init = { headers: BASIC_HEADERS(token) }
+  const init = {
+    headers: BASIC_HEADERS(token),
+    queryStringParameters: {
+      runner: username,
+    },
+  }
 
   try {
-    const trainings = await API.get(API_NAME, TRAININGS_FOR_USER(username), init)
+    const trainings = await API.get(API_NAME, TRAININGS_RESOURCE, init)
     dispatch(updateStatistics('LOAD_USER_TRAININGS', moment().format(DATETIME_FORMAT)))
     return dispatch(loadTrainingsSuccess(trainings))
   } catch (err) {
@@ -62,7 +67,7 @@ export const updateTraining = training => async dispatch => {
 
   console.log(`updating training ${training}`)
   try {
-    const response = await API.put(API_NAME, TRAININGS_RESOURCE, init)
+    const response = await API.put(API_NAME, TRAININGS_ID(training.trainingId), init)
     console.log('got response after update', response)
     return dispatch(updateTrainingSuccess(training))
   } catch (err) {
@@ -75,14 +80,13 @@ export const updateRunnerTraining = training => async dispatch => {
   const init = {
     headers: BASIC_HEADERS(token),
     body: {
-      trainingId: training.trainingId,
       activities: training.activities,
       completed: training.completed,
     },
   }
   console.log('runner completing training', training)
   try {
-    const response = await API.put(API_NAME, TRAININGS_RESOURCE, init)
+    const response = await API.put(API_NAME, TRAININGS_ID(training.trainingId), init)
     console.log('got response after update', response)
     return dispatch(updateTrainingSuccess(training))
   } catch (err) {
@@ -92,11 +96,11 @@ export const updateRunnerTraining = training => async dispatch => {
 
 export const removeTraining = training => async dispatch => {
   const token = await getApiToken()
-  const init = { headers: BASIC_HEADERS(token), body: {} }
+  const init = { headers: BASIC_HEADERS(token) }
 
   console.log(`removing training ${training}`)
   try {
-    const response = await API.del(API_NAME, TRAININGS_RESOURCE, init)
+    const response = await API.del(API_NAME, TRAININGS_ID(training.trainingId), init)
     console.log('got response after removal', response)
     return dispatch(removeTrainingSuccess(training.trainingId))
   } catch (err) {

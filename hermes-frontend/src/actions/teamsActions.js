@@ -1,7 +1,7 @@
 import { LOAD_TEAM_SUCCESS, LOAD_TEAMS_SUCCESS } from 'reducers/teamsReducer'
 import { API } from 'aws-amplify'
 import { getApiToken } from 'actions/authorizationActions'
-import { API_NAME, TEAMS_RESOURCE, USER_TEAM, BASIC_HEADERS } from 'utils/variables'
+import { API_NAME, TEAMS_RESOURCE, BASIC_HEADERS } from 'utils/variables'
 
 const loadUserTeamSuccess = team => ({
   type: LOAD_TEAM_SUCCESS,
@@ -15,10 +15,15 @@ const loadTeamsSuccess = teams => ({
 
 export const fetchUserTeam = username => async dispatch => {
   const token = await getApiToken()
-  const init = { headers: BASIC_HEADERS(token) }
+  const init = {
+    headers: BASIC_HEADERS(token),
+    queryStringParameters: {
+      member: username,
+    },
+  }
 
   try {
-    const team = await API.get(API_NAME, USER_TEAM(username), init)
+    const team = await API.get(API_NAME, TEAMS_RESOURCE, init)
     console.log('team', team)
     if (Object.keys(team).length) {
       return dispatch(loadUserTeamSuccess(team))
