@@ -59,7 +59,7 @@ export const createTotalActivitiesCountChart = (
         borderWidth: 0,
         data: [
           completed ? normalizeToPercentRange(completed, completed + unfinished, 0) / 100.0 : 0,
-          completed && unfinished
+          completed
             ? normalizeToPercentRange(unfinished, completed + unfinished, 0) / 100.0
             : 100.0,
         ],
