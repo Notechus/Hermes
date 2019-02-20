@@ -3,13 +3,13 @@ import { Col, Row } from 'reactstrap'
 import TeamMembersCard from 'components/Teams/Coach/TeamMembersCard.jsx'
 import CoachRunnerDetailsView from 'views/Teams/CoachRunnerDetailsView.jsx'
 
-const CoachTeamPage = ({ team }) => {
+const CoachTeamPage = ({ team, click }) => {
   return (
     <>
       <div className="content">
         <Row>
           <Col md={3}>
-            <TeamMembersCard members={team.members} />
+            <TeamMembersCard members={team.members} click={e => console.log(e)} />
           </Col>
           <Col md={9}>
             <CoachRunnerDetailsView />

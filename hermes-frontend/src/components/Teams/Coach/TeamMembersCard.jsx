@@ -2,7 +2,7 @@ import React from 'react'
 import { Card, CardBody, CardHeader, CardTitle } from 'reactstrap'
 import TeamMemberListCell from 'components/Teams/Coach/TeamMemberListCell.jsx'
 
-const TeamMembersCard = ({ members }) => {
+const TeamMembersCard = ({ members, click }) => {
   return (
     <>
       <Card>
@@ -16,7 +16,7 @@ const TeamMembersCard = ({ members }) => {
             {members &&
               members.map((prop, key) => (
                 <li key={key}>
-                  <TeamMemberListCell member={prop} />
+                  <TeamMemberListCell member={prop} click={() => click(prop)} />
                 </li>
               ))}
           </ul>
