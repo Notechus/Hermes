@@ -13,20 +13,24 @@ const loadTeamsSuccess = teams => ({
   teams,
 })
 
-export const fetchUserTeam = username => async dispatch => {
+export const fetchUserTeam = (username, userType) => async dispatch => {
   const token = await getApiToken()
   const init = {
     headers: BASIC_HEADERS(token),
-    queryStringParameters: {
-      member: username,
-    },
+    queryStringParameters: {},
+  }
+
+  if (userType === 'Coach') {
+    init.queryStringParameters.owner = username
+  } else if (userType === 'Member') {
+    init.queryStringParameters.member = username
   }
 
   try {
     const team = await API.get(API_NAME, TEAMS_RESOURCE, init)
     console.log('team', team)
     if (Object.keys(team).length) {
-      return dispatch(loadUserTeamSuccess(team))
+      return dispatch(loadUserTeamSuccess(team[0]))
     }
   } catch (err) {
     console.log('Could not fetch team', err)

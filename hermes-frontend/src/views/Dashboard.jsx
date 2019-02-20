@@ -6,7 +6,6 @@ import { Line } from 'react-chartjs-2'
 // reactstrap components
 import { Badge, Button, Card, CardBody, CardFooter, CardHeader, Col, Row } from 'reactstrap'
 import { fetchTrainingsForUser } from 'actions/trainingsActions'
-import { fetchUserTeam } from 'actions/teamsActions'
 import DashboardStatisticsCard from 'components/Dashboard/DashboardStatisticsCard'
 import TotalDistanceStatisticCard from 'components/Dashboard/TotalDistanceStatisticCard'
 import TotalProgressStatisticCard from 'components/Dashboard/TotalProgressStatisticCard'
@@ -39,7 +38,6 @@ class Dashboard extends React.Component {
       this.props.user.username !== prevProps.user.username
     ) {
       this.props.fetchTrainings(this.props.user.username)
-      this.props.fetchTeam(this.props.user.username)
     }
   }
 
@@ -194,7 +192,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchTrainings: username => dispatch(fetchTrainingsForUser(username)),
-  fetchTeam: username => dispatch(fetchUserTeam(username)),
 })
 
 export default connect(

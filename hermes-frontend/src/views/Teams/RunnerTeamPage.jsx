@@ -1,6 +1,6 @@
 import React from 'react'
 import moment from 'moment'
-import { Card, CardBody, CardFooter, CardHeader, CardTitle, Col, Row } from 'reactstrap'
+import { Card, CardBody, CardFooter, CardHeader, Col, Row } from 'reactstrap'
 import TeamCoachCard from 'components/Teams/TeamCoachCard.jsx'
 
 const RunnerTeamPage = ({ team, leave }) => {
@@ -9,15 +9,15 @@ const RunnerTeamPage = ({ team, leave }) => {
       <div className="content">
         <Row>
           <Col md={4}>
-            <TeamCoachCard description={team.description} owner={team.teamOwner} />
+            <TeamCoachCard
+              name={team.teamName}
+              description={team.description}
+              owner={team.teamOwner}
+            />
           </Col>
           <Col md={8}>
             <Card>
-              <CardHeader>
-                <CardTitle tag="h4" className="text-center">
-                  {team.teamName}
-                </CardTitle>
-              </CardHeader>
+              <CardHeader />
               <CardBody>
                 <Row>
                   <Col md={4}>
@@ -34,11 +34,13 @@ const RunnerTeamPage = ({ team, leave }) => {
                 </Row>
                 <p>Personal note: </p>
                 <hr />
-                <pre>{team.coachNote}</pre>
+                <pre>{team.member ? team.member.coachNote : ''}</pre>
               </CardBody>
               <CardFooter>
                 <hr />
-                <h6 className="card-category">Joined: {moment(team.joinedAt).fromNow()}</h6>
+                <h6 className="card-category">
+                  Joined: {moment(team.member ? team.member.joinedAt : '').fromNow()}
+                </h6>
               </CardFooter>
             </Card>
           </Col>

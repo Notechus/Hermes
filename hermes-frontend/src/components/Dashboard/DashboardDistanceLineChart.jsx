@@ -11,7 +11,9 @@ import { getLastYearOfTrainings } from 'reducers/trainingsReducer'
 
 const DashboardDistanceLineChart = ({ trainings }) => {
   const groupedData = mapValues(
-    groupBy(trainings, e => moment(e.trainingDate).format(YEAR_WITH_MONTH_FORMAT)),
+    groupBy(trainings.filter(e => e.completed), e =>
+      moment(e.trainingDate).format(YEAR_WITH_MONTH_FORMAT)
+    ),
     e => round(aggregateDistanceFromTrainings(e))
   )
   const chartData = createDistanceHistoryBarChart(

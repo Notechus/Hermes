@@ -2,13 +2,13 @@ import React from 'react'
 import { Card, CardBody, CardFooter, CardHeader, CardTitle } from 'reactstrap'
 import ImageAvatarNoUpload from 'components/CustomUpload/ImageAvatarNoUpload.jsx'
 
-const TeamCoachCard = ({ description, owner, ownerId }) => {
+const TeamCoachCard = ({name, description, owner, ownerId }) => {
   return (
     <>
       <Card>
         <CardHeader>
           <CardTitle tag="h4" className="text-center">
-            Coach
+            {name}
           </CardTitle>
         </CardHeader>
         <CardBody className="text-center">

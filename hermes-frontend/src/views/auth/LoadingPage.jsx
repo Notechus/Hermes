@@ -5,7 +5,7 @@ import LoadingScreen from 'react-loading-screen'
 
 const BG_COLOR = `url(${require('../../assets/img/bg/fabio-mangione.jpg')})`
 const TEXT_COLOR = '#f8f8f8'
-const SPINNER_COLOR = '#70aef8'
+const SPINNER_COLOR = '#666666'
 
 class LoadingPage extends Loading {
   componentDidMount() {

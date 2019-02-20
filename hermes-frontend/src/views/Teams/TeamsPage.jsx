@@ -6,28 +6,33 @@ import { fetchUserTeam } from 'actions/teamsActions'
 import CoachTeamPage from 'views/Teams/CoachTeamPage.jsx'
 import RunnerTeamPage from 'views/Teams/RunnerTeamPage.jsx'
 import JoinTeamPage from 'views/Teams/JoinTeamPage.jsx'
+import ContentLoading from 'components/Loading/ContentLoading.jsx'
 
 class TeamsPage extends Component {
-  state = {}
+  state = {
+    loading: true,
+  }
 
   componentDidMount() {
-    if (this.props.user && this.props.user.username) {
-      this.props.fetchTeam(this.props.user.username)
+    const { user, fetchTeam } = this.props
+    if (user && user.username) {
+      fetchTeam(user.username, user.type).then(() => this.setState({ loading: false }))
     }
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if (
-      this.props.user &&
-      this.props.user.username &&
-      this.props.user.username !== prevProps.user.username
-    ) {
-      this.props.fetchTeam(this.props.user.username)
+    const { user, fetchTeam } = this.props
+    if (user && user.username && user.username !== prevProps.user.username) {
+      fetchTeam(user.username, user.type).then(() => this.setState({ loading: false }))
     }
   }
 
   render() {
     const { team, user } = this.props
+    const { loading } = this.state
+    if (loading) {
+      return <ContentLoading text="Fetching teams" />
+    }
     if (user.type === 'Coach') {
       return team ? <CoachTeamPage team={team} /> : <div className="content">Create a team</div>
     } else if (user.type === 'Member') {
@@ -44,7 +49,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  fetchTeam: username => dispatch(fetchUserTeam(username)),
+  fetchTeam: (username, type) => dispatch(fetchUserTeam(username, type)),
 })
 
 export default connect(
