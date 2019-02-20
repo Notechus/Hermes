@@ -37,11 +37,12 @@ exports.handler = async (event, context) => {
 const fetchTeams = async (queryParameters, username, userType) => {
   if (queryParameters.owner && userType === 'Coach') {
     const teams = await getCoachTeams(queryParameters.owner)
-    teams.Items.forEach(async item => {
-      const members = await getTeamMembers(item.teamId)
-      item.memberrs = members.Items
-    })
-    return await teams.Items
+    return Promise.all(
+      teams.Items.map(async item => {
+        const members = await getTeamMembers(item.teamId)
+        return Object.assign({}, item, { members: members.Items })
+      })
+    )
   } else if (queryParameters.member) {
     const teamsMembers = await getTeamMemberships(queryParameters.member)
     console.log('got team members', teamsMembers)
