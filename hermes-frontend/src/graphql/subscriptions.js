@@ -1,6 +1,17 @@
 // eslint-disable
 // this is an auto generated file. This will be overwritten
 
+export const subscribeToEvents = username => `subscription myEvents {
+  onCreateEvent(username:"${username}"){
+    id
+    eventType
+    username
+    payload
+    creationTime
+    seen
+  }
+}`
+
 export const onCreateEvent = `subscription OnCreateEvent(
   $id: ID
   $eventType: String
@@ -25,7 +36,7 @@ export const onCreateEvent = `subscription OnCreateEvent(
     silencable
   }
 }
-`;
+`
 export const onUpdateEvent = `subscription OnUpdateEvent(
   $id: ID
   $eventType: String
@@ -50,7 +61,7 @@ export const onUpdateEvent = `subscription OnUpdateEvent(
     silencable
   }
 }
-`;
+`
 export const onDeleteEvent = `subscription OnDeleteEvent(
   $id: ID
   $eventType: String
@@ -75,4 +86,4 @@ export const onDeleteEvent = `subscription OnDeleteEvent(
     silencable
   }
 }
-`;
+`

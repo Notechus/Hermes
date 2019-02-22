@@ -1,20 +1,8 @@
 import React from 'react'
 import classnames from 'classnames'
-import {
-  Button,
-  Collapse,
-  Container,
-  DropdownItem,
-  DropdownMenu,
-  DropdownToggle,
-  Nav,
-  Navbar,
-  NavbarBrand,
-  NavItem,
-  NavLink,
-  UncontrolledDropdown,
-} from 'reactstrap'
+import { Button, Collapse, Container, Nav, Navbar, NavbarBrand, NavItem, NavLink } from 'reactstrap'
 import { Auth } from 'aws-amplify'
+import EventNavbarDropdown from 'components/Navbars/EventNavbarDropdown'
 
 class ApplicationNavbar extends React.Component {
   constructor(props) {
@@ -141,32 +129,7 @@ class ApplicationNavbar extends React.Component {
                     </NavLink>
                   </NavItem>
                 )}
-                <UncontrolledDropdown nav>
-                  <DropdownToggle
-                    aria-haspopup={true}
-                    caret
-                    color="default"
-                    data-toggle="dropdown"
-                    id="navbarDropdownMenuLink"
-                    nav
-                  >
-                    <i className="nc-icon nc-bell-55" />
-                    <p>
-                      <span className="d-lg-none d-md-block">Some Actions</span>
-                    </p>
-                  </DropdownToggle>
-                  <DropdownMenu aria-labelledby="navbarDropdownMenuLink" right>
-                    <DropdownItem href="#pablo" onClick={e => e.preventDefault()}>
-                      Action
-                    </DropdownItem>
-                    <DropdownItem href="#pablo" onClick={e => e.preventDefault()}>
-                      Another action
-                    </DropdownItem>
-                    <DropdownItem href="#pablo" onClick={e => e.preventDefault()}>
-                      Something else here
-                    </DropdownItem>
-                  </DropdownMenu>
-                </UncontrolledDropdown>
+                <EventNavbarDropdown username={user ? user.username : null} />
                 <NavItem>
                   <NavLink href="#pablo" onClick={e => e.preventDefault()}>
                     <i className="nc-icon nc-settings-gear-65" />

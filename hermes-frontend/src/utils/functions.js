@@ -51,7 +51,16 @@ export const sortByTrainingDateAsc = (a, b) => sortByDateString(b.trainingDate, 
 export const sortByDateString = (date1, date2) => {
   const d1 = moment(date1, DATE_FORMAT)
   const d2 = moment(date2, DATE_FORMAT)
+  return compareDates(d1, d2)
+}
 
+export const sortByDateTimeStringDesc = (date1, date2) => {
+  const d1 = moment(date1, DATETIME_FORMAT)
+  const d2 = moment(date2, DATETIME_FORMAT)
+  return compareDates(d1, d2)
+}
+
+const compareDates = (d1, d2) => {
   if (d1.isAfter(d2)) {
     return 1
   } else if (d2.isAfter(d1)) {
