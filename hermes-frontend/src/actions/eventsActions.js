@@ -44,7 +44,14 @@ export const fetchUserEvents = username => async dispatch => {
       userEvents.data && userEvents.data && userEvents.data.listEvents
         ? userEvents.data.listEvents.items
         : []
-    dispatch(fetchEvents(events))
+    dispatch(
+      fetchEvents(
+        events.map(e => {
+          e.payload = JSON.parse(e.payload)
+          return e
+        })
+      )
+    )
   } catch (err) {
     console.log('Could not fetch user events', err)
   }

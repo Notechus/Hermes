@@ -29,9 +29,11 @@ const EventNavbarDropdown = ({ events, username, onEvent, getEvents }) => {
           id="navbarDropdownEventLink"
           nav
         >
-          <Badge pill color="danger" className="notify-badge">
-            {events ? events.length : 0}
-          </Badge>
+          {events && events.length > 0 && (
+            <Badge pill color="danger" className="notify-badge">
+              {events.length}
+            </Badge>
+          )}
           <i className="nc-icon nc-bell-55" />
           <p>
             <span className="d-lg-none d-md-block">Notifications</span>
@@ -49,7 +51,7 @@ const EventNavbarDropdown = ({ events, username, onEvent, getEvents }) => {
                   message={
                     prop.payload && prop.payload.message ? prop.payload.message : 'New notification'
                   }
-                  time={'2019-02-25'}
+                  time={prop.creationTime}
                 />
               </DropdownItem>
             ))
