@@ -20,6 +20,11 @@ import configureStore from 'store/configureStore'
 const hist = createBrowserHistory()
 const store = configureStore()
 
+// if (process.env.NODE_ENV !== 'production') {
+//   const { whyDidYouUpdate } = require('why-did-you-update')
+//   whyDidYouUpdate(React)
+// }
+
 class App extends React.Component {
   render() {
     return (

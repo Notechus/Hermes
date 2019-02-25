@@ -8,6 +8,7 @@ export const REMOVE_EVENT = trainingsAction('REMOVE_EVENT')
 export const FETCH_EVENTS = trainingsAction('FETCH_EVENTS')
 
 export const getEvents = state => state.events.events
+export const getLatestEvents = state => (state.events.events ? state.events.events.slice(0, 5) : [])
 
 const initialState = {
   events: [],

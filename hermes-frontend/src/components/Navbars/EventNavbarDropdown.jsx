@@ -1,18 +1,22 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
-import { DropdownItem, DropdownMenu, DropdownToggle, UncontrolledDropdown } from 'reactstrap'
+import { DropdownItem, DropdownMenu, DropdownToggle, UncontrolledDropdown, Badge } from 'reactstrap'
 import { useEventSubscription } from 'hooks/events'
-import { getEvents } from 'reducers/eventsReducer'
+import { getLatestEvents } from 'reducers/eventsReducer'
 import { addNewEvent, fetchUserEvents } from 'actions/eventsActions'
+import NavbarDropdownItem from 'components/Navbars/NavbarDropdownItem.jsx'
 
 const EventNavbarDropdown = ({ events, username, onEvent, getEvents }) => {
   useEventSubscription(username, onEvent)
 
-  useEffect(() => {
-    if (username) {
-      getEvents(username)
-    }
-  })
+  useEffect(
+    () => {
+      if (username) {
+        getEvents(username)
+      }
+    },
+    [username]
+  )
 
   return (
     <>
@@ -25,6 +29,9 @@ const EventNavbarDropdown = ({ events, username, onEvent, getEvents }) => {
           id="navbarDropdownEventLink"
           nav
         >
+          <Badge pill color="danger" className="notify-badge">
+            {events ? events.length : 0}
+          </Badge>
           <i className="nc-icon nc-bell-55" />
           <p>
             <span className="d-lg-none d-md-block">Notifications</span>
@@ -38,7 +45,12 @@ const EventNavbarDropdown = ({ events, username, onEvent, getEvents }) => {
                 href="#pablo"
                 onClick={e => e.preventDefault() || console.log('clicked ', prop.id)}
               >
-                {prop.payload && prop.payload.message ? prop.payload.message : 'New notification'}
+                <NavbarDropdownItem
+                  message={
+                    prop.payload && prop.payload.message ? prop.payload.message : 'New notification'
+                  }
+                  time={'2019-02-25'}
+                />
               </DropdownItem>
             ))
           ) : (
@@ -46,6 +58,8 @@ const EventNavbarDropdown = ({ events, username, onEvent, getEvents }) => {
               No new notifications
             </DropdownItem>
           )}
+          <DropdownItem divider />
+          <DropdownItem>View more</DropdownItem>
         </DropdownMenu>
       </UncontrolledDropdown>
     </>
@@ -53,7 +67,7 @@ const EventNavbarDropdown = ({ events, username, onEvent, getEvents }) => {
 }
 
 const mapStateToProps = state => ({
-  events: getEvents(state),
+  events: getLatestEvents(state),
 })
 
 const mapDispatchToProps = dispatch => ({

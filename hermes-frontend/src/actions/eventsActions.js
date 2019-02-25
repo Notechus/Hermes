@@ -1,6 +1,5 @@
 import { FETCH_EVENTS, NEW_EVENT, REMOVE_EVENT } from 'reducers/eventsReducer'
 import { API, graphqlOperation } from 'aws-amplify'
-import { getApiToken } from 'actions/authorizationActions'
 import { listEvents } from 'graphql/queries'
 
 const addEvent = event => ({
@@ -25,11 +24,10 @@ export const addNewEvent = event => async dispatch => {
   dispatch(addEvent(evt))
 }
 
-export const markAsRead = event => async dispatch => {
-  const token = await getApiToken()
-
+export const markAsRead = id => async dispatch => {
   try {
     console.log('')
+    dispatch(removeEvent(id))
   } catch (err) {
     console.log('Could not fetch events', err)
   }
