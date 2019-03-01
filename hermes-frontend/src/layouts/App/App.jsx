@@ -58,20 +58,6 @@ class App extends React.Component {
       }
     })
   }
-  handleActiveClick = color => {
-    this.setState({ activeColor: color })
-  }
-  handleBgClick = color => {
-    this.setState({ backgroundColor: color })
-  }
-  handleMiniClick = () => {
-    if (document.body.classList.contains('sidebar-mini')) {
-      this.setState({ sidebarMini: false })
-    } else {
-      this.setState({ sidebarMini: true })
-    }
-    document.body.classList.toggle('sidebar-mini')
-  }
   render() {
     return (
       <div className="wrapper">
@@ -85,7 +71,6 @@ class App extends React.Component {
         <div className="main-panel" ref="mainPanel">
           <ApplicationNavbar
             {...this.props}
-            handleMiniClick={this.handleMiniClick}
             onStateChange={this.props.onStateChange}
             user={this.props.user}
           />

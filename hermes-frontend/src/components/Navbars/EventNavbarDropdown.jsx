@@ -6,6 +6,8 @@ import { getLatestEvents } from 'reducers/eventsReducer'
 import { addNewEvent, fetchUserEvents } from 'actions/eventsActions'
 import NavbarDropdownItem from 'components/Navbars/NavbarDropdownItem.jsx'
 
+const onClickEvent = e => e.preventDefault() || console.log('clicked')
+
 const EventNavbarDropdown = ({ events, username, onEvent, getEvents }) => {
   useEventSubscription(username, onEvent)
 
@@ -42,11 +44,7 @@ const EventNavbarDropdown = ({ events, username, onEvent, getEvents }) => {
         <DropdownMenu aria-labelledby="navbarDropdownEventLink" right>
           {events && events.length ? (
             events.map((prop, key) => (
-              <DropdownItem
-                key={key}
-                href="#pablo"
-                onClick={e => e.preventDefault() || console.log('clicked ', prop.id)}
-              >
+              <DropdownItem key={key} href="#pablo" onClick={onClickEvent}>
                 <NavbarDropdownItem
                   message={
                     prop.payload && prop.payload.message ? prop.payload.message : 'New notification'
@@ -56,9 +54,7 @@ const EventNavbarDropdown = ({ events, username, onEvent, getEvents }) => {
               </DropdownItem>
             ))
           ) : (
-            <DropdownItem href="#pablo" onClick={e => e.preventDefault()}>
-              No new notifications
-            </DropdownItem>
+            <DropdownItem href="#pablo">No new notifications</DropdownItem>
           )}
           <DropdownItem divider />
           <DropdownItem>View more</DropdownItem>

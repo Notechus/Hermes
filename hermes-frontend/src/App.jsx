@@ -22,7 +22,7 @@ const store = configureStore()
 
 // if (process.env.NODE_ENV !== 'production') {
 //   const { whyDidYouUpdate } = require('why-did-you-update')
-//   whyDidYouUpdate(React)
+//   whyDidYouUpdate(React, { exclude: [/^Connect/] })
 // }
 
 class App extends React.Component {

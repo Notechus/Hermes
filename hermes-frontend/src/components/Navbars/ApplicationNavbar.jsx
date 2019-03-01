@@ -64,6 +64,8 @@ class ApplicationNavbar extends React.Component {
     this.setState(newState)
   }
 
+  backToDashboard = () => {}
+
   isCoachUser = user => user && user.type === 'Coach'
 
   render() {
@@ -79,7 +81,7 @@ class ApplicationNavbar extends React.Component {
                   className="btn-icon btn-round"
                   color="default"
                   id="minimizeSidebar"
-                  onClick={this.props.handleMiniClick}
+                  onClick={this.backToDashboard}
                 >
                   <i className="nc-icon nc-minimal-right text-center visible-on-sidebar-mini" />
                   <i className="nc-icon nc-minimal-left text-center visible-on-sidebar-regular" />
