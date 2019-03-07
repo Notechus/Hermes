@@ -22,10 +22,6 @@ export const EMPTY_USER = {
   memo: '',
 }
 
-const initialState = {
-  user: EMPTY_USER,
-}
-
 const user = (state = {}, action) => {
   switch (action.type) {
     case LOAD_AUTHORIZATION_SUCCESS:
@@ -38,19 +34,5 @@ const user = (state = {}, action) => {
 }
 
 const auth = (state = {}, action) => {}
-
-const authorizationDataReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case LOAD_AUTHORIZATION_SUCCESS:
-      return { ...state, user: action.user }
-    case REMOVE_AUTHORIZATION_SUCCESS:
-      return { ...state, user: EMPTY_USER }
-    case UPDATE_AVATAR_SUCCESS:
-      const user = Object.assign({}, state.user, { avatar: action.avatar })
-      return { ...state, user }
-    default:
-      return state
-  }
-}
 
 export default combineReducers({ user })

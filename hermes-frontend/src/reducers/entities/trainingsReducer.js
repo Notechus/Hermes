@@ -63,10 +63,6 @@ export const getLastYearOfTrainings = state => {
   )
 }
 
-const initialState = {
-  trainings: [],
-}
-
 const byId = (state = {}, action) => {
   switch (action.type) {
     case LOAD_TRAININGS_SUCCESS:
@@ -92,32 +88,6 @@ const allIds = (state = [], action) => {
       return [...state, action.training.trainingId]
     case REMOVE_TRAINING_SUCCESS:
       return state.filter(e => e.trainingId !== action.trainingId)
-    default:
-      return state
-  }
-}
-
-const trainingsReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case LOAD_TRAININGS_SUCCESS:
-      return { ...state, trainings: action.trainings }
-    case UPDATE_TRAINING_SUCCESS:
-      const old = state.trainings.filter(e => e.trainingId !== action.training.trainingId)
-      return {
-        ...state,
-        trainings: [...old, action.training].sort(sortByTrainingDateDesc),
-      }
-    case CREATE_TRAINING_SUCCESS:
-      const previous = state.trainings
-      return {
-        ...state,
-        trainings: [...previous, action.training].sort(sortByTrainingDateDesc),
-      }
-    case REMOVE_TRAINING_SUCCESS:
-      const trainings = state.trainings.filter(e => e.trainingId !== action.trainingId)
-      return { ...state, trainings: trainings }
-    case REMOVE_TRAININGS_SUCCESS:
-      return { ...state, trainings: [] }
     default:
       return state
   }
