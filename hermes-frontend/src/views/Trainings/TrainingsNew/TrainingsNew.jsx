@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { getUser } from 'reducers/authorizationDataReducer'
-import { getTeam } from 'reducers/teamsReducer'
+import { getTeam } from 'reducers/entities/teamsReducer'
 import { createNewTraining } from 'actions/trainingsActions'
 import { formatDateAsString } from 'utils/functions'
 

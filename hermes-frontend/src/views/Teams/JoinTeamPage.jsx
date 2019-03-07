@@ -5,7 +5,7 @@ import TeamDetailsJoinView from 'components/Teams/TeamDetailsJoinView.jsx'
 import TeamAutocompletePicker from 'components/Teams/TeamAutocompletePicker.jsx'
 import TeamJoinModal from 'components/Teams/TeamJoinModal.jsx'
 import { getUser } from 'reducers/authorizationDataReducer'
-import { getTeams } from 'reducers/teamsReducer'
+import { getTeams } from 'reducers/entities/teamsReducer'
 import { fetchTeams, joinTeam } from 'actions/teamsActions'
 
 class JoinTeamPage extends React.Component {

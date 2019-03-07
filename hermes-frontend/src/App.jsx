@@ -25,29 +25,27 @@ const store = configureStore()
 //   whyDidYouUpdate(React, { exclude: [/^Connect/] })
 // }
 
-class App extends React.Component {
-  render() {
-    return (
-      <Provider store={store}>
-        <Router history={hist}>
-          <Switch>
-            <Route
-              path="/app"
-              render={props => (
-                <AdminLayout
-                  {...props}
-                  authState={this.props.authState}
-                  authData={this.props.authData}
-                  onStateChange={this.props.onStateChange}
-                />
-              )}
-            />
-            <Redirect from="/" to="/app/dashboard" />
-          </Switch>
-        </Router>
-      </Provider>
-    )
-  }
+const App = props => {
+  return (
+    <Provider store={store}>
+      <Router history={hist}>
+        <Switch>
+          <Route
+            path="/app"
+            render={prop => (
+              <AdminLayout
+                {...prop}
+                authState={props.authState}
+                authData={props.authData}
+                onStateChange={props.onStateChange}
+              />
+            )}
+          />
+          <Redirect from="/" to="/app/dashboard" />
+        </Switch>
+      </Router>
+    </Provider>
+  )
 }
 
 export default withAuthenticator(App, false, [

@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { getTeam } from 'reducers/teamsReducer'
+import { getTeam } from 'reducers/entities/teamsReducer'
 import Select from 'react-select'
 import { FormGroup } from 'reactstrap'
 

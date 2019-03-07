@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { getUser } from 'reducers/authorizationDataReducer'
-import { getTeam } from 'reducers/teamsReducer'
+import { getTeams } from 'reducers/entities/teamsReducer'
 import { fetchUserTeam } from 'actions/teamsActions'
 import CoachTeamPage from 'views/Teams/CoachTeamPage.jsx'
 import RunnerTeamPage from 'views/Teams/RunnerTeamPage.jsx'
-import JoinTeamPage from 'views/Teams/JoinTeamPage.jsx'
 import ContentLoading from 'components/Loading/ContentLoading.jsx'
 
 class TeamsPage extends Component {
@@ -28,15 +27,16 @@ class TeamsPage extends Component {
   }
 
   render() {
-    const { team, user } = this.props
+    const { teams, user } = this.props
     const { loading } = this.state
     if (loading) {
       return <ContentLoading text="Fetching teams" />
     }
+    const team = teams ? teams.filter(e => e.teamId === user.teamId).find(e => e) : null
     if (user.type === 'Coach') {
       return team ? <CoachTeamPage team={team} /> : <div className="content">Create a team</div>
     } else if (user.type === 'Member') {
-      return team ? <RunnerTeamPage team={team} /> : <JoinTeamPage />
+      return team ? <RunnerTeamPage team={team} /> : <div className="content">Join a team</div>
     } else {
       return <div className="content" />
     }
@@ -45,7 +45,7 @@ class TeamsPage extends Component {
 
 const mapStateToProps = state => ({
   user: getUser(state),
-  team: getTeam(state),
+  teams: getTeams(state),
 })
 
 const mapDispatchToProps = dispatch => ({

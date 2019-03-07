@@ -7,7 +7,7 @@ import { aggregateDistanceFromTrainings } from 'services/trainingCalculationServ
 import { createDistanceHistoryBarChart } from 'services/trainingChartService'
 import { round, YEAR_WITH_MONTH_FORMAT } from 'utils/functions'
 import moment from 'moment'
-import { getLastYearOfTrainings } from 'reducers/trainingsReducer'
+import { getLastYearOfTrainings } from 'reducers/entities/trainingsReducer'
 
 const DashboardDistanceLineChart = ({ trainings }) => {
   const groupedData = mapValues(

@@ -15,7 +15,7 @@ import {
   getNextTraining,
   getPreviousTraining,
   getTrainings,
-} from 'reducers/trainingsReducer'
+} from 'reducers/entities/trainingsReducer'
 import { getUser } from 'reducers/authorizationDataReducer'
 import { getWebStatistic } from 'reducers/webStatisticsReducer'
 import { chartExample2, chartExample3 } from 'variables/charts.jsx'

@@ -123,6 +123,13 @@ class Sidebar extends React.Component {
     }
   }
 
+  backToDashboard = () => {
+    const { history } = this.props
+    if (history && history.push) {
+      history.push('/app/dashboard')
+    }
+  }
+
   render() {
     const user = this.props.user
     return (
@@ -137,7 +144,7 @@ class Sidebar extends React.Component {
               <img src={logo} alt="react-logo" />
             </div>
           </a>
-          <a href="/" className="simple-text logo-normal">
+          <a href="#home" className="simple-text logo-normal" onClick={this.backToDashboard}>
             Hermes
           </a>
         </div>

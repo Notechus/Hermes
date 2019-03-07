@@ -5,7 +5,7 @@ import {
   UPDATE_TRAINING_SUCCESS,
   CREATE_TRAINING_SUCCESS,
   REMOVE_TRAINING_SUCCESS,
-} from 'reducers/trainingsReducer'
+} from 'reducers/entities/trainingsReducer'
 import { getApiToken } from 'actions/authorizationActions'
 import { API_NAME, TRAININGS_RESOURCE, BASIC_HEADERS, TRAININGS_ID } from 'utils/variables'
 import { updateStatistics } from 'actions/webStatisticsActions'

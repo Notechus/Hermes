@@ -2,7 +2,7 @@ import React from 'react'
 import { Card, CardBody, CardHeader, CardTitle, Col, Row } from 'reactstrap'
 import TrainingsTable from 'components/TrainingsTable/TrainingsTable.jsx'
 import { sortByTrainingDateAsc, sortByTrainingDateDesc } from 'utils/functions'
-import { getCurrentWeekTrainings, getTrainingsExceptCurrentWeek } from 'reducers/trainingsReducer'
+import { getCurrentWeekTrainings, getTrainingsExceptCurrentWeek } from 'reducers/entities/trainingsReducer'
 import { connect } from 'react-redux'
 
 const RunnerTrainingsView = ({ currentWeek, trainings, onLink }) => {

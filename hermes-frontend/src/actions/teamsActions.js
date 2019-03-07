@@ -1,4 +1,4 @@
-import { LOAD_TEAM_SUCCESS, LOAD_TEAMS_SUCCESS } from 'reducers/teamsReducer'
+import { LOAD_TEAM_SUCCESS, LOAD_TEAMS_SUCCESS } from 'reducers/entities/teamsReducer'
 import { API } from 'aws-amplify'
 import { getApiToken } from 'actions/authorizationActions'
 import { API_NAME, TEAMS_RESOURCE, BASIC_HEADERS } from 'utils/variables'
