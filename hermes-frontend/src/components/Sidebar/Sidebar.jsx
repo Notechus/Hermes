@@ -2,10 +2,11 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { Collapse, Nav } from 'reactstrap'
 import PerfectScrollbar from 'perfect-scrollbar'
+import { connect } from 'react-redux'
+import { getAvatar } from 'reducers/entities/avatarsReducer'
 
 import logo from 'assets/img/react-logo.png'
 import defaultImage from 'assets/img/default-avatar.png'
-import { S3Image } from 'aws-amplify-react'
 
 let ps
 
@@ -131,13 +132,9 @@ class Sidebar extends React.Component {
   }
 
   render() {
-    const user = this.props.user
+    const { user, avatar, routes, bgColor, activeColor } = this.props
     return (
-      <div
-        className="sidebar"
-        data-color={this.props.bgColor}
-        data-active-color={this.props.activeColor}
-      >
+      <div className="sidebar" data-color={bgColor} data-active-color={activeColor}>
         <div className="logo">
           <a href="/" className="simple-text logo-mini">
             <div className="logo-img">
@@ -151,11 +148,7 @@ class Sidebar extends React.Component {
         <div className="sidebar-wrapper" ref="sidebar">
           <div className="user">
             <div className="photo">
-              {user.avatar && user.avatar !== '' ? (
-                <S3Image imgKey={user.avatar} level="protected" className="picture-src" />
-              ) : (
-                <img src={defaultImage} alt="Avatar" />
-              )}
+              <img src={avatar ? avatar : defaultImage} alt="Avatar" />
             </div>
             <div className="info justify-content-center pl-4">
               <NavLink to="/app/user-profile" activeClassName="">
@@ -163,11 +156,15 @@ class Sidebar extends React.Component {
               </NavLink>
             </div>
           </div>
-          <Nav>{this.createLinks(this.props.routes)}</Nav>
+          <Nav>{this.createLinks(routes)}</Nav>
         </div>
       </div>
     )
   }
 }
 
-export default Sidebar
+const mapStateToProps = (state, ownProps) => ({
+  avatar: getAvatar(state, ownProps.user.userId),
+})
+
+export default connect(mapStateToProps)(Sidebar)

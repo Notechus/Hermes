@@ -4,6 +4,7 @@ import {
 } from 'reducers/authorizationDataReducer'
 import { Auth, API, Storage } from 'aws-amplify'
 import { API_NAME, USER_BY_ID, BASIC_HEADERS } from 'utils/variables'
+import { fetchUserAvatar } from 'actions/avatarsActions'
 
 const loadAuthorizationSuccess = user => ({
   type: LOAD_AUTHORIZATION_SUCCESS,
@@ -39,7 +40,7 @@ export const fetchAuthorizedUser = async dispatch => {
       memo: userProfile.memo || '',
       teamId: userProfile.teamId || '',
     }
-
+    dispatch(fetchUserAvatar(user.username, user.userId))
     return dispatch(loadAuthorizationSuccess(user))
   } catch (err) {
     console.log(err)

@@ -12,7 +12,6 @@ export const useEventSubscription = (username, onEvent) => {
         next: event => console.log('received evt', event) || onEvent(event.value),
         error: err => console.log('error graphql', err),
       })
-      console.log('got sub', sub)
 
       return () => {
         sub.unsubscribe()

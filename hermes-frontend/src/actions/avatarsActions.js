@@ -9,9 +9,10 @@ const loadedAvatar = (userId, avatar) => ({
   avatar,
 })
 
-export const fetchUserAvatar = (username, userId) => async dispatch => {
+export const fetchAvatar = (username, userId) => async dispatch => {
   try {
-    const avatar = await Storage.get(`${username}${AVATAR_SUFFIX}`, {
+    const key = `${username.toLowerCase()}${AVATAR_SUFFIX}`
+    const avatar = await Storage.get(key, {
       level: 'protected',
       identityId: userId,
     })
@@ -22,10 +23,11 @@ export const fetchUserAvatar = (username, userId) => async dispatch => {
   }
 }
 
-export const fetchAvatar = (username, userId) => async dispatch => {
+export const fetchUserAvatar = (username, userId) => async dispatch => {
   try {
-    const avatar = await Storage.get(`${username}${AVATAR_SUFFIX}`, {
-      level: 'private',
+    const key = `${username.toLowerCase()}${AVATAR_SUFFIX}`
+    const avatar = await Storage.get(key, {
+      level: 'protected',
     })
     console.log('avatar', avatar)
     dispatch(loadedAvatar(userId, avatar))
