@@ -20,10 +20,11 @@ import configureStore from 'store/configureStore'
 const hist = createBrowserHistory()
 const store = configureStore()
 
-// if (process.env.NODE_ENV !== 'production') {
-//   const { whyDidYouUpdate } = require('why-did-you-update')
-//   whyDidYouUpdate(React, { exclude: [/^Connect/] })
-// }
+if (process.env.NODE_ENV !== 'production') {
+  const { whyDidYouUpdate } = require('why-did-you-update')
+  // whyDidYouUpdate(React, { exclude: [/^Connect/] })
+  whyDidYouUpdate(React)
+}
 
 const App = props => {
   return (

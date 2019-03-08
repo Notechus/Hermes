@@ -1,5 +1,6 @@
 import React from 'react'
 import { Card, CardBody, CardFooter, CardHeader, CardTitle } from 'reactstrap'
+import DashboardUpdateTimeFooter from 'components/Dashboard/DashboardUpdateTimeFooter'
 
 const DashboardStatisticsCard = ({
   title,
@@ -25,7 +26,9 @@ const DashboardStatisticsCard = ({
             </div>
           )}
           <hr />
-          <div className="stats">{footerStats}</div>
+          <div className="stats">
+            <DashboardUpdateTimeFooter time={footerStats} />
+          </div>
         </CardFooter>
       </Card>
     </>

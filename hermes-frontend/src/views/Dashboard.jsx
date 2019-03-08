@@ -1,28 +1,19 @@
 import React from 'react'
-import moment from 'moment'
 import { connect } from 'react-redux'
 // react plugin used to create charts
 import { Line } from 'react-chartjs-2'
 // reactstrap components
 import { Badge, Button, Card, CardBody, CardFooter, CardHeader, Col, Row } from 'reactstrap'
 import { fetchTrainingsForUser } from 'actions/trainingsActions'
-import DashboardStatisticsCard from 'components/Dashboard/DashboardStatisticsCard'
 import TotalDistanceStatisticCard from 'components/Dashboard/TotalDistanceStatisticCard'
 import TotalProgressStatisticCard from 'components/Dashboard/TotalProgressStatisticCard'
-import TrainingCardBody from 'components/Dashboard/TrainingCardBody'
-import {
-  getCurrentMonthTrainings,
-  getNextTraining,
-  getPreviousTraining,
-  getTrainings,
-} from 'reducers/entities/trainingsReducer'
+import { getCurrentMonthTrainings, getTrainings } from 'reducers/entities/trainingsReducer'
 import { getUser } from 'reducers/authorizationDataReducer'
 import { getWebStatistic } from 'reducers/webStatisticsReducer'
 import { chartExample2, chartExample3 } from 'variables/charts.jsx'
-
-import { DATE_FORMAT, sortByActivityOrderAsc } from 'utils/functions'
-import DashboardUpdateTimeFooter from 'components/Dashboard/DashboardUpdateTimeFooter'
 import DashboardDistanceLineChart from 'components/Dashboard/DashboardDistanceLineChart'
+import NextTrainingCard from 'components/Dashboard/NextTrainingCard'
+import LastTrainingCard from 'components/Dashboard/LastTrainingCard'
 
 class Dashboard extends React.Component {
   componentDidMount() {
@@ -42,48 +33,21 @@ class Dashboard extends React.Component {
   }
 
   render() {
-    const { nextTraining, previousTraining, trainingsUpdated, trainings } = this.props
     return (
       <>
         <div className="content">
           <Row>
             <Col md="3">
-              <DashboardStatisticsCard
-                title="Next training"
-                subTitle={nextTraining ? moment(nextTraining.trainingDate).format(DATE_FORMAT) : ''}
-                footerStats={<DashboardUpdateTimeFooter time={trainingsUpdated} />}
-              >
-                <TrainingCardBody
-                  intensity={nextTraining ? nextTraining.intensity : 0}
-                  activities={
-                    nextTraining ? nextTraining.activities.sort(sortByActivityOrderAsc) : []
-                  }
-                  description={nextTraining ? nextTraining.description : ''}
-                />
-              </DashboardStatisticsCard>
+              <NextTrainingCard />
             </Col>
             <Col md="3">
-              <DashboardStatisticsCard
-                title="Last training"
-                subTitle={
-                  previousTraining ? moment(previousTraining.trainingDate).format(DATE_FORMAT) : ''
-                }
-                footerStats={<DashboardUpdateTimeFooter time={trainingsUpdated} />}
-              >
-                <TrainingCardBody
-                  intensity={previousTraining ? previousTraining.intensity : 0}
-                  activities={
-                    previousTraining ? previousTraining.activities.sort(sortByActivityOrderAsc) : []
-                  }
-                  description={previousTraining ? previousTraining.description : ''}
-                />
-              </DashboardStatisticsCard>
+              <LastTrainingCard />
             </Col>
             <Col md="3">
-              <TotalDistanceStatisticCard trainings={trainings} updateTime={trainingsUpdated} />
+              <TotalDistanceStatisticCard />
             </Col>
             <Col md="3">
-              <TotalProgressStatisticCard trainings={trainings} updateTime={trainingsUpdated} />
+              <TotalProgressStatisticCard />
             </Col>
           </Row>
           <Row>
@@ -182,12 +146,8 @@ class Dashboard extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  nextTraining: getNextTraining(state),
-  previousTraining: getPreviousTraining(state),
-  trainings: getCurrentMonthTrainings(state),
   yearTrainings: getTrainings(state),
   user: getUser(state),
-  trainingsUpdated: getWebStatistic(state, 'LOAD_USER_TRAININGS'),
 })
 
 const mapDispatchToProps = dispatch => ({

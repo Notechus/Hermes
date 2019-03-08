@@ -1,8 +1,8 @@
 import React from 'react'
 import classnames from 'classnames'
-import { Button, Collapse, Container, Nav, Navbar, NavbarBrand, NavItem, NavLink } from 'reactstrap'
+import { Container, Navbar, NavbarBrand } from 'reactstrap'
 import { Auth } from 'aws-amplify'
-import EventNavbarDropdown from 'components/Navbars/EventNavbarDropdown'
+import NavbarRightPanel from 'components/Navbars/NavbarRightPanel.jsx'
 
 class ApplicationNavbar extends React.Component {
   constructor(props) {
@@ -64,29 +64,27 @@ class ApplicationNavbar extends React.Component {
     this.setState(newState)
   }
 
-  backToDashboard = () => {}
+  moveToNewTraining = e => {
+    e.preventDefault()
+    const { history } = this.props
+    if (history && history.push) {
+      history.push('/app/trainings/new')
+    }
+  }
 
-  isCoachUser = user => user && user.type === 'Coach'
+  signOut = e => {
+    e.preventDefault()
+    Auth.signOut()
+      .then(() => this.props.onStateChange('signedOut', {}))
+      .catch(err => console.log(err))
+  }
 
   render() {
-    const { user } = this.props
-
     return (
       <>
         <Navbar className={classnames('navbar-absolute fixed-top', this.state.color)} expand="lg">
           <Container fluid>
             <div className="navbar-wrapper">
-              <div className="navbar-minimize">
-                <Button
-                  className="btn-icon btn-round"
-                  color="default"
-                  id="minimizeSidebar"
-                  onClick={this.backToDashboard}
-                >
-                  <i className="nc-icon nc-minimal-right text-center visible-on-sidebar-mini" />
-                  <i className="nc-icon nc-minimal-left text-center visible-on-sidebar-regular" />
-                </Button>
-              </div>
               <div
                 className={classnames('navbar-toggle', {
                   toggled: this.state.sidebarOpen,
@@ -98,7 +96,7 @@ class ApplicationNavbar extends React.Component {
                   <span className="navbar-toggler-bar bar3" />
                 </button>
               </div>
-              <NavbarBrand href="#pablo" onClick={e => e.preventDefault()}>
+              <NavbarBrand href="#pablo">
                 <span className="d-none d-md-block">Dashboard</span>
                 <span className="d-block d-md-none">Dashboard</span>
               </NavbarBrand>
@@ -117,46 +115,11 @@ class ApplicationNavbar extends React.Component {
               <span className="navbar-toggler-bar navbar-kebab" />
               <span className="navbar-toggler-bar navbar-kebab" />
             </button>
-            <Collapse className="justify-content-end" navbar isOpen={this.state.collapseOpen}>
-              <Nav navbar>
-                {this.isCoachUser(user) && (
-                  <NavItem>
-                    <NavLink
-                      href="#new"
-                      onClick={e =>
-                        e.preventDefault() || this.props.history.push('/app/trainings/new')
-                      }
-                    >
-                      New
-                    </NavLink>
-                  </NavItem>
-                )}
-                <EventNavbarDropdown username={user ? user.username : null} />
-                <NavItem>
-                  <NavLink href="#pablo" onClick={e => e.preventDefault()}>
-                    <i className="nc-icon nc-settings-gear-65" />
-                    <p>
-                      <span className="d-lg-none d-md-block">Account</span>
-                    </p>
-                  </NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink
-                    href="#pablo"
-                    onClick={() =>
-                      Auth.signOut()
-                        .then(() => this.props.onStateChange('signedOut', {}))
-                        .catch(err => console.log(err))
-                    }
-                  >
-                    <i className="nc-icon nc-button-power" />
-                    <p>
-                      <span className="d-lg-none d-md-block">Sign out</span>
-                    </p>
-                  </NavLink>
-                </NavItem>
-              </Nav>
-            </Collapse>
+            <NavbarRightPanel
+              collapseOpen={this.state.collapseOpen}
+              signOut={this.signOut}
+              newTraining={this.moveToNewTraining}
+            />
           </Container>
         </Navbar>
       </>

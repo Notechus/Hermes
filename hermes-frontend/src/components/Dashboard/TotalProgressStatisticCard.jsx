@@ -1,6 +1,8 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import { getCurrentMonthTrainings } from 'reducers/entities/trainingsReducer'
+import { getWebStatistic } from 'reducers/webStatisticsReducer'
 import DashboardStatisticsCard from 'components/Dashboard/DashboardStatisticsCard'
-import DashboardUpdateTimeFooter from 'components/Dashboard/DashboardUpdateTimeFooter'
 import { Doughnut } from 'react-chartjs-2'
 import { normalizeToPercentRange, round } from 'utils/functions'
 import { countTrainingsWithStatus } from 'services/trainingCalculationService'
@@ -39,7 +41,7 @@ const TotalProgressStatisticCard = ({ trainings, updateTime }) => {
         }
         footerLegend="Completed"
         footerClass="text-danger"
-        footerStats={<DashboardUpdateTimeFooter time={updateTime} />}
+        footerStats={updateTime}
       >
         <Doughnut
           data={chartData.data}
@@ -53,4 +55,9 @@ const TotalProgressStatisticCard = ({ trainings, updateTime }) => {
   )
 }
 
-export default React.memo(TotalProgressStatisticCard)
+const mapStateToProps = state => ({
+  trainings: getCurrentMonthTrainings(state),
+  updateTime: getWebStatistic(state, 'LOAD_USER_TRAININGS'),
+})
+
+export default connect(mapStateToProps)(React.memo(TotalProgressStatisticCard))
