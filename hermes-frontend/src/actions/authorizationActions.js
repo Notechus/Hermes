@@ -42,13 +42,17 @@ export const fetchAuthorizedUser = async dispatch => {
       memo: userProfile.memo || '',
       teamId: userProfile.teamId || '',
     }
-    dispatch(fetchUserAvatar(user.username, user.userId))
-    dispatch(fetchTrainingsForUser(user.username))
-    dispatch(fetchUserTeam(user.username, user.type))
+    dispatch(loadUserRelatedData(user.userId, user.username, user.type))
     return dispatch(loadAuthorizationSuccess(user))
   } catch (err) {
     console.log(err)
   }
+}
+
+export const loadUserRelatedData = (userId, username, userType) => async dispatch => {
+  dispatch(fetchUserAvatar(username, userId))
+  dispatch(fetchTrainingsForUser(username))
+  dispatch(fetchUserTeam(username, userType))
 }
 
 export const updateUser = attributes => async dispatch => {

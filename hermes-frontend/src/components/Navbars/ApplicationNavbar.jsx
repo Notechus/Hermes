@@ -1,8 +1,11 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import classnames from 'classnames'
 import { Container, Navbar, NavbarBrand } from 'reactstrap'
 import { Auth } from 'aws-amplify'
 import NavbarRightPanel from 'components/Navbars/NavbarRightPanel.jsx'
+import { loadUserRelatedData } from 'actions/authorizationActions'
+import { getUser } from 'reducers/authorizationDataReducer'
 
 class ApplicationNavbar extends React.Component {
   constructor(props) {
@@ -64,6 +67,13 @@ class ApplicationNavbar extends React.Component {
     this.setState(newState)
   }
 
+  reloadData = e => {
+    e.preventDefault()
+    const { user, reloadData } = this.props
+    console.log('reloading data', user, reloadData)
+    reloadData(user.userId, user.username, user.type)
+  }
+
   signOut = e => {
     e.preventDefault()
     Auth.signOut()
@@ -72,14 +82,16 @@ class ApplicationNavbar extends React.Component {
   }
 
   render() {
+    const { color, sidebarOpen, collapseOpen } = this.state
+
     return (
       <>
-        <Navbar className={classnames('navbar-absolute fixed-top', this.state.color)} expand="lg">
+        <Navbar className={classnames('navbar-absolute fixed-top', color)} expand="lg">
           <Container fluid>
             <div className="navbar-wrapper">
               <div
                 className={classnames('navbar-toggle', {
-                  toggled: this.state.sidebarOpen,
+                  toggled: sidebarOpen,
                 })}
               >
                 <button className="navbar-toggler" type="button" onClick={this.toggleSidebar}>
@@ -95,7 +107,7 @@ class ApplicationNavbar extends React.Component {
             </div>
             <button
               aria-controls="navigation-index"
-              aria-expanded={this.state.collapseOpen}
+              aria-expanded={collapseOpen}
               aria-label="Toggle navigation"
               className="navbar-toggler"
               // data-target="#navigation"
@@ -107,7 +119,12 @@ class ApplicationNavbar extends React.Component {
               <span className="navbar-toggler-bar navbar-kebab" />
               <span className="navbar-toggler-bar navbar-kebab" />
             </button>
-            <NavbarRightPanel collapseOpen={this.state.collapseOpen} signOut={this.signOut} />
+            <NavbarRightPanel
+              user={this.props.user}
+              reloadData={this.reloadData}
+              collapseOpen={collapseOpen}
+              signOut={this.signOut}
+            />
           </Container>
         </Navbar>
       </>
@@ -115,4 +132,16 @@ class ApplicationNavbar extends React.Component {
   }
 }
 
-export default ApplicationNavbar
+const mapStateToProps = state => ({
+  user: getUser(state),
+})
+
+const mapDispatchToProps = dispatch => ({
+  reloadData: (userId, username, userType) =>
+    dispatch(loadUserRelatedData(userId, username, userType)),
+})
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ApplicationNavbar)

@@ -10,7 +10,7 @@ export const USERS_RESOURCE = '/users'
 export const USER_BY_ID = id => `${USERS_RESOURCE}/${id}`
 
 const APP_VERSION_SUFFIX = 'alpha'
-export const APPLICATION_VERSION = `0.1.0.${APP_VERSION_SUFFIX}`
+export const APPLICATION_VERSION = `0.1.1.${APP_VERSION_SUFFIX}`
 
 export const BASIC_HEADERS = token => ({
   Authorization: token,

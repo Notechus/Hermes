@@ -5,19 +5,20 @@ import { useEventSubscription } from 'hooks/events'
 import { getLatestEvents } from 'reducers/eventsReducer'
 import { addNewEvent, fetchUserEvents } from 'actions/eventsActions'
 import NavbarDropdownItem from 'components/Navbars/NavbarDropdownItem.jsx'
+import { getUser } from 'reducers/authorizationDataReducer'
 
 const onClickEvent = e => e.preventDefault() || console.log('clicked')
 
-const EventNavbarDropdown = ({ events, username, onEvent, getEvents }) => {
-  useEventSubscription(username, onEvent)
+const EventNavbarDropdown = ({ events, user, onEvent, getEvents }) => {
+  useEventSubscription(user.username, onEvent)
 
   useEffect(
     () => {
-      if (username) {
-        getEvents(username)
+      if (user && user.username) {
+        getEvents(user.username)
       }
     },
-    [username]
+    [user.username]
   )
 
   return (
@@ -65,6 +66,7 @@ const EventNavbarDropdown = ({ events, username, onEvent, getEvents }) => {
 }
 
 const mapStateToProps = state => ({
+  user: getUser(state),
   events: getLatestEvents(state),
 })
 

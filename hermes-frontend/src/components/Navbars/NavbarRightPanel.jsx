@@ -7,16 +7,26 @@ const isCoachUser = user => user && user.type === 'Coach'
 
 const preventDefault = e => e.preventDefault()
 
-const NavbarRightPanel = ({ user, signOut, collapseOpen }) => {
+const NavbarRightPanel = ({ user, signOut, collapseOpen, reloadData }) => {
   return (
     <Collapse className="justify-content-end" navbar isOpen={collapseOpen}>
       <Nav navbar>
         {isCoachUser(user) && (
           <NavItem>
-            <NavLnk to="/app/trainings/new">New</NavLnk>
+            <NavLnk className="nav-link" to="/app/trainings/new">
+              New
+            </NavLnk>
           </NavItem>
         )}
-        <EventNavbarDropdown username={user ? user.username : null} />
+        <NavItem>
+          <NavLink href="#reload" onClick={reloadData}>
+            <i className="nc-icon nc-refresh-69" />
+            <p>
+              <span className="d-lg-none d-md-block">Refresh</span>
+            </p>
+          </NavLink>
+        </NavItem>
+        <EventNavbarDropdown />
         <NavItem>
           <NavLink href="#pablo" onClick={preventDefault}>
             <i className="nc-icon nc-settings-gear-65" />
