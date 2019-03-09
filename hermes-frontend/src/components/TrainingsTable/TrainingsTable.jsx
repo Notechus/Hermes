@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Table } from 'reactstrap'
 import TrainingsTableRowData from 'components/TrainingsTable/TrainingsTableRowData'
 
-const TrainingsTable = ({ data, onChange }) => {
+const TrainingsTable = ({ ids }) => {
   return (
     <Table responsive>
       <thead className="text-primary">
@@ -17,9 +17,9 @@ const TrainingsTable = ({ data, onChange }) => {
         </tr>
       </thead>
       <tbody>
-        {data.map((prop, key) => (
-          <tr key={key}>
-            <TrainingsTableRowData row={prop} onChange={() => onChange('editTraining', prop)} />
+        {ids.map(id => (
+          <tr key={id}>
+            <TrainingsTableRowData trainingId={id} />
           </tr>
         ))}
       </tbody>
@@ -28,8 +28,7 @@ const TrainingsTable = ({ data, onChange }) => {
 }
 
 TrainingsTable.propTypes = {
-  data: PropTypes.array.isRequired,
-  onChange: PropTypes.func,
+  ids: PropTypes.array.isRequired,
 }
 
 export default React.memo(TrainingsTable)

@@ -33,7 +33,7 @@ const SingleTrainingView = ({
           <Card>
             <CardHeader>
               <span className="ml-auto">
-                <a href="#back" onClick={e => e.preventDefault() || onReturn('trainings', null)}>
+                <a href="#back" onClick={onReturn}>
                   <i className="fa fa-arrow-left fa-2x" style={{ color: 'gray' }} />
                 </a>
               </span>
@@ -82,15 +82,7 @@ const SingleTrainingView = ({
               </Row>
             </CardBody>
             <CardFooter>
-              <Button
-                size="sm"
-                color="success"
-                className="btn-round"
-                onClick={e => {
-                  e.preventDefault()
-                  onUpdate()
-                }}
-              >
+              <Button size="sm" color="success" className="btn-round" onClick={onUpdate}>
                 Update
               </Button>
             </CardFooter>

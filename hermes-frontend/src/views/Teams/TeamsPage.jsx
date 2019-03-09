@@ -9,22 +9,22 @@ import ContentLoading from 'components/Loading/ContentLoading.jsx'
 
 class TeamsPage extends Component {
   state = {
-    loading: true,
+    loading: false,
   }
 
-  componentDidMount() {
-    const { user, fetchTeam } = this.props
-    if (user && user.username) {
-      fetchTeam(user.username, user.type).then(() => this.setState({ loading: false }))
-    }
-  }
-
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    const { user, fetchTeam } = this.props
-    if (user && user.username && user.username !== prevProps.user.username) {
-      fetchTeam(user.username, user.type).then(() => this.setState({ loading: false }))
-    }
-  }
+  // componentDidMount() {
+  //   const { user, fetchTeam } = this.props
+  //   if (user && user.username) {
+  //     fetchTeam(user.username, user.type).then(() => this.setState({ loading: false }))
+  //   }
+  // }
+  //
+  // componentDidUpdate(prevProps, prevState, snapshot) {
+  //   const { user, fetchTeam } = this.props
+  //   if (user && user.username && user.username !== prevProps.user.username) {
+  //     fetchTeam(user.username, user.type).then(() => this.setState({ loading: false }))
+  //   }
+  // }
 
   render() {
     const { teams, user } = this.props

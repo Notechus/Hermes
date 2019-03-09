@@ -83,7 +83,7 @@ export const isDateInRange = (date, rangeStart, rangeEnd) => {
   return d.isSameOrAfter(rangeStart) && d.isSameOrBefore(rangeEnd)
 }
 
-export const getCurrentMonthNumber = () => moment().month() + 1
+export const getToday = () => moment().startOf('day')
 
 export const normalizeToPercentRange = (value, oldMax, oldMin) =>
   (100 / (oldMax - oldMin)) * (value - oldMin)

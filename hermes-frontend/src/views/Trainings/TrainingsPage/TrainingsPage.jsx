@@ -2,33 +2,17 @@ import React from 'react'
 import { connect } from 'react-redux'
 // reactstrap components
 import { getUser } from 'reducers/authorizationDataReducer'
+import {
+  getCurrentWeekTrainingIdsSelect,
+  getTrainingIdsExceptCurrentWeekSelect,
+} from 'reducers/entities/trainingsReducer'
 import { sortByActivityOrderAsc } from 'utils/functions'
-import { fetchTrainingsForUser, updateRunnerTraining } from 'actions/trainingsActions'
-import RunnerTrainingsView from 'views/Trainings/TrainingsPage/RunnerTrainingsView.jsx'
-import SingleTrainingView from 'views/Trainings/TrainingsPage/SingleTrainingView.jsx'
+import { updateRunnerTraining } from 'actions/trainingsActions'
 import ReactBSAlert from 'react-bootstrap-sweetalert'
+import { Card, CardBody, CardHeader, CardTitle, Col, Row } from 'reactstrap'
+import TrainingsTable from 'components/TrainingsTable/TrainingsTable'
 
 class TrainingsPage extends React.Component {
-  state = {
-    activePage: 'trainings',
-  }
-
-  componentDidMount() {
-    if (this.props.user && this.props.user.username) {
-      this.props.fetchTrainings(this.props.user.username)
-    }
-  }
-
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    if (
-      this.props.user &&
-      this.props.user.username &&
-      this.props.user.username !== prevProps.user.username
-    ) {
-      this.props.fetchTrainings(this.props.user.username)
-    }
-  }
-
   changeState = (activePage, training) => {
     training &&
       training.activities.forEach(e => {
@@ -47,33 +31,11 @@ class TrainingsPage extends React.Component {
   }
 
   onChange = (field, order, value) => {
-    const { training } = this.state
-    const activity = training.activities.find(e => e.order === order)
+    const { activities } = this.state
+    const activity = activities.find(e => e.order === order)
     activity[field] = value
-    const restActivities = training.activities.filter(e => e.order !== order)
-    training.activities = [...restActivities, activity].sort(sortByActivityOrderAsc)
-    this.setState({ training })
-  }
-
-  changeCompleted = () => {
-    const { training } = this.state
-    training.completed = !training.completed
-    this.setState({ training: training })
-  }
-
-  updateTrainingInfo = () => {
-    const { updateTraining } = this.props
-    const { training } = this.state
-    training.activities.forEach(e => {
-      if (e.hr) {
-        e.hr = Number.parseInt(e.hr)
-      }
-      if (e.distance) {
-        e.distance = Number.parseFloat(e.distance)
-      }
-    })
-    console.log('updating training', training)
-    updateTraining(training).then(() => this.successAlert())
+    const restActivities = activities.filter(e => e.order !== order)
+    this.setState({ activities: [...restActivities, activity].sort(sortByActivityOrderAsc) })
   }
 
   successAlert = () => {
@@ -97,48 +59,52 @@ class TrainingsPage extends React.Component {
     })
   }
 
-  hideAlert = () => {
-    this.setState({ alert: null })
-  }
-
   render() {
-    const { activePage, training, alert } = this.state
-
-    switch (activePage) {
-      case 'trainings':
-        return (
-          <>
-            {alert}
-            <RunnerTrainingsView onLink={this.changeState} />
-          </>
-        )
-      case 'editTraining':
-        return (
-          <>
-            {alert}
-            <SingleTrainingView
-              activities={training.activities}
-              completed={training.completed}
-              modificationTime={training.modificationTime}
-              onReturn={this.changeState}
-              onUpdate={this.updateTrainingInfo}
-              onChange={this.onChange}
-              onCompleted={this.changeCompleted}
-            />
-          </>
-        )
-      default:
-        return null
-    }
+    const { currentWeek, trainings } = this.props
+    return (
+      <>
+        <div className="content">
+          <Row>
+            <Col md="12">
+              <Card>
+                <CardHeader>
+                  <CardTitle tag="h4">Current Week</CardTitle>
+                </CardHeader>
+                <CardBody>
+                  <TrainingsTable ids={currentWeek ? currentWeek : []} />
+                </CardBody>
+              </Card>
+            </Col>
+          </Row>
+          <Row>
+            <Col md="12">
+              <Card>
+                <CardHeader>
+                  <CardTitle tag="h4">All Trainings</CardTitle>
+                </CardHeader>
+                <CardBody>
+                  <TrainingsTable ids={trainings ? trainings : []} />
+                </CardBody>
+              </Card>
+            </Col>
+          </Row>
+        </div>
+      </>
+    )
   }
 }
 
-const mapStateToProps = state => ({
-  user: getUser(state),
-})
+const mapStateToProps = state => {
+  const getCurrentWeekTrainings = getCurrentWeekTrainingIdsSelect()
+  const getTrainingsExceptCurrentWeek = getTrainingIdsExceptCurrentWeekSelect()
+  return {
+    user: getUser(state),
+    currentWeek: getCurrentWeekTrainings(state),
+    trainings: getTrainingsExceptCurrentWeek(state),
+  }
+}
 
 const mapDispatchToProps = dispatch => ({
-  fetchTrainings: username => dispatch(fetchTrainingsForUser(username)),
   updateTraining: training => dispatch(updateRunnerTraining(training)),
 })
 

@@ -45,7 +45,7 @@ export const fetchTeams = async dispatch => {
   try {
     const teams = await API.get(API_NAME, TEAMS_RESOURCE, init)
     console.log('fetched teams', teams)
-    return dispatch(loadTeamsSuccess(teams.Items))
+    return dispatch(loadTeamsSuccess(teams))
   } catch (err) {
     console.log('Could not fetch teams', err)
   }

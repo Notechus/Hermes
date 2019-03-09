@@ -5,6 +5,8 @@ import {
 import { Auth, API, Storage } from 'aws-amplify'
 import { API_NAME, USER_BY_ID, BASIC_HEADERS } from 'utils/variables'
 import { fetchUserAvatar } from 'actions/avatarsActions'
+import { fetchTrainingsForUser } from 'actions/trainingsActions'
+import { fetchUserTeam } from 'actions/teamsActions'
 
 const loadAuthorizationSuccess = user => ({
   type: LOAD_AUTHORIZATION_SUCCESS,
@@ -41,6 +43,8 @@ export const fetchAuthorizedUser = async dispatch => {
       teamId: userProfile.teamId || '',
     }
     dispatch(fetchUserAvatar(user.username, user.userId))
+    dispatch(fetchTrainingsForUser(user.username))
+    dispatch(fetchUserTeam(user.username, user.type))
     return dispatch(loadAuthorizationSuccess(user))
   } catch (err) {
     console.log(err)

@@ -7,30 +7,29 @@ import { Badge, Button, Card, CardBody, CardFooter, CardHeader, Col, Row } from 
 import { fetchTrainingsForUser } from 'actions/trainingsActions'
 import TotalDistanceStatisticCard from 'components/Dashboard/TotalDistanceStatisticCard'
 import TotalProgressStatisticCard from 'components/Dashboard/TotalProgressStatisticCard'
-import { getCurrentMonthTrainings, getTrainings } from 'reducers/entities/trainingsReducer'
+import { getTrainings } from 'reducers/entities/trainingsReducer'
 import { getUser } from 'reducers/authorizationDataReducer'
-import { getWebStatistic } from 'reducers/webStatisticsReducer'
 import { chartExample2, chartExample3 } from 'variables/charts.jsx'
 import DashboardDistanceLineChart from 'components/Dashboard/DashboardDistanceLineChart'
 import NextTrainingCard from 'components/Dashboard/NextTrainingCard'
 import LastTrainingCard from 'components/Dashboard/LastTrainingCard'
 
 class Dashboard extends React.Component {
-  componentDidMount() {
-    if (this.props.user && this.props.user.username) {
-      this.props.fetchTrainings(this.props.user.username)
-    }
-  }
-
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    if (
-      this.props.user &&
-      this.props.user.username &&
-      this.props.user.username !== prevProps.user.username
-    ) {
-      this.props.fetchTrainings(this.props.user.username)
-    }
-  }
+  // componentDidMount() {
+  //   if (this.props.user && this.props.user.username) {
+  //     this.props.fetchTrainings(this.props.user.username)
+  //   }
+  // }
+  //
+  // componentDidUpdate(prevProps, prevState, snapshot) {
+  //   if (
+  //     this.props.user &&
+  //     this.props.user.username &&
+  //     this.props.user.username !== prevProps.user.username
+  //   ) {
+  //     this.props.fetchTrainings(this.props.user.username)
+  //   }
+  // }
 
   render() {
     return (

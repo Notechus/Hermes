@@ -5,10 +5,12 @@ import {
   getCurrentMonthBoundaries,
   isDateInRange,
   getYearInterval,
+  getToday,
 } from 'utils/functions'
 import moment from 'moment'
 import { keyBy, omit } from 'lodash'
 import { combineReducers } from 'redux'
+import { createSelector } from 'reselect'
 
 const trainingsAction = createActionNamespace('trainingsAction')
 
@@ -19,26 +21,44 @@ export const REMOVE_TRAINING_SUCCESS = trainingsAction('REMOVE_TRAINING_SUCCESS'
 export const CREATE_TRAINING_SUCCESS = trainingsAction('CREATE_TRAINING_SUCCESS')
 
 export const getTraining = (state, id) => state.entities.trainings.byId[id]
+
+export const getTrainingIds = state => state.entities.trainings.allIds
+
 export const getTrainings = state =>
   state.entities.trainings.allIds.map(id => getTraining(state, id))
-export const getCurrentMonthTrainings = state => {
-  const [start, end] = getCurrentMonthBoundaries()
-  return getTrainings(state).filter(e => moment(e.trainingDate).isBetween(start, end, null, '[]'))
-}
-export const getNextTraining = state => {
-  const now = moment()
-  return getTrainings(state)
-    .filter(e => !e.completed && moment(e.trainingDate).isSameOrAfter(now, 'day'))
-    .sort(sortByTrainingDateDesc)
-    .find(e => e)
-}
-export const getPreviousTraining = state => {
-  const now = moment()
-  return getTrainings(state)
-    .filter(e => e.completed && moment(e.trainingDate).isSameOrBefore(now, 'day'))
-    .sort(sortByTrainingDateAsc)
-    .find(e => e)
-}
+
+export const getCurrentMonthTrainingsSelect = () =>
+  createSelector(
+    [getTrainings],
+    trainings => {
+      const [start, end] = getCurrentMonthBoundaries()
+      return trainings.filter(e => moment(e.trainingDate).isBetween(start, end, null, '[]'))
+    }
+  )
+
+export const getNextTrainingSelect = () =>
+  createSelector(
+    [getTrainings],
+    trainings => {
+      const today = getToday()
+      return trainings
+        .filter(e => !e.completed && moment(e.trainingDate).isSameOrAfter(today, 'day'))
+        .sort(sortByTrainingDateDesc)
+        .find(e => e)
+    }
+  )
+
+export const getPreviousTrainingSelect = () =>
+  createSelector(
+    [getTrainings],
+    trainings => {
+      const today = getToday()
+      return trainings
+        .filter(e => e.completed && moment(e.trainingDate).isSameOrBefore(today, 'day'))
+        .sort(sortByTrainingDateAsc)
+        .find(e => e)
+    }
+  )
 
 export const getCurrentWeekTrainings = state => {
   const startWeek = moment().startOf('isoWeek')
@@ -47,6 +67,32 @@ export const getCurrentWeekTrainings = state => {
     isDateInRange(training.trainingDate, startWeek, endWeek)
   )
 }
+
+export const getCurrentWeekTrainingIdsSelect = () =>
+  createSelector(
+    [getTrainings],
+    trainings => {
+      const startWeek = moment().startOf('isoWeek')
+      const endWeek = moment().endOf('isoWeek')
+      return trainings
+        .filter(training => isDateInRange(training.trainingDate, startWeek, endWeek))
+        .sort(sortByTrainingDateDesc)
+        .map(e => e.trainingId)
+    }
+  )
+
+export const getTrainingIdsExceptCurrentWeekSelect = () =>
+  createSelector(
+    [getTrainings],
+    trainings => {
+      const startWeek = moment().startOf('isoWeek')
+      const endWeek = moment().endOf('isoWeek')
+      return trainings
+        .filter(training => !isDateInRange(training.trainingDate, startWeek, endWeek))
+        .sort(sortByTrainingDateDesc)
+        .map(e => e.trainingId)
+    }
+  )
 
 export const getTrainingsExceptCurrentWeek = state => {
   const startWeek = moment().startOf('isoWeek')

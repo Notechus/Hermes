@@ -18,6 +18,7 @@ import UserProfile from 'views/pages/UserProfile.jsx'
 import ValidationForms from 'views/forms/ValidationForms.jsx'
 import Wizard from 'views/forms/Wizard.jsx'
 import Trainings from 'views/Trainings/TrainingsPage/TrainingsPage.jsx'
+import SingleTrainingPage from 'views/Trainings/SingleTrainingPage/SingleTrainingPage.jsx'
 import TrainingsNew from 'views/Trainings/TrainingsNew/TrainingsNew.jsx'
 import TeamsPage from 'views/Teams/TeamsPage.jsx'
 
@@ -35,6 +36,13 @@ const routes = [
     name: 'Trainings',
     icon: 'nc-icon nc-layout-11',
     component: TrainingsNew,
+    layout: '/app',
+    hidden: true,
+  },
+  {
+    path: '/trainings/single/:id',
+    name: 'Edit Training',
+    component: SingleTrainingPage,
     layout: '/app',
     hidden: true,
   },

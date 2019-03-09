@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import TrainingCardBody from 'components/Dashboard/TrainingCardBody.jsx'
 import DashboardStatisticsCard from 'components/Dashboard/DashboardStatisticsCard.jsx'
-import { getNextTraining } from 'reducers/entities/trainingsReducer'
+import { getNextTrainingSelect } from 'reducers/entities/trainingsReducer'
 import moment from 'moment'
 import { DATE_FORMAT } from 'utils/functions'
 import { getWebStatistic } from 'reducers/webStatisticsReducer'
@@ -23,9 +23,12 @@ const NextTrainingCard = ({ training, trainingsUpdated }) => {
   )
 }
 
-const mapStateToProps = state => ({
-  training: getNextTraining(state),
-  trainingsUpdated: getWebStatistic(state, 'LOAD_USER_TRAININGS')
-})
+const mapStateToProps = state => {
+  const getNextTraining = getNextTrainingSelect()
+  return {
+    training: getNextTraining(state),
+    trainingsUpdated: getWebStatistic(state, 'LOAD_USER_TRAININGS'),
+  }
+}
 
 export default connect(mapStateToProps)(React.memo(NextTrainingCard))

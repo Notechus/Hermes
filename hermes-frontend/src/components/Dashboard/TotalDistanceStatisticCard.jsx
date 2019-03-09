@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { getCurrentMonthTrainings } from 'reducers/entities/trainingsReducer'
+import { getCurrentMonthTrainingsSelect } from 'reducers/entities/trainingsReducer'
 import DashboardStatisticsCard from 'components/Dashboard/DashboardStatisticsCard'
 import { Doughnut } from 'react-chartjs-2'
 import { normalizeToPercentRange, round } from 'utils/functions'
@@ -55,9 +55,12 @@ const TotalDistanceStatisticCard = ({ trainings, updateTime }) => {
   )
 }
 
-const mapStateToProps = state => ({
-  trainings: getCurrentMonthTrainings(state),
-  updateTime: getWebStatistic(state, 'LOAD_USER_TRAININGS')
-})
+const mapStateToProps = state => {
+  const getCurrentMonthTrainings = getCurrentMonthTrainingsSelect()
+  return {
+    trainings: getCurrentMonthTrainings(state),
+    updateTime: getWebStatistic(state, 'LOAD_USER_TRAININGS'),
+  }
+}
 
 export default connect(mapStateToProps)(React.memo(TotalDistanceStatisticCard))
