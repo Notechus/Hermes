@@ -64,14 +64,6 @@ class ApplicationNavbar extends React.Component {
     this.setState(newState)
   }
 
-  moveToNewTraining = e => {
-    e.preventDefault()
-    const { history } = this.props
-    if (history && history.push) {
-      history.push('/app/trainings/new')
-    }
-  }
-
   signOut = e => {
     e.preventDefault()
     Auth.signOut()
@@ -115,11 +107,7 @@ class ApplicationNavbar extends React.Component {
               <span className="navbar-toggler-bar navbar-kebab" />
               <span className="navbar-toggler-bar navbar-kebab" />
             </button>
-            <NavbarRightPanel
-              collapseOpen={this.state.collapseOpen}
-              signOut={this.signOut}
-              newTraining={this.moveToNewTraining}
-            />
+            <NavbarRightPanel collapseOpen={this.state.collapseOpen} signOut={this.signOut} />
           </Container>
         </Navbar>
       </>

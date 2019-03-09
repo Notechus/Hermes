@@ -4,11 +4,14 @@ import { Collapse, Nav } from 'reactstrap'
 import PerfectScrollbar from 'perfect-scrollbar'
 import { connect } from 'react-redux'
 import { getAvatar } from 'reducers/entities/avatarsReducer'
+import { Link } from 'react-router-dom'
 
 import logo from 'assets/img/react-logo.png'
 import defaultImage from 'assets/img/default-avatar.png'
 
 let ps
+
+const DASHBOARD_URL = '/app/dashboard'
 
 class Sidebar extends React.Component {
   constructor(props) {
@@ -136,14 +139,14 @@ class Sidebar extends React.Component {
     return (
       <div className="sidebar" data-color={bgColor} data-active-color={activeColor}>
         <div className="logo">
-          <a href="/" className="simple-text logo-mini">
+          <Link to={DASHBOARD_URL} className="simple-text logo-mini">
             <div className="logo-img">
               <img src={logo} alt="react-logo" />
             </div>
-          </a>
-          <a href="#home" className="simple-text logo-normal" onClick={this.backToDashboard}>
+          </Link>
+          <Link to={DASHBOARD_URL} className="simple-text logo-normal">
             Hermes
-          </a>
+          </Link>
         </div>
         <div className="sidebar-wrapper" ref="sidebar">
           <div className="user">

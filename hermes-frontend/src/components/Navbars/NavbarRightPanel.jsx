@@ -1,23 +1,24 @@
 import React from 'react'
 import { Collapse, Nav, NavItem, NavLink } from 'reactstrap'
+import { NavLink as NavLnk } from 'react-router-dom'
 import EventNavbarDropdown from 'components/Navbars/EventNavbarDropdown.jsx'
 
 const isCoachUser = user => user && user.type === 'Coach'
 
-const NavbarRightPanel = ({ user, signOut, collapseOpen, newTraining }) => {
+const preventDefault = e => e.preventDefault()
+
+const NavbarRightPanel = ({ user, signOut, collapseOpen }) => {
   return (
     <Collapse className="justify-content-end" navbar isOpen={collapseOpen}>
       <Nav navbar>
         {isCoachUser(user) && (
           <NavItem>
-            <NavLink href="#new" onClick={newTraining}>
-              New
-            </NavLink>
+            <NavLnk to="/app/trainings/new">New</NavLnk>
           </NavItem>
         )}
         <EventNavbarDropdown username={user ? user.username : null} />
         <NavItem>
-          <NavLink href="#pablo">
+          <NavLink href="#pablo" onClick={preventDefault}>
             <i className="nc-icon nc-settings-gear-65" />
             <p>
               <span className="d-lg-none d-md-block">Account</span>

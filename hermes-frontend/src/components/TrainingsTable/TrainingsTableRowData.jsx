@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import moment from 'moment'
 import { getTraining } from 'reducers/entities/trainingsReducer'
@@ -9,9 +10,7 @@ const TrainingsTableRowData = ({ trainingId, training }) => {
   return (
     <>
       <td className="text-left">
-        <a href="#edit" onClick={e => e.preventDefault()}>
-          {training.trainingDate}
-        </a>
+        <Link to={`/app/trainings/single/${trainingId}`}>{training.trainingDate}</Link>
       </td>
       <td className="text-left">{moment(training.trainingDate).format(DAY_FORMAT)}</td>
       <td className="text-center">{training.completed && <i className="nc-icon nc-check-2" />}</td>

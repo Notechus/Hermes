@@ -6,7 +6,6 @@ import {
   getCurrentWeekTrainingIdsSelect,
   getTrainingIdsExceptCurrentWeekSelect,
 } from 'reducers/entities/trainingsReducer'
-import { sortByActivityOrderAsc } from 'utils/functions'
 import { updateRunnerTraining } from 'actions/trainingsActions'
 import ReactBSAlert from 'react-bootstrap-sweetalert'
 import { Card, CardBody, CardHeader, CardTitle, Col, Row } from 'reactstrap'
@@ -28,14 +27,6 @@ class TrainingsPage extends React.Component {
       })
 
     this.setState({ activePage, training: training ? Object.assign({}, training) : null })
-  }
-
-  onChange = (field, order, value) => {
-    const { activities } = this.state
-    const activity = activities.find(e => e.order === order)
-    activity[field] = value
-    const restActivities = activities.filter(e => e.order !== order)
-    this.setState({ activities: [...restActivities, activity].sort(sortByActivityOrderAsc) })
   }
 
   successAlert = () => {

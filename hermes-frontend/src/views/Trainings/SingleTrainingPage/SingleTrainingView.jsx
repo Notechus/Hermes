@@ -14,6 +14,7 @@ import {
   Label,
   Row,
 } from 'reactstrap'
+import { Link } from 'react-router-dom'
 import { DATETIME_FORMAT } from 'utils/functions'
 import TrainingActivityCompleteForm from 'components/TrainingsPage/TrainingActivityCompleteForm.jsx'
 
@@ -21,7 +22,6 @@ const SingleTrainingView = ({
   activities,
   completed,
   modificationTime,
-  onReturn,
   onUpdate,
   onChange,
   onCompleted,
@@ -33,9 +33,9 @@ const SingleTrainingView = ({
           <Card>
             <CardHeader>
               <span className="ml-auto">
-                <a href="#back" onClick={onReturn}>
+                <Link to="/app/trainings">
                   <i className="fa fa-arrow-left fa-2x" style={{ color: 'gray' }} />
-                </a>
+                </Link>
               </span>
               <CardTitle tag="h4" className="text-center">
                 Complete training

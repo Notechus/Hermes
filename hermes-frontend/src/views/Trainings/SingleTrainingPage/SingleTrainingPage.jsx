@@ -3,14 +3,25 @@ import { connect } from 'react-redux'
 import { getTraining } from 'reducers/entities/trainingsReducer'
 import { updateTraining } from 'actions/trainingsActions'
 import SingleTrainingView from 'views/Trainings/SingleTrainingPage/SingleTrainingView'
+import { sortByActivityOrderAsc } from 'utils/functions'
 
 const TRAININGS_PAGE = '/app/trainings'
 
 class SingleTrainingPage extends React.PureComponent {
+  constructor(props) {
+    super(props)
+    this.state = {
+      activities: [],
+      completed: false,
+      modificationTime: '',
+      trainingId: '',
+    }
+  }
+
   componentDidMount() {
     const { training, history } = this.props
     if (training) {
-      this.setState({ ...training })
+      this.setState({ ...JSON.parse(JSON.stringify(training)) })
     } else {
       setTimeout(() => history.push(TRAININGS_PAGE), 1000)
     }
@@ -21,9 +32,17 @@ class SingleTrainingPage extends React.PureComponent {
     this.setState({ completed: !completed })
   }
 
+  onChange = (field, order, value) => {
+    const { activities } = this.state
+    const activity = activities.find(e => e.order === order)
+    activity[field] = value
+    const restActivities = activities.filter(e => e.order !== order)
+    this.setState({ activities: [...restActivities, activity].sort(sortByActivityOrderAsc) })
+  }
+
   updateTrainingInfo = e => {
     e.preventDefault()
-    const { updateTraining } = this.props
+    const { updateTraining, history } = this.props
     const { activities } = this.state
     activities.forEach(e => {
       if (e.hr) {
@@ -33,16 +52,7 @@ class SingleTrainingPage extends React.PureComponent {
         e.distance = Number.parseFloat(e.distance)
       }
     })
-    console.log('updating training', this.state)
-    // updateTraining({})
-  }
-
-  returnToTrainings = e => {
-    e.preventDefault()
-    const { history } = this.props
-    if (history && history.push) {
-      history.push(TRAININGS_PAGE)
-    }
+    updateTraining({ ...this.state }).then(() => history.push(TRAININGS_PAGE))
   }
 
   render() {
@@ -54,7 +64,6 @@ class SingleTrainingPage extends React.PureComponent {
           activities={activities}
           completed={completed}
           modificationTime={modificationTime}
-          onReturn={this.returnToTrainings}
           onUpdate={this.updateTrainingInfo}
           onChange={this.onChange}
           onCompleted={this.changeCompleted}
