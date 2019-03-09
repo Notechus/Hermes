@@ -16,22 +16,12 @@ export const fetchAvatar = (username, userId) => async dispatch => {
       level: 'protected',
       identityId: userId,
     })
+    const result = await fetch(avatar, { method: 'GET', mode: 'cors' })
     console.log('avatar', avatar)
-    dispatch(loadedAvatar(userId, avatar))
+    if (result.ok) {
+      dispatch(loadedAvatar(userId, avatar))
+    }
   } catch (err) {
-    console.log('Could not fetch team', err)
-  }
-}
-
-export const fetchUserAvatar = (username, userId) => async dispatch => {
-  try {
-    const key = `${username.toLowerCase()}${AVATAR_SUFFIX}`
-    const avatar = await Storage.get(key, {
-      level: 'protected',
-    })
-    console.log('avatar', avatar)
-    dispatch(loadedAvatar(userId, avatar))
-  } catch (err) {
-    console.log('Could not fetch teams', err)
+    console.log('Could not fetch avatar', err)
   }
 }

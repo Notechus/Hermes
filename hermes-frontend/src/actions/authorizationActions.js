@@ -4,7 +4,7 @@ import {
 } from 'reducers/authorizationDataReducer'
 import { Auth, API, Storage } from 'aws-amplify'
 import { API_NAME, USER_BY_ID, BASIC_HEADERS } from 'utils/variables'
-import { fetchUserAvatar } from 'actions/avatarsActions'
+import { fetchAvatar } from 'actions/avatarsActions'
 import { fetchTrainingsForUser } from 'actions/trainingsActions'
 import { fetchUserTeam } from 'actions/teamsActions'
 
@@ -50,7 +50,7 @@ export const fetchAuthorizedUser = async dispatch => {
 }
 
 export const loadUserRelatedData = (userId, username, userType) => async dispatch => {
-  dispatch(fetchUserAvatar(username, userId))
+  dispatch(fetchAvatar(username, userId))
   dispatch(fetchTrainingsForUser(username))
   dispatch(fetchUserTeam(username, userType))
 }
