@@ -112,7 +112,7 @@ class UserProfile extends React.Component {
                       <Col className="pr-1" md="4">
                         <FormGroup>
                           <label>Type</label>
-                          <Input defaultValue={user.type} placeholder="Type" type="text" />
+                          <Input defaultValue={user.type} disabled placeholder="Type" type="text" />
                         </FormGroup>
                       </Col>
                       <Col className="px-1" md="3">
