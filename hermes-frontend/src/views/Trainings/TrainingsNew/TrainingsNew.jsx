@@ -11,7 +11,6 @@ import ReactBSAlert from 'react-bootstrap-sweetalert'
 
 import AboutTrainingStep from './Steps/AboutTrainingStep.jsx'
 import TrainingActivitiesStep from './Steps/TrainingActivitiesStep.jsx'
-import AdditionalInfoStep from './Steps/AdditionalInfoStep.jsx'
 import TrainingSummaryStep from './Steps/TrainingSummaryStep.jsx'
 
 const steps = team => [
@@ -25,11 +24,6 @@ const steps = team => [
     stepName: 'Activities',
     stepIcon: 'nc-icon nc-user-run',
     component: TrainingActivitiesStep,
-  },
-  {
-    stepName: 'Additional Information',
-    stepIcon: 'nc-icon nc-single-copy-04',
-    component: AdditionalInfoStep,
   },
   {
     stepName: 'Summary',

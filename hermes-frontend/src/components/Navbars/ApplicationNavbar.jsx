@@ -6,6 +6,7 @@ import { Auth } from 'aws-amplify'
 import NavbarRightPanel from 'components/Navbars/NavbarRightPanel.jsx'
 import { loadUserRelatedData } from 'actions/authorizationActions'
 import { getUser } from 'reducers/authorizationDataReducer'
+import { dispatchNotification } from 'actions/notificationsActions'
 
 class ApplicationNavbar extends React.Component {
   constructor(props) {
@@ -123,6 +124,7 @@ class ApplicationNavbar extends React.Component {
               user={this.props.user}
               reloadData={this.reloadData}
               collapseOpen={collapseOpen}
+              notify={this.props.dispatchNotification}
               signOut={this.signOut}
             />
           </Container>
@@ -139,6 +141,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   reloadData: (userId, username, userType) =>
     dispatch(loadUserRelatedData(userId, username, userType)),
+  dispatchNotification: (message, type) => dispatch(dispatchNotification(message, type)),
 })
 
 export default connect(

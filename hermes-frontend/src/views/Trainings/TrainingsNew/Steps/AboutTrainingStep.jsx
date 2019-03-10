@@ -2,7 +2,6 @@ import React from 'react'
 import classnames from 'classnames'
 // reactstrap components
 import { Col, FormGroup, Input, Row } from 'reactstrap'
-import { Storage } from 'aws-amplify'
 import ReactDatetime from 'react-datetime'
 // core components
 import ImageAvatar from 'components/TrainingsNew/ImageAvatar.jsx'
@@ -17,7 +16,6 @@ class AboutTrainingStep extends React.Component {
       username: '',
       trainingDescription: '',
       trainingDate: '',
-      memberAvatar: '',
       usernameState: '',
       trainingDescriptionState: '',
       trainingDateState: '',
@@ -73,13 +71,6 @@ class AboutTrainingStep extends React.Component {
       username: user.value,
       memberId: user.id,
     })
-    Storage.get(user.value + '-avatar.png', { level: 'protected', identityId: user.id }).then(
-      url => {
-        this.setState({
-          memberAvatar: url,
-        })
-      }
-    )
   }
 
   render() {
@@ -88,7 +79,7 @@ class AboutTrainingStep extends React.Component {
         <h5 className="info-text">Let's start with the basic information</h5>
         <Row className="justify-content-center">
           <Col sm="3">
-            <ImageAvatar src={this.state.memberAvatar} />
+            <ImageAvatar userId={this.state.memberId} username={this.state.username} />
             <UsernameFromTeamDropdown
               username={this.state.username}
               memberId={this.state.memberId}

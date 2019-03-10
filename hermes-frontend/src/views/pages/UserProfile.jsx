@@ -54,7 +54,7 @@ class UserProfile extends React.Component {
   }
 
   render() {
-    const user = this.props.user
+    const { user } = this.props
     return (
       <>
         <div className="content">
@@ -65,8 +65,8 @@ class UserProfile extends React.Component {
                 <CardBody>
                   <div className="author">
                     <ImageAvatarUpload
-                      loaded={!!(user.avatar && user.avatar !== '')}
-                      image={user.avatar}
+                      userId={user.userId}
+                      username={user.username}
                       onChange={this.handleImageChange}
                     />
                     <h5 className="title">{user.name + ' ' + user.surname}</h5>

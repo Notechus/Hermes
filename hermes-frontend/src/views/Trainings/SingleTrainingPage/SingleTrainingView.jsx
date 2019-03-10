@@ -25,6 +25,7 @@ const SingleTrainingView = ({
   onUpdate,
   onChange,
   onCompleted,
+  loading,
 }) => {
   return (
     <div className="content">
@@ -82,7 +83,13 @@ const SingleTrainingView = ({
               </Row>
             </CardBody>
             <CardFooter>
-              <Button size="sm" color="success" className="btn-round" onClick={onUpdate}>
+              <Button
+                size="sm"
+                color="success"
+                className="btn-round"
+                onClick={onUpdate}
+                disabled={loading}
+              >
                 Update
               </Button>
             </CardFooter>

@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react'
 // react plugin for creating notifications over the dashboard
-import NotificationAlert from "react-notification-alert";
+import NotificationAlert from 'react-notification-alert'
 
 // reactstrap components
 import {
@@ -13,72 +13,74 @@ import {
   CardTitle,
   Modal,
   Row,
-  Col
-} from "reactstrap";
+  Col,
+} from 'reactstrap'
 
 class Notifications extends React.Component {
+
+
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       visible: true,
       modalMini: false,
       modalClassic: false,
-      modalNotice: false
-    };
+      modalNotice: false,
+    }
   }
   toggleModalClassic = () => {
     this.setState({
-      modalClassic: !this.state.modalClassic
-    });
-  };
+      modalClassic: !this.state.modalClassic,
+    })
+  }
   toggleModalNotice = () => {
     this.setState({
-      modalNotice: !this.state.modalNotice
-    });
-  };
+      modalNotice: !this.state.modalNotice,
+    })
+  }
   toggleModalMini = () => {
     this.setState({
-      modalMini: !this.state.modalMini
-    });
-  };
+      modalMini: !this.state.modalMini,
+    })
+  }
   notify = place => {
-    const color = Math.floor(Math.random() * 5 + 1);
-    let type;
+    const color = Math.floor(Math.random() * 5 + 1)
+    let type
     switch (color) {
       case 1:
-        type = "primary";
-        break;
+        type = 'primary'
+        break
       case 2:
-        type = "success";
-        break;
+        type = 'success'
+        break
       case 3:
-        type = "danger";
-        break;
+        type = 'danger'
+        break
       case 4:
-        type = "warning";
-        break;
+        type = 'warning'
+        break
       case 5:
-        type = "info";
-        break;
+        type = 'info'
+        break
       default:
-        break;
+        break
     }
     const options = {
       place: place,
       message: (
         <div>
           <div>
-            Welcome to <b>Now UI Dashboard React</b> - a beautiful premium admin
-            for every web developer.
+            Welcome to <b>Now UI Dashboard React</b> - a beautiful premium admin for every web
+            developer.
           </div>
         </div>
       ),
       type: type,
-      icon: "now-ui-icons ui-1_bell-53",
-      autoDismiss: 7
-    };
-    this.refs.notificationAlert.notificationAlert(options);
-  };
+      icon: 'now-ui-icons ui-1_bell-53',
+      autoDismiss: 7,
+    }
+    this.refs.notificationAlert.notificationAlert(options)
+  }
   render() {
     return (
       <>
@@ -90,7 +92,7 @@ class Notifications extends React.Component {
                 <CardHeader>
                   <CardTitle>Notifications</CardTitle>
                   <p className="card-category">
-                    Handcrafted by our friend{" "}
+                    Handcrafted by our friend{' '}
                     <a
                       href="https://github.com/mouse0270"
                       rel="noopener noreferrer"
@@ -98,7 +100,7 @@ class Notifications extends React.Component {
                     >
                       Robert McIntosh
                     </a>
-                    . Please checkout the{" "}
+                    . Please checkout the{' '}
                     <a
                       href="http://bootstrap-notify.remabledesigns.com/"
                       rel="noopener noreferrer"
@@ -120,38 +122,19 @@ class Notifications extends React.Component {
                             <span>This is a plain notification</span>
                           </Alert>
                           <UncontrolledAlert color="info" fade={false}>
-                            <span>
-                              This is a notification with close button.
-                            </span>
+                            <span>This is a notification with close button.</span>
                           </UncontrolledAlert>
-                          <UncontrolledAlert
-                            className="alert-with-icon"
-                            color="info"
-                            fade={false}
-                          >
-                            <span
-                              data-notify="icon"
-                              className="nc-icon nc-bell-55"
-                            />
-                            <span>
-                              This is a notification with close button and icon.
-                            </span>
+                          <UncontrolledAlert className="alert-with-icon" color="info" fade={false}>
+                            <span data-notify="icon" className="nc-icon nc-bell-55" />
+                            <span>This is a notification with close button and icon.</span>
                           </UncontrolledAlert>
-                          <UncontrolledAlert
-                            className="alert-with-icon"
-                            color="info"
-                            fade={false}
-                          >
-                            <span
-                              data-notify="icon"
-                              className="nc-icon nc-chart-pie-36"
-                            />
+                          <UncontrolledAlert className="alert-with-icon" color="info" fade={false}>
+                            <span data-notify="icon" className="nc-icon nc-chart-pie-36" />
                             <span>
-                              This is a notification with close button and icon
-                              and have many lines. You can see that the icon and
-                              the close button are always vertically aligned.
-                              This is a beautiful notification. So you don't
-                              have to worry about the style.
+                              This is a notification with close button and icon and have many lines.
+                              You can see that the icon and the close button are always vertically
+                              aligned. This is a beautiful notification. So you don't have to worry
+                              about the style.
                             </span>
                           </UncontrolledAlert>
                         </CardBody>
@@ -166,36 +149,31 @@ class Notifications extends React.Component {
                           <UncontrolledAlert color="primary" fade={false}>
                             <span>
                               <b>Primary - </b>
-                              This is a regular notification made with
-                              ".alert-primary"
+                              This is a regular notification made with ".alert-primary"
                             </span>
                           </UncontrolledAlert>
                           <UncontrolledAlert color="info" fade={false}>
                             <span>
                               <b>Info - </b>
-                              This is a regular notification made with
-                              ".alert-info"
+                              This is a regular notification made with ".alert-info"
                             </span>
                           </UncontrolledAlert>
                           <UncontrolledAlert color="success" fade={false}>
                             <span>
                               <b>Success - </b>
-                              This is a regular notification made with
-                              ".alert-success"
+                              This is a regular notification made with ".alert-success"
                             </span>
                           </UncontrolledAlert>
                           <UncontrolledAlert color="warning" fade={false}>
                             <span>
                               <b>Warning - </b>
-                              This is a regular notification made with
-                              ".alert-warning"
+                              This is a regular notification made with ".alert-warning"
                             </span>
                           </UncontrolledAlert>
                           <UncontrolledAlert color="danger" fade={false}>
                             <span>
                               <b>Danger - </b>
-                              This is a regular notification made with
-                              ".alert-danger"
+                              This is a regular notification made with ".alert-danger"
                             </span>
                           </UncontrolledAlert>
                         </CardBody>
@@ -215,9 +193,7 @@ class Notifications extends React.Component {
                       <Col className="ml-auto mr-auto text-center" md="6">
                         <CardTitle tag="h4">
                           Notifications Places
-                          <p className="category">
-                            Click to view notifications
-                          </p>
+                          <p className="category">Click to view notifications</p>
                         </CardTitle>
                       </Col>
                     </Row>
@@ -229,7 +205,7 @@ class Notifications extends React.Component {
                               block
                               className="btn-round"
                               color="default"
-                              onClick={() => this.notify("tl")}
+                              onClick={() => this.notify('tl')}
                               outline
                             >
                               Top Left
@@ -240,7 +216,7 @@ class Notifications extends React.Component {
                               block
                               className="btn-round"
                               color="default"
-                              onClick={() => this.notify("tc")}
+                              onClick={() => this.notify('tc')}
                               outline
                             >
                               Top Center
@@ -251,7 +227,7 @@ class Notifications extends React.Component {
                               block
                               className="btn-round"
                               color="default"
-                              onClick={() => this.notify("tr")}
+                              onClick={() => this.notify('tr')}
                               outline
                             >
                               Top Right
@@ -268,7 +244,7 @@ class Notifications extends React.Component {
                               block
                               className="btn-round"
                               color="default"
-                              onClick={() => this.notify("bl")}
+                              onClick={() => this.notify('bl')}
                               outline
                             >
                               Bottom Left
@@ -279,7 +255,7 @@ class Notifications extends React.Component {
                               block
                               className="btn-round"
                               color="default"
-                              onClick={() => this.notify("bc")}
+                              onClick={() => this.notify('bc')}
                               outline
                             >
                               Bottom Center
@@ -290,7 +266,7 @@ class Notifications extends React.Component {
                               block
                               className="btn-round"
                               color="default"
-                              onClick={() => this.notify("br")}
+                              onClick={() => this.notify('br')}
                               outline
                             >
                               Bottom Right
@@ -315,10 +291,7 @@ class Notifications extends React.Component {
                         Small alert modal
                       </Button>
                       {/* Classic Modal */}
-                      <Modal
-                        isOpen={this.state.modalClassic}
-                        toggle={this.toggleModalClassic}
-                      >
+                      <Modal isOpen={this.state.modalClassic} toggle={this.toggleModalClassic}>
                         <div className="modal-header justify-content-center">
                           <button
                             aria-label="Close"
@@ -333,15 +306,12 @@ class Notifications extends React.Component {
                         </div>
                         <div className="modal-body">
                           <p>
-                            Far far away, behind the word mountains, far from
-                            the countries Vokalia and Consonantia, there live
-                            the blind texts. Separated they live in
-                            Bookmarksgrove right at the coast of the Semantics,
-                            a large language ocean. A small river named Duden
-                            flows by their place and supplies it with the
-                            necessary regelialia. It is a paradisematic country,
-                            in which roasted parts of sentences fly into your
-                            mouth.
+                            Far far away, behind the word mountains, far from the countries Vokalia
+                            and Consonantia, there live the blind texts. Separated they live in
+                            Bookmarksgrove right at the coast of the Semantics, a large language
+                            ocean. A small river named Duden flows by their place and supplies it
+                            with the necessary regelialia. It is a paradisematic country, in which
+                            roasted parts of sentences fly into your mouth.
                           </p>
                         </div>
                         <div className="modal-footer">
@@ -358,11 +328,7 @@ class Notifications extends React.Component {
                           </div>
                           <div className="divider" />
                           <div className="right-side">
-                            <Button
-                              className="btn-link"
-                              color="danger"
-                              type="button"
-                            >
+                            <Button className="btn-link" color="danger" type="button">
                               Delete
                             </Button>
                           </div>
@@ -370,10 +336,7 @@ class Notifications extends React.Component {
                       </Modal>
                       {/* End Modal */}
                       {/* notice modal */}
-                      <Modal
-                        isOpen={this.state.modalNotice}
-                        toggle={this.toggleModalNotice}
-                      >
+                      <Modal isOpen={this.state.modalNotice} toggle={this.toggleModalNotice}>
                         <div className="modal-header">
                           <button
                             aria-hidden={true}
@@ -394,13 +357,10 @@ class Notifications extends React.Component {
                               <Col md="8">
                                 <strong>1. Register</strong>
                                 <p className="description">
-                                  The first step is to create an account at{" "}
-                                  <a href="http://www.creative-tim.com/">
-                                    Creative Tim
-                                  </a>
-                                  . You can choose a social network or go for
-                                  the classic version, whatever works best for
-                                  you.
+                                  The first step is to create an account at{' '}
+                                  <a href="http://www.creative-tim.com/">Creative Tim</a>. You can
+                                  choose a social network or go for the classic version, whatever
+                                  works best for you.
                                 </p>
                               </Col>
                               <Col md="4">
@@ -408,7 +368,7 @@ class Notifications extends React.Component {
                                   <img
                                     alt="..."
                                     className="rounded img-raised"
-                                    src={require("assets/img/bg/daniel-olahs.jpg")}
+                                    src={require('assets/img/bg/daniel-olahs.jpg')}
                                   />
                                 </div>
                               </Col>
@@ -419,13 +379,10 @@ class Notifications extends React.Component {
                               <Col md="8">
                                 <strong>2. Apply</strong>
                                 <p className="description">
-                                  The first step is to create an account at{" "}
-                                  <a href="http://www.creative-tim.com/">
-                                    Creative Tim
-                                  </a>
-                                  . You can choose a social network or go for
-                                  the classic version, whatever works best for
-                                  you.
+                                  The first step is to create an account at{' '}
+                                  <a href="http://www.creative-tim.com/">Creative Tim</a>. You can
+                                  choose a social network or go for the classic version, whatever
+                                  works best for you.
                                 </p>
                               </Col>
                               <Col md="4">
@@ -433,16 +390,15 @@ class Notifications extends React.Component {
                                   <img
                                     alt="..."
                                     className="rounded img-raised"
-                                    src={require("assets/img/bg/david-marcu.jpg")}
+                                    src={require('assets/img/bg/david-marcu.jpg')}
                                   />
                                 </div>
                               </Col>
                             </Row>
                           </div>
                           <p>
-                            If you have more questions, don't hesitate to
-                            contact us or send us a tweet @creativetim. We're
-                            here to help!
+                            If you have more questions, don't hesitate to contact us or send us a
+                            tweet @creativetim. We're here to help!
                           </p>
                         </div>
                         <div className="modal-footer justify-content-center">
@@ -501,8 +457,8 @@ class Notifications extends React.Component {
           </Row>
         </div>
       </>
-    );
+    )
   }
 }
 
-export default Notifications;
+export default Notifications

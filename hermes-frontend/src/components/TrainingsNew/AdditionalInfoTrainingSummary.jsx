@@ -1,16 +1,16 @@
 import React from 'react'
 
-import { Col, Row } from 'reactstrap'
+import { Col, FormGroup, Input, Row } from 'reactstrap'
 
-const AdditionalInfoTrainingSummary = ({ intensity, importance, comment }) => {
+const AdditionalInfoTrainingSummary = ({ onChange }) => {
   return (
     <>
       <Row className="justify-content-center">
         <Col sm="12">
-          <h6>Intensity(1-10): {intensity}</h6>
-          <h6>Importance(1-10): {importance}</h6>
-          <h6>Additional comments:</h6>
-          <h6 className="text-muted ml-4">{comment}</h6>
+          <FormGroup>
+            <label>Additional Comments</label>
+            <Input type="textarea" name="trainingComment" onChange={onChange} />
+          </FormGroup>
         </Col>
       </Row>
     </>

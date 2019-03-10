@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { getTeam } from 'reducers/entities/teamsReducer'
+import { getCurrentUserTeam } from 'reducers/entities/teamsReducer'
 import Select from 'react-select'
 import { FormGroup } from 'reactstrap'
 
@@ -31,7 +31,7 @@ const UsernameFromTeamDropdown = ({ team, username, memberId, onChange }) => {
 }
 
 const mapStateToProps = state => ({
-  team: getTeam(state),
+  team: getCurrentUserTeam(state),
 })
 
 export default connect(mapStateToProps)(React.memo(UsernameFromTeamDropdown))

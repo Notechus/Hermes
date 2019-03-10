@@ -1,20 +1,14 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import { Button, Col, Row } from 'reactstrap'
 import moment from 'moment'
 import TeamMemberAvatar from 'components/Teams/Coach/TeamMemberAvatar.jsx'
 import { getAvatar } from 'reducers/entities/avatarsReducer'
 import { fetchAvatar } from 'actions/avatarsActions'
+import { useAvatar } from 'hooks/avatars'
 
 const TeamMemberListCell = ({ member, click, avatar, fetchAvatar }) => {
-  useEffect(
-    () => {
-      if (avatar === undefined || avatar === null) {
-        fetchAvatar(member.username, member.userId)
-      }
-    },
-    [member.username, member.userId]
-  )
+  useAvatar(avatar, member.username, member.userId, fetchAvatar)
 
   return (
     <>

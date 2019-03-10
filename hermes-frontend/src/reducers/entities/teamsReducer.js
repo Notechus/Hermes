@@ -1,6 +1,7 @@
 import { createActionNamespace } from 'utils/actions'
 import { keyBy } from 'lodash'
 import { combineReducers } from 'redux'
+import { getUser } from 'reducers/authorizationDataReducer'
 
 const trainingsAction = createActionNamespace('teamsAction')
 
@@ -9,6 +10,10 @@ export const LOAD_TEAMS_SUCCESS = trainingsAction('LOAD_TEAMS_SUCCESS')
 
 export const getTeam = (state, id) => state.entities.teams.byId[id]
 export const getTeams = state => state.entities.teams.allIds.map(id => getTeam(state, id))
+export const getCurrentUserTeam = state => {
+  const user = getUser(state)
+  return state.entities.teams.byId[user.teamId]
+}
 
 const byId = (state = {}, action) => {
   switch (action.type) {

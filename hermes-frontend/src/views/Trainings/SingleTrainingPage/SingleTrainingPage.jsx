@@ -15,6 +15,7 @@ class SingleTrainingPage extends React.PureComponent {
       completed: false,
       modificationTime: '',
       trainingId: '',
+      loading: false,
     }
   }
 
@@ -52,13 +53,16 @@ class SingleTrainingPage extends React.PureComponent {
         e.distance = Number.parseFloat(e.distance)
       }
     })
-    updateTraining({ ...this.state }).then(() => history.push(TRAININGS_PAGE))
+    updateTraining({ ...this.state })
+      .then()
+      .then(() => {})
+      .then(() => history.push(TRAININGS_PAGE))
   }
 
   render() {
     const { training } = this.props
     if (training) {
-      const { activities, completed, modificationTime } = this.state
+      const { activities, completed, modificationTime, loading } = this.state
       return (
         <SingleTrainingView
           activities={activities}
@@ -67,6 +71,7 @@ class SingleTrainingPage extends React.PureComponent {
           onUpdate={this.updateTrainingInfo}
           onChange={this.onChange}
           onCompleted={this.changeCompleted}
+          loading={loading}
         />
       )
     } else {

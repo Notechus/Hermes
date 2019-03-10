@@ -5,12 +5,12 @@ import { Col, Row } from 'reactstrap'
 import { formatDateAsString } from 'utils/functions'
 import ImageAvatar from 'components/TrainingsNew/ImageAvatar.jsx'
 
-const BasicInfoTrainingSummary = ({ username, avatar, description, trainingDate }) => {
+const BasicInfoTrainingSummary = ({ username, userId, description, trainingDate }) => {
   return (
     <>
       <Row className="justify-content-center">
         <Col sm="6">
-          <ImageAvatar src={avatar} />
+          <ImageAvatar userId={userId} username={username} />
         </Col>
         <Col sm="6">
           <h6>Member username: {username}</h6>

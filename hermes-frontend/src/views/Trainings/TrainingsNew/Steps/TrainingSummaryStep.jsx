@@ -9,6 +9,7 @@ import AdditionalInfoTrainingSummary from 'components/TrainingsNew/AdditionalInf
 class TrainingSummaryStep extends React.Component {
   state = {
     openedCollapses: ['basicInfo'],
+    trainingComment: '',
   }
 
   componentDidMount() {}
@@ -53,7 +54,7 @@ class TrainingSummaryStep extends React.Component {
                 <BasicInfoTrainingSummary
                   username={wizardData.username}
                   description={wizardData.trainingDescription}
-                  avatar={wizardData.memberAvatar}
+                  userId={wizardData.memberId}
                   trainingDate={wizardData.trainingDate}
                 />
               </TrainingSummaryCollapse>
@@ -74,9 +75,8 @@ class TrainingSummaryStep extends React.Component {
                 toggle={() => this.collapsesToggle('additionalInfo')}
               >
                 <AdditionalInfoTrainingSummary
-                  comment={wizardData.trainingComment}
-                  importance={wizardData.importance}
-                  intensity={wizardData.intensity}
+                  comment={this.state.trainingComment}
+                  onChange={e => this.setState({ trainingComment: e.target.value })}
                 />
               </TrainingSummaryCollapse>
             </div>

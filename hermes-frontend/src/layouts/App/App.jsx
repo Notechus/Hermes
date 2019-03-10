@@ -5,6 +5,7 @@ import { Route, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import ApplicationNavbar from 'components/Navbars/ApplicationNavbar.jsx'
+import Notifications from 'components/Notifications/Notifications.jsx'
 import Footer from 'components/Footer/Footer.jsx'
 import Sidebar from 'components/Sidebar/Sidebar.jsx'
 import { fetchAuthorizedUser } from 'actions/authorizationActions'
@@ -69,6 +70,7 @@ class App extends React.Component {
           user={this.props.user}
         />
         <div className="main-panel" ref="mainPanel">
+          <Notifications />
           <ApplicationNavbar
             {...this.props}
             onStateChange={this.props.onStateChange}
