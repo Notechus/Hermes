@@ -6,7 +6,7 @@ import { Auth } from 'aws-amplify'
 import NavbarRightPanel from 'components/Navbars/NavbarRightPanel.jsx'
 import { loadUserRelatedData } from 'actions/authorizationActions'
 import { getUser } from 'reducers/authorizationDataReducer'
-import { dispatchNotification } from 'actions/notificationsActions'
+import { notification } from 'actions/notificationsActions'
 
 class ApplicationNavbar extends React.Component {
   constructor(props) {
@@ -141,7 +141,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   reloadData: (userId, username, userType) =>
     dispatch(loadUserRelatedData(userId, username, userType)),
-  dispatchNotification: (message, type) => dispatch(dispatchNotification(message, type)),
+  dispatchNotification: (message, type) => dispatch(notification(message, type)),
 })
 
 export default connect(

@@ -6,7 +6,6 @@ import {
   getCurrentWeekTrainingIdsSelect,
   getTrainingIdsExceptCurrentWeekSelect,
 } from 'reducers/entities/trainingsReducer'
-import { updateRunnerTraining } from 'actions/trainingsActions'
 import ReactBSAlert from 'react-bootstrap-sweetalert'
 import { Card, CardBody, CardHeader, CardTitle, Col, Row } from 'reactstrap'
 import TrainingsTable from 'components/TrainingsTable/TrainingsTable'
@@ -95,11 +94,4 @@ const mapStateToProps = state => {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  updateTraining: training => dispatch(updateRunnerTraining(training)),
-})
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(TrainingsPage)
+export default connect(mapStateToProps)(TrainingsPage)

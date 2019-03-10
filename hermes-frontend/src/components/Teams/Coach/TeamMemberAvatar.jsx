@@ -1,5 +1,4 @@
 import React from 'react'
-import { Storage } from 'aws-amplify'
 import defaultImage from 'assets/img/default-avatar.png'
 
 const TeamMemberAvatar = ({ image }) => {

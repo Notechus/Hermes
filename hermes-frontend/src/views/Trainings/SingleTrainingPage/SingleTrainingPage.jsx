@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { getTraining } from 'reducers/entities/trainingsReducer'
-import { updateTraining } from 'actions/trainingsActions'
+import { updateRunnerTraining } from 'actions/trainingsActions'
 import SingleTrainingView from 'views/Trainings/SingleTrainingPage/SingleTrainingView'
 import { sortByActivityOrderAsc } from 'utils/functions'
 
@@ -22,7 +22,13 @@ class SingleTrainingPage extends React.PureComponent {
   componentDidMount() {
     const { training, history } = this.props
     if (training) {
-      this.setState({ ...JSON.parse(JSON.stringify(training)) })
+      const newState = JSON.parse(JSON.stringify(training))
+      newState.activities.forEach(e => {
+        e.time = 0
+        e.hr = 0
+        e.pace = 0
+      })
+      this.setState({ ...newState })
     } else {
       setTimeout(() => history.push(TRAININGS_PAGE), 1000)
     }
@@ -85,7 +91,7 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  updateTraining: training => dispatch(updateTraining(training)),
+  updateTraining: training => dispatch(updateRunnerTraining(training)),
 })
 
 export default connect(

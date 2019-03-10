@@ -6,6 +6,6 @@ const newNotification = (message, notificationType) => ({
   notificationType,
 })
 
-export const dispatchNotification = (message, type) => dispatch => {
+export const notification = (message, type) => dispatch => {
   dispatch(newNotification(message, type))
 }

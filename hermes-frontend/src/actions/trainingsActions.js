@@ -9,6 +9,7 @@ import {
 import { getApiToken } from 'actions/authorizationActions'
 import { API_NAME, TRAININGS_RESOURCE, BASIC_HEADERS, TRAININGS_ID } from 'utils/variables'
 import { updateStatistics } from 'actions/webStatisticsActions'
+import { notification } from 'actions/notificationsActions'
 import { DATETIME_FORMAT } from 'utils/functions'
 
 const loadTrainingsSuccess = trainings => ({
@@ -40,6 +41,7 @@ export const createNewTraining = training => async dispatch => {
   console.log('creating training', training)
   const result = await API.post(API_NAME, TRAININGS_RESOURCE, init)
   console.log(result)
+  dispatch(notification(`Successfully added new training for ${training.runner}`, 'success'))
   return dispatch(createTrainingSuccess(result))
 }
 
@@ -88,6 +90,7 @@ export const updateRunnerTraining = training => async dispatch => {
   try {
     const response = await API.put(API_NAME, TRAININGS_ID(training.trainingId), init)
     console.log('got response after update', response)
+    dispatch(notification('Successfully updated training', 'success'))
     return dispatch(updateTrainingSuccess(training))
   } catch (err) {
     console.log('Could not update training', err)
