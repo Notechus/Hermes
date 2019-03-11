@@ -49,6 +49,7 @@ class SingleTrainingPage extends React.PureComponent {
 
   updateTrainingInfo = e => {
     e.preventDefault()
+    this.setState({ loading: true })
     const { updateTraining, history } = this.props
     const { activities } = this.state
     activities.forEach(e => {
@@ -60,8 +61,7 @@ class SingleTrainingPage extends React.PureComponent {
       }
     })
     updateTraining({ ...this.state })
-      .then()
-      .then(() => {})
+      .then(() => this.setState({ loading: false }))
       .then(() => history.push(TRAININGS_PAGE))
   }
 

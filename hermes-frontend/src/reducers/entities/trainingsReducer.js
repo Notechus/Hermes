@@ -112,7 +112,7 @@ export const getLastYearOfTrainings = state => {
 const byId = (state = {}, action) => {
   switch (action.type) {
     case LOAD_TRAININGS_SUCCESS:
-      return { ...state, ...keyBy(action.trainings, e => e.trainingId) }
+      return { ...keyBy(action.trainings, e => e.trainingId) }
     case UPDATE_TRAINING_SUCCESS:
       return { ...state, [action.training.trainingId]: action.training }
     case CREATE_TRAINING_SUCCESS:
@@ -127,7 +127,7 @@ const byId = (state = {}, action) => {
 const allIds = (state = [], action) => {
   switch (action.type) {
     case LOAD_TRAININGS_SUCCESS:
-      return [...new Set([...state, ...action.trainings.map(e => e.trainingId)])]
+      return [...new Set([...action.trainings.map(e => e.trainingId)])]
     case UPDATE_TRAINING_SUCCESS:
       return state
     case CREATE_TRAINING_SUCCESS:
