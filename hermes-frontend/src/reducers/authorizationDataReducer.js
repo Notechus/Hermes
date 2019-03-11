@@ -11,8 +11,8 @@ export const getUser = state => state.authorizationData.user
 export const EMPTY_USER = {
   username: '',
   userId: '',
-  name: '',
-  surname: '',
+  firstName: '',
+  lastName: '',
   avatar: '',
   email: '',
   gender: '',

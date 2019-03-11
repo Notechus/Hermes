@@ -30,10 +30,10 @@ export const fetchAuthorizedUser = async dispatch => {
     const user = {
       userId: userProfile.userId || '',
       username: authUser.username,
-      name: userProfile.name || '',
+      firstName: userProfile.firstName || '',
       email: userProfile.email,
       gender: userProfile.gender || '',
-      surname: userProfile.surname || '',
+      lastName: userProfile.lastName || '',
       type: userProfile.type || '',
       about: userProfile.about || '',
       memo: userProfile.memo || '',

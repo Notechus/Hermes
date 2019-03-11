@@ -20,20 +20,21 @@ import ImageAvatarUpload from 'components/CustomUpload/ImageAvatarUpload.jsx'
 import Select from 'react-select'
 
 class UserProfile extends React.Component {
-  state = { ...EMPTY_USER }
+  state = { ...EMPTY_USER, updating: false }
 
   componentDidMount() {
+    const { user } = this.props
     this.setState({
-      ...this.props.user,
-      gender: { value: this.props.user.gender, label: this.props.user.gender },
+      ...user,
+      gender: { value: user.gender, label: user.gender },
     })
   }
 
   handleImageChange = e => {
     e.preventDefault()
     const file = e.target.files[0]
-    const { username } = this.props.user
-    this.props.changeAvatar(`${username}-avatar.png`, file)
+    const { userId } = this.props.user
+    this.props.changeAvatar(userId, file)
   }
 
   onChange = e => {
@@ -41,20 +42,23 @@ class UserProfile extends React.Component {
   }
 
   handleUpdate = () => {
-    const { name, surname, gender, about, memo } = this.state
-
+    const { firstName, lastName, gender, about, memo, email } = this.state
+    this.setState({ updating: true })
     const userToUpdate = {
-      name: name,
-      'custom:surname': surname,
+      firstName,
+      lastName,
       gender: gender.value,
-      'custom:about': about,
-      'custom:memo': memo,
+      about,
+      memo,
+      email,
     }
-    this.props.updateUser(userToUpdate)
+    console.log('trying to update user attributes', userToUpdate)
+    this.props.updateUser(userToUpdate).then(() => this.setState({ updating: false }))
   }
 
   render() {
     const { user } = this.props
+    const { firstName, lastName, gender, about, memo, email, updating } = this.state
     return (
       <>
         <div className="content">
@@ -64,40 +68,13 @@ class UserProfile extends React.Component {
                 <div className="image" />
                 <CardBody>
                   <div className="author">
-                    <ImageAvatarUpload
-                      userId={user.userId}
-                      onChange={this.handleImageChange}
-                    />
-                    <h5 className="title">{user.name + ' ' + user.surname}</h5>
+                    <ImageAvatarUpload userId={user.userId} onChange={this.handleImageChange} />
+                    <h5 className="title">{user.firstName + ' ' + user.lastName}</h5>
                     <p className="description">@{user.username}</p>
                   </div>
                   <p className="description text-center">{user.memo}</p>
                 </CardBody>
-                <CardFooter>
-                  <hr />
-                  <div className="button-container">
-                    <Row>
-                      <Col className="ml-auto" lg="3" md="6" xs="6">
-                        <h5>
-                          12 <br />
-                          <small>Files</small>
-                        </h5>
-                      </Col>
-                      <Col className="ml-auto mr-auto" lg="4" md="6" xs="6">
-                        <h5>
-                          2GB <br />
-                          <small>Used</small>
-                        </h5>
-                      </Col>
-                      <Col className="mr-auto" lg="3">
-                        <h5>
-                          24,6$ <br />
-                          <small>Spent</small>
-                        </h5>
-                      </Col>
-                    </Row>
-                  </div>
-                </CardFooter>
+                <CardFooter />
               </Card>
             </Col>
             <Col md="8">
@@ -108,13 +85,13 @@ class UserProfile extends React.Component {
                 <CardBody>
                   <Form>
                     <Row>
-                      <Col className="pr-1" md="4">
+                      <Col md="4">
                         <FormGroup>
                           <label>Type</label>
                           <Input defaultValue={user.type} disabled placeholder="Type" type="text" />
                         </FormGroup>
                       </Col>
-                      <Col className="px-1" md="3">
+                      <Col md="3">
                         <FormGroup>
                           <label>Username</label>
                           <Input
@@ -125,52 +102,52 @@ class UserProfile extends React.Component {
                           />
                         </FormGroup>
                       </Col>
-                      <Col className="pl-1" md="5">
+                      <Col md="5">
                         <FormGroup>
                           <label htmlFor="email">Email address</label>
                           <Input
                             name="email"
                             placeholder="Email"
                             type="email"
-                            value={this.state.email}
+                            value={email}
                             onChange={this.onChange}
                           />
                         </FormGroup>
                       </Col>
                     </Row>
                     <Row>
-                      <Col className="pr-1" md="4">
+                      <Col md="4">
                         <FormGroup>
                           <label>First Name</label>
                           <Input
-                            name="name"
-                            value={this.state.name}
+                            name="firstName"
+                            value={firstName}
                             placeholder="First Name"
                             type="text"
                             onChange={this.onChange}
                           />
                         </FormGroup>
                       </Col>
-                      <Col className="pl-1" md="4">
+                      <Col md="4">
                         <FormGroup>
                           <label>Last Name</label>
                           <Input
-                            name="surname"
-                            value={this.state.surname}
+                            name="lastName"
+                            value={lastName}
                             placeholder="Last Name"
                             type="text"
                             onChange={this.onChange}
                           />
                         </FormGroup>
                       </Col>
-                      <Col className="pl-1" md="4">
+                      <Col md="4">
                         <FormGroup>
                           <label>Gender</label>
                           <Select
                             className="react-select primary"
                             classNamePrefix="react-select"
                             name="gender"
-                            value={this.state.gender}
+                            value={gender}
                             onChange={v => this.setState({ gender: v })}
                             options={[
                               { value: 'Male', label: 'Male' },
@@ -187,7 +164,7 @@ class UserProfile extends React.Component {
                           <label>Memo</label>
                           <Input
                             name="memo"
-                            value={this.state.memo}
+                            value={memo}
                             placeholder="Memo"
                             type="text"
                             onChange={this.onChange}
@@ -205,7 +182,7 @@ class UserProfile extends React.Component {
                             type="textarea"
                             cols="80"
                             rows="4"
-                            value={this.state.about}
+                            value={about}
                             onChange={this.onChange}
                           />
                         </FormGroup>
@@ -214,7 +191,9 @@ class UserProfile extends React.Component {
                     <Row>
                       <Col md="12">
                         <FormGroup>
-                          <Button onClick={this.handleUpdate}>Update</Button>
+                          <Button onClick={this.handleUpdate} disabled={updating}>
+                            Update
+                          </Button>
                         </FormGroup>
                       </Col>
                     </Row>
@@ -234,7 +213,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  changeAvatar: (name, file) => dispatch(updateUserAvatar(name, file)),
+  changeAvatar: (userId, file) => dispatch(updateUserAvatar(userId, file)),
   updateUser: attributes => dispatch(updateUser(attributes)),
   fetchUser: () => dispatch(fetchAuthorizedUser),
 })

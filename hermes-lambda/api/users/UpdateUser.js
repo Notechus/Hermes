@@ -3,7 +3,7 @@ const ddb = new AWS.DynamoDB.DocumentClient()
 
 AWS.config.update({ region: 'eu-west-1' })
 
-const ALLOWED_PROPERTIES = ['email', 'name', 'surname', 'gender', 'memo', 'about', 'avatar']
+const ALLOWED_PROPERTIES = ['email', 'firstName', 'lastName', 'gender', 'memo', 'about', 'avatar']
 
 exports.handler = async (event, context) => {
   const { awsRequestId } = context
