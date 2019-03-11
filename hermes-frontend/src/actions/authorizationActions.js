@@ -1,21 +1,19 @@
-import {
-  LOAD_AUTHORIZATION_SUCCESS,
-  UPDATE_AVATAR_SUCCESS,
-} from 'reducers/authorizationDataReducer'
+import { LOAD_AUTHORIZATION_SUCCESS, UPDATE_USER_SUCCESS } from 'reducers/authorizationDataReducer'
 import { Auth, API, Storage } from 'aws-amplify'
 import { API_NAME, USER_BY_ID, BASIC_HEADERS } from 'utils/variables'
 import { fetchAvatar } from 'actions/avatarsActions'
 import { fetchTrainingsForUser } from 'actions/trainingsActions'
 import { fetchUserTeam } from 'actions/teamsActions'
+import { notification } from 'actions/notificationsActions'
 
 const loadAuthorizationSuccess = user => ({
   type: LOAD_AUTHORIZATION_SUCCESS,
   user,
 })
 
-const updateAvatarSuccess = avatar => ({
-  type: UPDATE_AVATAR_SUCCESS,
-  avatar,
+const updateUserSuccess = user => ({
+  type: UPDATE_USER_SUCCESS,
+  user,
 })
 
 export const getApiToken = async () => {
@@ -30,7 +28,6 @@ export const fetchAuthorizedUser = async dispatch => {
       headers: BASIC_HEADERS(token),
     })
     const user = {
-      avatar: userProfile.avatar || '',
       userId: userProfile.userId || '',
       username: authUser.username,
       name: userProfile.name || '',
@@ -50,7 +47,7 @@ export const fetchAuthorizedUser = async dispatch => {
 }
 
 export const loadUserRelatedData = (userId, username, userType) => async dispatch => {
-  dispatch(fetchAvatar(username, userId))
+  dispatch(fetchAvatar(userId))
   dispatch(fetchTrainingsForUser(username))
   dispatch(fetchUserTeam(username, userType))
 }
@@ -58,42 +55,29 @@ export const loadUserRelatedData = (userId, username, userType) => async dispatc
 export const updateUser = attributes => async dispatch => {
   try {
     const authUser = await Auth.currentAuthenticatedUser()
-    const updateResult = await Auth.updateUserAttributes(authUser, attributes)
-    if (updateResult === 'SUCCESS') {
-      dispatch(fetchAuthorizedUser)
-    }
+    const token = await getApiToken()
+    const response = await API.put(API_NAME, USER_BY_ID(authUser.username), {
+      headers: BASIC_HEADERS(token),
+      body: attributes,
+    })
+    console.log('got response after update', response)
+    dispatch(notification('You have successfully updated your profile', 'success'))
+    return dispatch(updateUserSuccess(attributes))
   } catch (err) {
     console.log(err)
   }
 }
 
-export const updateUserAvatar = (name, file) => async dispatch => {
-  dispatch(updateAvatarSuccess(''))
-  const finalName = name.toLowerCase()
+export const updateUserAvatar = (userId, file) => async dispatch => {
   try {
-    const result = await Storage.put(finalName, file, {
+    const result = await Storage.put(userId + '.png', file, {
       contentType: 'image/png',
       level: 'protected',
     })
-    const authUser = await Auth.currentAuthenticatedUser()
-    const updateResult = await Auth.updateUserAttributes(authUser, { picture: result.key })
-    if (updateResult === 'SUCCESS') {
-      return dispatch(updateAvatarSuccess(finalName))
-    }
+    console.log('got response after update', result)
+    dispatch(notification('You have successfully updated your profile', 'success'))
+    return dispatch(fetchAvatar(userId))
   } catch (err) {
     console.log(err)
   }
-  Storage.put(finalName, file, {
-    contentType: 'image/png',
-    level: 'protected',
-  })
-    .then(result => {
-      return Auth.currentAuthenticatedUser().then(user =>
-        Auth.updateUserAttributes(user, { picture: result.key })
-      )
-    })
-    .then(() => {
-      return dispatch(updateAvatarSuccess(finalName))
-    })
-    .catch(err => console.log(err))
 }

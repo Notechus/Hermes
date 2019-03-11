@@ -66,7 +66,6 @@ class UserProfile extends React.Component {
                   <div className="author">
                     <ImageAvatarUpload
                       userId={user.userId}
-                      username={user.username}
                       onChange={this.handleImageChange}
                     />
                     <h5 className="title">{user.name + ' ' + user.surname}</h5>

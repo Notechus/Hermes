@@ -10,7 +10,7 @@ const BasicInfoTrainingSummary = ({ username, userId, description, trainingDate 
     <>
       <Row className="justify-content-center">
         <Col sm="6">
-          <ImageAvatar userId={userId} username={username} />
+          <ImageAvatar userId={userId} />
         </Col>
         <Col sm="6">
           <h6>Member username: {username}</h6>

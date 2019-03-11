@@ -5,8 +5,8 @@ import { useAvatar } from 'hooks/avatars'
 import { getAvatar } from 'reducers/entities/avatarsReducer'
 import { fetchAvatar } from 'actions/avatarsActions'
 
-const ImageAvatar = ({ avatar, userId, username, fetchAvatar }) => {
-  useAvatar(avatar, username, userId, fetchAvatar)
+const ImageAvatar = ({ avatar, userId, fetchAvatar }) => {
+  useAvatar(avatar, userId, fetchAvatar)
   return (
     <div className="picture-container">
       <div className="picture">
@@ -21,7 +21,7 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  fetchAvatar: (username, userId) => dispatch(fetchAvatar(username, userId)),
+  fetchAvatar: userId => dispatch(fetchAvatar(userId)),
 })
 
 export default connect(

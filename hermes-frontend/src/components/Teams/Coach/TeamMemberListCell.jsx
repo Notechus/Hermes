@@ -8,7 +8,7 @@ import { fetchAvatar } from 'actions/avatarsActions'
 import { useAvatar } from 'hooks/avatars'
 
 const TeamMemberListCell = ({ member, click, avatar, fetchAvatar }) => {
-  useAvatar(avatar, member.username, member.userId, fetchAvatar)
+  useAvatar(avatar, member.userId, fetchAvatar)
 
   return (
     <>
@@ -37,7 +37,7 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  fetchAvatar: (username, userId) => dispatch(fetchAvatar(username, userId)),
+  fetchAvatar: userId => dispatch(fetchAvatar(userId)),
 })
 
 export default connect(

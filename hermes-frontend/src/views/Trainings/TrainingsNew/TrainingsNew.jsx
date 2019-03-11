@@ -7,7 +7,6 @@ import { formatDateAsString } from 'utils/functions'
 
 import ReactWizard from 'react-bootstrap-wizard'
 import { Col } from 'reactstrap'
-import ReactBSAlert from 'react-bootstrap-sweetalert'
 
 import AboutTrainingStep from './Steps/AboutTrainingStep.jsx'
 import TrainingActivitiesStep from './Steps/TrainingActivitiesStep.jsx'
@@ -33,9 +32,7 @@ const steps = team => [
 ]
 
 class TrainingsNew extends React.Component {
-  state = {
-    alert: null,
-  }
+  state = {}
 
   componentDidMount() {
     const { user, history } = this.props
@@ -44,32 +41,10 @@ class TrainingsNew extends React.Component {
     }
   }
 
-  successAlert = username => {
-    this.setState({
-      alert: (
-        <ReactBSAlert
-          success
-          style={{ display: 'block', marginTop: '-100px' }}
-          title="Good job!"
-          onConfirm={() => this.hideAlert()}
-          onCancel={() => this.hideAlert()}
-          confirmBtnBsStyle="info"
-        >
-          You have successfully added new training for {username}!
-        </ReactBSAlert>
-      ),
-    })
-  }
-
-  hideAlert = () => {
-    this.setState({
-      alert: null,
-    })
-    this.props.history.push('/app/teams')
-  }
-
   createNewTraining = formState => {
     console.log(formState)
+
+    const { createTraining, history } = this.props
 
     const {
       trainingDate,
@@ -81,23 +56,21 @@ class TrainingsNew extends React.Component {
       trainingDescription,
     } = formState
 
-    this.props
-      .createTraining({
-        runner: username,
-        trainingDate: formatDateAsString(trainingDate),
-        trainingDescription: trainingDescription,
-        activities: activities.map(e =>
-          Object.assign(
-            {},
-            { order: e.order, distance: e.distance, description: e.description },
-            e.comment ? { comment: e.comment } : null
-          )
-        ),
-        coachNotes: trainingComment,
-        importance: importance,
-        intensity: intensity,
-      })
-      .then(() => this.successAlert(username))
+    createTraining({
+      runner: username,
+      trainingDate: formatDateAsString(trainingDate),
+      trainingDescription: trainingDescription,
+      activities: activities.map(e =>
+        Object.assign(
+          {},
+          { order: e.order, distance: e.distance, description: e.description },
+          e.comment ? { comment: e.comment } : null
+        )
+      ),
+      coachNotes: trainingComment,
+      importance: importance,
+      intensity: intensity,
+    }).then(() => history.push('/app/teams'))
   }
 
   render() {
@@ -105,7 +78,6 @@ class TrainingsNew extends React.Component {
     return (
       <>
         <div className="content">
-          {this.state.alert}
           <Col className="ml-auto mr-auto" md="10">
             <ReactWizard
               steps={wizardSteps}

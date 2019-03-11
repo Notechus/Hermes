@@ -79,7 +79,7 @@ class AboutTrainingStep extends React.Component {
         <h5 className="info-text">Let's start with the basic information</h5>
         <Row className="justify-content-center">
           <Col sm="3">
-            <ImageAvatar userId={this.state.memberId} username={this.state.username} />
+            <ImageAvatar userId={this.state.memberId} />
             <UsernameFromTeamDropdown
               username={this.state.username}
               memberId={this.state.memberId}

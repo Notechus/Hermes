@@ -71,7 +71,6 @@ class ApplicationNavbar extends React.Component {
   reloadData = e => {
     e.preventDefault()
     const { user, reloadData } = this.props
-    console.log('reloading data', user, reloadData)
     reloadData(user.userId, user.username, user.type)
   }
 

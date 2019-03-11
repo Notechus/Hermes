@@ -4,8 +4,7 @@ const authorizationDataAction = createActionNamespace('authorizationData')
 
 export const LOAD_AUTHORIZATION_SUCCESS = authorizationDataAction('LOAD_AUTHORIZATION_SUCCESS')
 export const REMOVE_AUTHORIZATION_SUCCESS = authorizationDataAction('REMOVE_AUTHORIZATION_SUCCESS')
-
-export const UPDATE_AVATAR_SUCCESS = authorizationDataAction('UPDATE_AVATAR_SUCCESS')
+export const UPDATE_USER_SUCCESS = authorizationDataAction('UPDATE_USER_SUCCESS')
 
 export const getUser = state => state.authorizationData.user
 
@@ -26,8 +25,8 @@ const user = (state = {}, action) => {
   switch (action.type) {
     case LOAD_AUTHORIZATION_SUCCESS:
       return { ...action.user }
-    case UPDATE_AVATAR_SUCCESS:
-      return { ...state, ...{ avatar: action.avatar } }
+    case UPDATE_USER_SUCCESS:
+      return { ...state, ...action.user }
     default:
       return state
   }

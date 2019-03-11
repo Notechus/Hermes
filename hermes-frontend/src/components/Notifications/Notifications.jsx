@@ -10,7 +10,7 @@ class Notifications extends React.PureComponent {
       place: 'tc',
       message: <div>{notification.message}</div>,
       type: notification.type,
-      icon: 'now-ui-icons ui-1_bell-53',
+      icon: 'nc-icon nc-bell-55',
       autoDismiss: 5,
     }
     this.refs.notify.notificationAlert(options)

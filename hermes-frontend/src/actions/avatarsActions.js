@@ -1,7 +1,7 @@
 import { LOAD_AVATAR_SUCCESS } from 'reducers/entities/avatarsReducer'
 import { Storage } from 'aws-amplify'
 
-const AVATAR_SUFFIX = '-avatar.png'
+const AVATAR_SUFFIX = '.png'
 
 const loadedAvatar = (userId, avatar) => ({
   type: LOAD_AVATAR_SUCCESS,
@@ -9,15 +9,13 @@ const loadedAvatar = (userId, avatar) => ({
   avatar,
 })
 
-export const fetchAvatar = (username, userId) => async dispatch => {
+export const fetchAvatar = userId => async dispatch => {
   try {
-    const key = `${username.toLowerCase()}${AVATAR_SUFFIX}`
-    const avatar = await Storage.get(key, {
+    const avatar = await Storage.get(userId + AVATAR_SUFFIX, {
       level: 'protected',
       identityId: userId,
     })
     const result = await fetch(avatar, { method: 'GET', mode: 'cors' })
-    console.log('avatar', avatar)
     if (result.ok) {
       dispatch(loadedAvatar(userId, avatar))
     }

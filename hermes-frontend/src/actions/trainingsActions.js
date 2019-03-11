@@ -1,3 +1,4 @@
+import React from 'react'
 import moment from 'moment'
 import { API } from 'aws-amplify'
 import {
@@ -41,7 +42,14 @@ export const createNewTraining = training => async dispatch => {
   console.log('creating training', training)
   const result = await API.post(API_NAME, TRAININGS_RESOURCE, init)
   console.log(result)
-  dispatch(notification(`Successfully added new training for ${training.runner}`, 'success'))
+  dispatch(
+    notification(
+      <div>
+        Successfully added new training for <b>{training.runner}</b>
+      </div>,
+      'success'
+    )
+  )
   return dispatch(createTrainingSuccess(result))
 }
 
