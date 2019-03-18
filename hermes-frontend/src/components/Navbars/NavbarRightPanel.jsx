@@ -5,8 +5,6 @@ import EventNavbarDropdown from 'components/Navbars/EventNavbarDropdown.jsx'
 
 const isCoachUser = user => user && user.type === 'Coach'
 
-const preventDefault = e => e.preventDefault()
-
 const NavbarRightPanel = ({ user, signOut, collapseOpen, reloadData, notify }) => {
   return (
     <Collapse className="justify-content-end" navbar isOpen={collapseOpen}>

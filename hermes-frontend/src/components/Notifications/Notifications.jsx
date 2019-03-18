@@ -1,24 +1,27 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import { connect } from 'react-redux'
 import NotificationAlert from 'react-notification-alert'
 import { getNotification } from 'reducers/notificationsReducer'
 
-class Notifications extends React.PureComponent {
-  componentWillReceiveProps(nextProps, nextContext) {
-    const { notification } = nextProps
-    const options = {
-      place: 'tc',
-      message: <div>{notification.message}</div>,
-      type: notification.type,
-      icon: 'nc-icon nc-bell-55',
-      autoDismiss: 5,
-    }
-    this.refs.notify.notificationAlert(options)
-  }
+const options = (msg, type) => ({
+  place: 'tc',
+  message: <div>{msg}</div>,
+  type: type,
+  icon: 'nc-icon nc-bell-55',
+  autoDismiss: 5,
+})
 
-  render() {
-    return <NotificationAlert ref="notify" />
-  }
+const Notifications = ({ notification }) => {
+  const notify = useRef(null)
+  useEffect(
+    () => {
+      if (notify && Object.keys(notification).length > 0) {
+        notify && notify.current.notificationAlert(options(notification.message, notification.type))
+      }
+    },
+    [notification, notify]
+  )
+  return <NotificationAlert ref={notify} />
 }
 
 const mapStateToProps = state => ({

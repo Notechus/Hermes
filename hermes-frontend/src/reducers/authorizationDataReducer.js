@@ -32,6 +32,4 @@ const user = (state = {}, action) => {
   }
 }
 
-const auth = (state = {}, action) => {}
-
 export default combineReducers({ user })
